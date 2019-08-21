@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/mybatis-3.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.47.jar"/>
+	<classpathentry kind="lib" path="lib/fastjson-1.2.59.jar"/>
+	<classpathentry kind="lib" path="lib/liquidlnf.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

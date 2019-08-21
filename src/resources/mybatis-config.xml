@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<!-- 数据库JDBC配置文件 -->
+	<properties resource="resources/database.properties"></properties>
+	
+	<!-- 驼峰自动转换 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
+	</settings>
+	
+	<!-- 设置别名和包扫描 -->
+	<typeAliases>
+		<typeAlias type="tech.zxuuu.entity.Student" alias="Student"/>
+	</typeAliases>
+	
+	<!-- 环境配置 -->
+	<environments default="development">
+	  <environment id="development">
+	    <transactionManager type="JDBC"/>
+	    <dataSource type="POOLED">
+				<!-- 配置连接信息 -->
+				<property name="driver" value="${jdbc.driverClass}"/>
+				<property name="url" value="${jdbc.url}"/>
+				<property name="username" value="${jdbc.username}"/>
+				<property name="password" value="${jdbc.password}"/>
+	    </dataSource>
+	  </environment>
+	</environments>
+	
+	<!-- 关系映射文件 -->
+	<mappers>
+	  <mapper resource="resources/mapper/StudentMapper.xml"/>
+	  <mapper resource="resources/mapper/TeacherMapper.xml"/>
+	  <mapper resource="resources/mapper/ManagerMapper.xml"/>
+	</mappers>
+	
+</configuration>
