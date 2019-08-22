@@ -5,7 +5,11 @@ import java.util.Map;
 
 import tech.zxuuu.net.Response;
 
-// 基于生产者-消费者模型的响应消息队列（单例）
+/**
+ * 客户端请求消息队列（生产者-消费者模式）
+ * 
+ * @author z0gSh1u
+ */
 public class ResponseQueue {
 
 	private static ResponseQueue responseQueue = new ResponseQueue();
@@ -13,26 +17,24 @@ public class ResponseQueue {
 		return responseQueue;
 	}
 	
-	private Map<String, Response> mp;
+	private Map<String, Response> mp; // Map: Hash -> Response
 	
 	protected ResponseQueue() {
 		mp = new HashMap<>();
 	}
 	
 	public void produce(Response response) {
-		System.out.println("One Response is produced. Hash=" + response.getHashCode());
-		mp.put(response.getHashCode(), response);
+		mp.put(response.getHash(), response);
 	}
 	
 	public Response consume(String hashCode) {
-		System.out.println("One Response is consumed.");
 		Response response = mp.get(hashCode);
 		mp.remove(hashCode);
 		return response;
 	}
 	
-	public boolean contain(String hashCode) {
-		return mp.containsKey(hashCode);
+	public boolean contain(String hash) {
+		return mp.containsKey(hash);
 	}
 	
 }

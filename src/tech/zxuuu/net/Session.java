@@ -4,6 +4,7 @@ import tech.zxuuu.entity.*;
 
 /**
  * 在请求中携带的用户信息
+ * 
  * @author z0gSh1u
  */
 
@@ -30,6 +31,8 @@ public class Session {
 		return userType;
 	}
 
+	public Session() {}
+	
 	public Session(Student student) {
 		this.student = student;
 		this.userType = UserType.STUDENT;

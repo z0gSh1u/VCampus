@@ -5,6 +5,7 @@ import tech.zxuuu.util.SwingUtils;
 import java.awt.EventQueue;
 
 import tech.zxuuu.client.auth.*;
+import tech.zxuuu.client.main.App;
 
 /**
  * 客户端启动类
@@ -27,7 +28,7 @@ public class Bootstrap {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AuthGUI frame = new AuthGUI();
+					App frame = new App();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

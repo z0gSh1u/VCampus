@@ -11,8 +11,11 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import tech.zxuuu.net.RequestListener;
+import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.server.messageQueue.RequestHandler;
 import tech.zxuuu.server.messageQueue.RequestQueue;
+import tech.zxuuu.util.ServerUtils;
 import tech.zxuuu.util.SwingUtils;
 
 import javax.swing.JButton;
@@ -26,7 +29,7 @@ public class App extends JFrame {
 	private JPanel contentPane;
 	
 	// 添加属性
-	private Listener listener;
+	private RequestListener requestListener;
 	// 服务器端全局请求消息队列
 	public static RequestQueue requestQueue;	
 	public static RequestHandler requestHandler;
@@ -69,9 +72,8 @@ public class App extends JFrame {
 			e.printStackTrace();
 		}
 		// 启动服务器端侦听
-		listener = new Listener();
-		listener.start();
-		SwingUtils.showMessage(null, "开始服务器端侦听", "信息");
+		requestListener = new RequestListener(Integer.parseInt(ServerUtils.getMainPort()));
+		requestListener.start();
 		// 启动请求处理器
 		App.requestHandler = new RequestHandler();
 		App.requestHandler.start();
@@ -90,6 +92,9 @@ public class App extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
+		
+		SwingUtils.showMessage(null, "开始服务器端侦听", "信息");
+		
 	}
 
 }

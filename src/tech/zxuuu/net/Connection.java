@@ -15,11 +15,11 @@ import java.net.Socket;
 
 public abstract class Connection {
 
-	private Socket socket;
-	private PrintWriter pWriter;
-	private BufferedReader bReader;
+	protected Socket socket;
+	protected PrintWriter pWriter;
+	protected BufferedReader bReader;
 
-	// 初始化连接，并提供流读写器
+	// 初始化连接，并初始化相关流读写器
 	public Connection(Socket socket) {
 		super();
 		this.socket = socket;
@@ -28,33 +28,34 @@ public abstract class Connection {
 		}
 		try {
 			this.pWriter = new PrintWriter
-			    (new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8"));
+			  (new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8"));
 			this.bReader = new BufferedReader
-	        (new InputStreamReader(this.socket.getInputStream(), "UTF-8"));
+	      (new InputStreamReader(this.socket.getInputStream(), "UTF-8"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	// 同步方法，避免写入冲突
-	// public synchronized void write(String content) {
-	 public void write(String content) {
-		System.out.println("writing || " + content);
-		
-		this.pWriter.write(content + "\n");
-		this.pWriter.flush();
-	}
+	// 为了加不同的锁，ConnectionToClient和ConnectionToServer应该自行实现读写方法
+	// 向Socket写一段数据
+	public abstract void write(String content);
+	// 从Socket读一段数据
+	public abstract String readLine();
 	
-	// 同步方法，避免读取冲突
-	public synchronized String readLine() {
+	// 销毁连接
+	public void destory() {
 		try {
-			return this.bReader.readLine();
+			pWriter.close();
+			pWriter = null;
+			bReader.close();
+			bReader = null;
+			socket.close();
+			socket = null;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Connection [socket=" + socket + ", pWriter=" + pWriter + ", bReader=" + bReader + "]";
@@ -82,19 +83,6 @@ public abstract class Connection {
 
 	public void setbReader(BufferedReader bReader) {
 		this.bReader = bReader;
-	}
-
-	public void destory() {
-		try {
-			pWriter.close();
-			pWriter = null;
-			bReader.close();
-			bReader = null;
-			socket.close();
-			socket = null;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 }

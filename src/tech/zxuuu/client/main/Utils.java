@@ -21,15 +21,15 @@ public class Utils {
 		return Integer.parseInt(ServerUtils.getMainPort());
 	}
 	
-	// 只应该被调用一次，conn作为长连接，在客户端整个生命周期内流动
+	// 只应该被调用一次，connectionToServer作为长连接，在客户端整个生命周期内流动
 	public static ConnectionToServer formConnection() {
-		ConnectionToServer conn = null;
+		ConnectionToServer connectionToServer = null;
 		try {
-			conn = new ConnectionToServer(new Socket(Utils.getServerHost(), Utils.getMainPort()));
+			connectionToServer = new ConnectionToServer(new Socket(Utils.getServerHost(), Utils.getMainPort()));
 		} catch (Exception e) {
 			return null;
 		}
-		return conn;
+		return connectionToServer;
 	}
 	
 }

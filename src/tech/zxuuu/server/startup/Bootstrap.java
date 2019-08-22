@@ -1,8 +1,6 @@
 package tech.zxuuu.server.startup;
 
 import java.awt.EventQueue;
-
-import tech.zxuuu.client.main.*;
 import tech.zxuuu.server.main.App;
 import tech.zxuuu.util.SwingUtils;
 

@@ -5,11 +5,15 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.net.InetAddress;
 
-
+/**
+ * 服务器相关实用工具类
+ * 
+ * @author z0gSh1u
+ */
 public final class ServerUtils {
 
 	final static String CONFIGPATH = "/resources/server.properties";
-	
+
 	public static String getServerHost() {
 		Properties prop = new Properties();
 		try {
@@ -19,7 +23,7 @@ public final class ServerUtils {
 		}
 		return prop.getProperty("serverhost");
 	}
-	
+
 	public static String getMainPort() {
 		Properties prop = new Properties();
 		try {
@@ -29,5 +33,5 @@ public final class ServerUtils {
 		}
 		return prop.getProperty("mainport");
 	}
-	
+
 }

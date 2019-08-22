@@ -1,11 +1,15 @@
 package tech.zxuuu.client.auth;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import sun.net.NetworkServer;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -13,29 +17,28 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 
 import tech.zxuuu.client.auth.*;
+import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.entity.Student;
 import tech.zxuuu.entity.UserType;
-import tech.zxuuu.net.ConnectionToServer;
-import tech.zxuuu.net.Request;
-import tech.zxuuu.net.Response;
 import tech.zxuuu.net.Session;
-import tech.zxuuu.client.auth.Listener;
 import tech.zxuuu.util.SwingUtils;
+import javax.swing.JPasswordField;
 
+/**
+ * 登陆界面GUI
+ * @author z0gSh1u
+ */
 public class AuthGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUsername;
-	private JTextField txtPassword;
-	
-	// 新增属性
-	public static ConnectionToServer conn;
-	public static ResponseQueue responseQueue;
-	private Listener listener;
-	
+	private JPasswordField txtPassword;
 
 	/**
 	 * Launch the application.
@@ -58,22 +61,6 @@ public class AuthGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public AuthGUI() {
-		
-		// 尝试连接服务器
-		AuthGUI.conn = Utils.formConnection();
-		if (AuthGUI.conn != null) {
-			AuthGUI.responseQueue = ResponseQueue.getInstance();
-			this.listener = new Listener(AuthGUI.conn);
-			this.listener.start();
-		}
-		JLabel lblServerStatus = new JLabel(
-			AuthGUI.conn != null ? "连接成功" : "连接失败"
-		);
-		// 加载服务器相关信息
-		JLabel lblServerHost = new JLabel(Utils.getServerHost() + ":" + String.valueOf(Utils.getMainPort()));
-		lblServerHost.setBounds(92, 392, 137, 18);
-		lblServerStatus.setBounds(229, 392, 72, 18);
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 793, 509);
 		contentPane = new JPanel();
@@ -106,11 +93,6 @@ public class AuthGUI extends JFrame {
 		lblPassword.setBounds(249, 146, 45, 18);
 		pBody.add(lblPassword);
 		
-		txtPassword = new JTextField();
-		txtPassword.setBounds(323, 143, 190, 24);
-		pBody.add(txtPassword);
-		txtPassword.setColumns(10);
-		
 		JLabel lblType = new JLabel("用户类型：");
 		lblType.setBounds(249, 213, 75, 18);
 		pBody.add(lblType);
@@ -131,52 +113,45 @@ public class AuthGUI extends JFrame {
 		JButton btnLogin = new JButton("登陆");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					if (SwingUtils.isTxtEmpty(txtPassword) || SwingUtils.isTxtEmpty(txtUsername)) {
-						SwingUtils.showError(null, "有字段为空！", "错误");
-						return;
+				// 输入合法检查
+				if (SwingUtils.isTxtEmpty(txtPassword) || SwingUtils.isTxtEmpty(txtUsername)) {
+					SwingUtils.showError(null, "有字段为空！", "错误");
+					return;
+				}
+				UserType type = null;
+				if (rdoStudent.isSelected()) {
+					type = UserType.STUDENT;
+					Boolean res = AuthHelper.verifyStudent(txtUsername.getText(), txtPassword.getText());
+					if (res) {
+						SwingUtils.showMessage(null, "学生登陆成功！", "信息");
+						App.hasLogon = true;
+						App.session = new Session(new Student(txtUsername.getText(), txtPassword.getText()));
+						// TODO: 是否考虑verifyStudent返回完整的学生对象
+//						Container ctn = getParent();
+//						while (!(ctn instanceof JFrame)) {
+//							ctn = ctn.getParent();
+//						}
+//						JFrame jf = (JFrame) ctn;
+//						jf.setVisible(false);
+					} else {
+						SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
 					}
-					UserType type = null;
-					if (rdoStudent.isSelected()) {
-						type = UserType.STUDENT;
-					} else if (rdoTeacher.isSelected()) {
-						type = UserType.TEACHER;
-					} else if (rdoManager.isSelected()) {
-						type = UserType.MANAGER;
-					}
-					Auth auth = new Auth(txtUsername.getText(), txtPassword.getText(), type);
-					System.out.println("Auth result: " + auth.verifyUser());
+				} else if (rdoTeacher.isSelected()) {
+					type = UserType.TEACHER;
+					// TODO: 添加处理逻辑
+				} else if (rdoManager.isSelected()) {
+					type = UserType.MANAGER;
+					// TODO: 添加处理逻辑
+				}
 			}
 		});
+		
 		btnLogin.setBounds(323, 280, 113, 43);
 		pBody.add(btnLogin);
 		
-		JLabel lblNewLabel = new JLabel("服务器状态：");
-		lblNewLabel.setBounds(0, 392, 113, 18);
-		pBody.add(lblNewLabel);
-		pBody.add(lblServerHost);
-		pBody.add(lblServerStatus);
-		
-		JButton button = new JButton("找回密码");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (SwingUtils.isTxtEmpty(txtUsername)) {
-					SwingUtils.showError(null, "用户名为空", "错误");
-					return;
-				}
-				Request req = new Request(AuthGUI.conn, null, "tech.zxuuu.server.auth.Auth.getPassword", new Object[] {
-					txtUsername.getText()
-				});
-				String hash = req.send();
-				while (!ResponseQueue.getInstance().contain(hash)) {
-					System.out.println("waiting");
-				}
-				Response resp = ResponseQueue.getInstance().consume(hash);
-				String myPassword = (String) resp.getReturn(String.class);
-				System.out.println("My Password = " + myPassword);
-			}
-		});
-		button.setBounds(413, 347, 113, 27);
-		pBody.add(button);
+		txtPassword = new JPasswordField();
+		txtPassword.setBounds(323, 143, 190, 24);
+		pBody.add(txtPassword);
 
 	}
 }

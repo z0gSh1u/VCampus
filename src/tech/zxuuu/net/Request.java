@@ -1,12 +1,6 @@
 package tech.zxuuu.net;
 
-import java.util.Arrays;
-import java.util.Map;
-
 import com.alibaba.fastjson.*;
-
-import tech.zxuuu.entity.Student;
-import tech.zxuuu.entity.UserType;
 
 /**
  * 请求类
@@ -16,51 +10,64 @@ import tech.zxuuu.entity.UserType;
 
 public class Request {
 
-	private ConnectionToServer connToServer;
-	private ConnectionToClient connToClient;
-	private Session sess;
-	private String hashCode;
-	private String targetApi;
-	private Object[] params;
+	private ConnectionToServer connectionToServer; // 到服务器的连接，依靠它来发送请求
+	private ConnectionToClient connectionToClient; // 到客户端的连接，依靠它来发送响应，由底层的RequestListener设定
+	private Session session; // 用户Session信息
+	private String hash; // 请求-响应对哈希
+	private String targetApi; // 请求目标接口
+	private Object[] params; // 请求目标接口参数，注意，params.length应正好，且元素顺序应对应
 
-	@Override
-	public String toString() {
-		return "Request [conn=" + connToServer + ", sess=" + sess + ", hashCode=" + hashCode + ", targetApi=" + targetApi
-				+ ", params=" + Arrays.toString(params) + "]";
-	}
-
-	public Request(ConnectionToServer conn, Session sess, String targetApi, Object[] params) {
+	public Request() {}	
+	public Request(ConnectionToServer connectionToServer, Session session,
+			String targetApi, Object[] params) {
 		super();
-		this.connToServer = conn;
-		this.connToClient = null;
-		this.sess = sess;
-		this.hashCode = String.valueOf(this.hashCode());
+		this.connectionToServer = connectionToServer;
+		this.connectionToClient = null;
+		this.session = session;
+		this.hash = null;
 		this.targetApi = targetApi;
 		this.params = params;
 	}
-
-	public ConnectionToClient getConnToClient() {
-		return connToClient;
+	
+	// 组装JSON发送，返回本次请求的Hash
+	public String send() {
+		// 在发送请求的前一时刻，Request对象的最终形态才确定，此时的Hash才有意义
+		this.hash = String.valueOf(this.hashCode());
+		String json = JSON.toJSONString(this);
+		this.connectionToServer.write(json);
+		return this.hash;
 	}
 
-	public void setConnToClient(ConnectionToClient connToClient) {
-		this.connToClient = connToClient;
+	public ConnectionToServer getConnectionToServer() {
+		return connectionToServer;
+	}
+
+	public void setConnectionToServer(ConnectionToServer connectionToServer) {
+		this.connectionToServer = connectionToServer;
+	}
+
+	public ConnectionToClient getConnectionToClient() {
+		return connectionToClient;
+	}
+
+	public void setConnectionToClient(ConnectionToClient connectionToClient) {
+		this.connectionToClient = connectionToClient;
 	}
 
 	public Session getSession() {
-		return sess;
+		return session;
 	}
 
-	public void setSession(Session sess) {
-		this.sess = sess;
+	public void setSession(Session session) {
+		this.session = session;
 	}
 
-	public String getHashCode() {
-		return hashCode;
+	public String getHash() {
+		return hash;
 	}
 
-	public void setHashCode(String hashCode) {
-		this.hashCode = hashCode;
+	public void setHash(String hash) {
+		this.hash = hash;
 	}
 
 	public String getTargetApi() {
@@ -77,38 +84,6 @@ public class Request {
 
 	public void setParams(Object[] params) {
 		this.params = params;
-	}
-
-	public ConnectionToServer getConnToServer() {
-		return connToServer;
-	}
-
-	public void setConnToServer(ConnectionToServer conn) {
-		this.connToServer = conn;
-	}
-
-	public Session getSess() {
-		return sess;
-	}
-
-	public void setSess(Session sess) {
-		this.sess = sess;
-	}
-
-	// 组装JSON发送，返回本次请求的Hash
-	public String send() {
-		
-		this.hashCode = String.valueOf(this.hashCode());
-		
-		System.out.println("[REQ] " + hashCode);
-		
-		String json = JSON.toJSONString(this);
-		
-		System.out.println(connToServer);
-		
-		this.connToServer.write(json);
-		
-		return hashCode;
 	}
 
 }
