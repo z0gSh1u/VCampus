@@ -1,9 +1,7 @@
 package tech.zxuuu.util;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
-import java.net.InetAddress;
 
 /**
  * 服务器相关实用工具类

@@ -16,6 +16,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 设置别名和包扫描 -->
 	<typeAliases>
 		<typeAlias type="tech.zxuuu.entity.Student" alias="Student"/>
+		<typeAlias type="tech.zxuuu.entity.Teacher" alias="Teacher"/>
+		<typeAlias type="tech.zxuuu.entity.Manager" alias="Manager"/>
 	</typeAliases>
 	
 	<!-- 环境配置 -->
