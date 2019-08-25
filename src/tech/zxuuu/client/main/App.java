@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.auth.AuthGUI;
+import tech.zxuuu.client.library.LibraryQuery;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
@@ -15,6 +16,9 @@ import tech.zxuuu.net.Session;
 import tech.zxuuu.util.SwingUtils;
 
 import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class App extends JFrame {
 
@@ -37,7 +41,7 @@ public class App extends JFrame {
 			public void run() {
 				try {
 					App frame = new App();
-					// frame.setVisible(true);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,20 +69,19 @@ public class App extends JFrame {
 		this.responseListener.start();
 	  /***********************/
 		
-		if (!App.hasLogon) {
-			EventQueue.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						AuthGUI frame = new AuthGUI();
-						frame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-			
-		}
+//		if (!App.hasLogon) {
+//			EventQueue.invokeLater(new Runnable() {
+//				public void run() {
+//					try {
+//						AuthGUI frame = new AuthGUI();
+//						frame.setVisible(true);
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			});
+//			
+//		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 893, 604);
@@ -92,6 +95,18 @@ public class App extends JFrame {
 
 		JLabel lblClientMainPage = new JLabel("Client Main Page");
 		panel.add(lblClientMainPage);
+		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.CENTER);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LibraryQuery lq=new LibraryQuery();
+				lq.setVisible(true);
+			}
+		});
+		panel_1.add(btnNewButton);
 	}
 
 }
