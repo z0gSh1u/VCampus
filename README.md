@@ -1,4 +1,5 @@
-<center><h1>虚拟校园系统VCampus</h1></center>
+# 虚拟校园系统VCampus
+
 ![logo](https://s2.ax1x.com/2019/08/25/mRCnHI.png)
 
 VCampus是一款基于C/S架构的软件，主要模拟了东南大学校内与学生、教师、行政人员相关的各类功能情境。
