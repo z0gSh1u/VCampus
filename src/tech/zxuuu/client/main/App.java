@@ -8,7 +8,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.auth.AuthGUI;
-import tech.zxuuu.client.library.LibraryQuery;
+import tech.zxuuu.client.library.AddBook;
+import tech.zxuuu.client.library.QueryBook;
+import tech.zxuuu.client.library.ReturnBook;
+import tech.zxuuu.client.library.RenewBook;
+import tech.zxuuu.client.library.Student_interface;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.net.ConnectionToServer;
@@ -103,8 +107,10 @@ public class App extends JFrame {
 		JButton btnNewButton = new JButton("New button");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StuMenuGUI lq=new StuMenuGUI();
-				lq.setVisible(true);
+        /* 请修改此处内容以快速进行前后端联调 */
+				Student_interface interface1=new Student_interface();
+				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				interface1.setVisible(true);
 			}
 		});
 		panel_1.add(btnNewButton);

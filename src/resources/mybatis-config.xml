@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAliases>
 		<typeAlias type="tech.zxuuu.entity.Student" alias="Student"/>
 		<typeAlias type="tech.zxuuu.entity.Teacher" alias="Teacher"/>
+		<typeAlias type="tech.zxuuu.entity.Book" alias="Book"/>
 		<typeAlias type="tech.zxuuu.entity.Manager" alias="Manager"/>
 	</typeAliases>
 	

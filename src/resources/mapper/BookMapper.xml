@@ -8,4 +8,21 @@
 		SELECT `author` FROM `tb_book` WHERE `title` = #{title}
 	</select>
     
+    <update id="changeChargableByISBN" parameterType="String" >
+    	UPDATE tb_book SET chargable = 0 WHERE isbn=#{ISBN}
+    </update>
+    <select id="searchTitleByISBN" parameterType="String" resultType="String">
+        SELECT title from tb_book WHERE isbn=#{ISBN}
+    </select>
+    <update id="changeNumberByTitle" parameterType="String">
+        UPDATE tb_book SET number=number+1 WHERE title=#{title}
+    </update>
+    
+    <select id="searchBeBorrowed" parameterType="String" resultType="Book">
+        SELECT * FROM tb_book WHERE borrower=#{borrower}
+     </select>
+     
+     <update id="returnBookByISBN" parameterType="String" >
+        UPDATE tb_book SET chargable=1 WHERE isbn=#{ISBN}
+     </update>
 </mapper>
