@@ -6,6 +6,8 @@ public class OpenCourseInfo {
 	private String speaker;
 	private String preview;
 	
+	public OpenCourseInfo() {}
+	
 	public OpenCourseInfo(int id, String courseName, String speaker, String preview){
 		this.id = id;
 		this.courseName = courseName;
@@ -27,5 +29,21 @@ public class OpenCourseInfo {
 
 	public String getPreview() {
 		return preview;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public void setSpeaker(String speaker) {
+		this.speaker = speaker;
+	}
+
+	public void setPreview(String preview) {
+		this.preview = preview;
 	}
 }

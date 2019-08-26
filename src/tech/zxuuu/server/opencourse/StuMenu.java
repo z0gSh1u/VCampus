@@ -13,7 +13,7 @@ import tech.zxuuu.server.main.App;
 public class StuMenu {
 
 	//获取公开课列表
-	public static List<OpenCourseInfo> getCourseList(){
+	public static List<OpenCourseInfo> getCourseList(String parameter){
 		List<OpenCourseInfo> list = null;
 		try {
 			SqlSession sqlSession = App.sqlSessionFactory.openSession();

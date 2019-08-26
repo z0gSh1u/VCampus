@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import tech.zxuuu.client.auth.AuthGUI;
 import tech.zxuuu.client.library.LibraryQuery;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
@@ -102,7 +103,7 @@ public class App extends JFrame {
 		JButton btnNewButton = new JButton("New button");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LibraryQuery lq=new LibraryQuery();
+				StuMenuGUI lq=new StuMenuGUI();
 				lq.setVisible(true);
 			}
 		});

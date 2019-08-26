@@ -65,6 +65,8 @@ public class CourseInfoGUI extends JPanel {
 	public CourseInfoGUI() {
 		setLayout(null);
 		
+		//this.setBounds(0, 0, 428, 121);
+		
 		this.edpPreview = new JEditorPane();
 		edpPreview.setContentType("text/html");
 		edpPreview.setBounds(0, 0, 121, 121);
@@ -92,6 +94,5 @@ public class CourseInfoGUI extends JPanel {
 		this.lblCourseName.setText(this.courseName);
 		this.lblSpeaker.setText(this.speaker);
 	}
-	
-	
+
 }

@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import java.awt.GridLayout;
 
 public class StuMenuGUI extends JFrame {
 
@@ -36,6 +37,7 @@ public class StuMenuGUI extends JFrame {
 	private JButton btnBack;
 	private JTextArea textArea;
 	private JScrollPane spnCourseList;
+	private JPanel pnlCourseList;
 	
 	private int screenWidth;
 	private int screenHeight;
@@ -61,15 +63,14 @@ public class StuMenuGUI extends JFrame {
 	//显示公开课列表
 	private void showCourseList() {
 		Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.opencourse.StuMenu.getCourseList",
-				new Object[] {});
+				new Object[] {"smjb"});
 		String hash = req.send();
 		ResponseUtils.blockAndWaitResponse(hash);
 		Response resp = ResponseQueue.getInstance().consume(hash);
-		List<OpenCourseInfo> courseList =  resp.getReturn(List.class);
+		List<OpenCourseInfo> courseList =  resp.getListReturn(OpenCourseInfo.class);
 		
 		for(OpenCourseInfo course : courseList) {
-			CourseInfoGUI courseGUI = new CourseInfoGUI(course.getId(), course.getCourseName(), course.getSpeaker(), course.getPreview());
-			spnCourseList.add(courseGUI);
+			pnlCourseList.add(new CourseInfoGUI(course.getId(), course.getCourseName(), course.getSpeaker(), course.getPreview()));
 		}
 	}
 
@@ -108,6 +109,11 @@ public class StuMenuGUI extends JFrame {
 		spnCourseList.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		spnCourseList.setBounds(226, 201, 1255, 893);
 		contentPane.add(spnCourseList);
-
+		
+		pnlCourseList = new JPanel();
+		spnCourseList.setViewportView(pnlCourseList);
+		pnlCourseList.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		showCourseList();
 	}
 }
