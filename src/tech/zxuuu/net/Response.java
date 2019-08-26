@@ -63,6 +63,9 @@ public class Response {
 	public <T> List<T> getListReturn(Class<T> elementClazz) {
 		
 		JSONArray tempParam = (JSONArray) this.param;
+		
+		System.out.println(tempParam.toJSONString());
+		
 		List<Object> unparsedList = JSON.parseArray(tempParam.toJSONString());
 		List<T> processedList = new ArrayList<T>();
 		
