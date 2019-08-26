@@ -1,7 +1,6 @@
 package tech.zxuuu.net;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,8 +8,11 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+<<<<<<< HEAD
 
 import tech.zxuuu.entity.Student;
+=======
+>>>>>>> 31196a258411756ee02883e33f97cd19fad7aef9
 import tech.zxuuu.util.JSONUtils;
 
 /**
@@ -60,6 +62,9 @@ public class Response {
 	public <T> List<T> getListReturn(Class<T> elementClazz) {
 		
 		JSONArray tempParam = (JSONArray) this.param;
+		
+		System.out.println(tempParam.toJSONString());
+		
 		List<Object> unparsedList = JSON.parseArray(tempParam.toJSONString());
 		List<T> processedList = new ArrayList<T>();
 		
