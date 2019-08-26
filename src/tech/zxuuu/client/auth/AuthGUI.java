@@ -119,14 +119,9 @@ public class AuthGUI extends JFrame {
 					if (res) {
 						SwingUtils.showMessage(null, "学生登陆成功！", "信息");
 						App.hasLogon = true;
+						// TODO 后端接口返回学生对象
 						App.session = new Session(new Student(txtUsername.getText(), txtPassword.getText()));
-						// TODO: 是否考虑verifyStudent返回完整的学生对象
-//						Container ctn = getParent();
-//						while (!(ctn instanceof JFrame)) {
-//							ctn = ctn.getParent();
-//						}
-//						JFrame jf = (JFrame) ctn;
-//						jf.setVisible(false);
+						App.requireRouting();
 					} else {
 						SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
 					}

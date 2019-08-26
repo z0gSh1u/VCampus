@@ -25,7 +25,7 @@ public class Auth {
 	}
 	
 	// 教师登陆后端接口
-	public static Boolean verifyTeacher(Teacher teacher) {
+	public static Teacher verifyTeacher(Teacher teacher) {
 		Boolean result = false;
 		try {
 			SqlSession sqlSession = App.sqlSessionFactory.openSession();

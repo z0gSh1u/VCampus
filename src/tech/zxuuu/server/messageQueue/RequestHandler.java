@@ -59,6 +59,7 @@ public class RequestHandler extends Thread {
 						}
 					}
 					Object ret = method.invoke(null, processedParams);
+					App.appendLog("调用了接口：" + methodName);
 
 					// 组织并发送响应
 					new Response(
