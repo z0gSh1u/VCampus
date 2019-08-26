@@ -1,5 +1,9 @@
 package tech.zxuuu.dao;
 
+import java.util.HashMap;
+import java.util.List;
+
+import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.entity.Student;
 
 public interface IStudentMapper {
@@ -9,5 +13,7 @@ public interface IStudentMapper {
 	public String getNameByCardNumber(String cardNumber);
 	
 	public String getPasswordByUsername(String cardNumber);
+	
+	public List<OpenCourseInfo> getOpenCourseList();
 	
 }

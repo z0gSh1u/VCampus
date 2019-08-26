@@ -8,10 +8,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.auth.AuthGUI;
-import tech.zxuuu.client.library.LibraryQuery;
+import tech.zxuuu.client.library.AddBook;
+import tech.zxuuu.client.library.QueryBook;
+import tech.zxuuu.client.library.ReturnBook;
+import tech.zxuuu.client.library.RenewBook;
+import tech.zxuuu.client.library.Student_interface;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
-import tech.zxuuu.entity.ManagerType;
-import tech.zxuuu.entity.UserType;
+import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
@@ -21,12 +24,6 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-/**
- * 整个程序运行周期最关键的幕后窗口，承载许多数据，不会被setVisable
- * 
- * @author z0gSh1u
- */
 
 public class App extends JFrame {
 
@@ -49,7 +46,7 @@ public class App extends JFrame {
 			public void run() {
 				try {
 					App frame = new App();
-					// frame.setVisible(true);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -77,21 +74,19 @@ public class App extends JFrame {
 		this.responseListener.start();
 	  /***********************/
 		
-		// 登录验证部分
-		if (!App.hasLogon) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						AuthGUI frame = new AuthGUI();
-						frame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		}
-		
-		
+//		if (!App.hasLogon) {
+//			EventQueue.invokeLater(new Runnable() {
+//				public void run() {
+//					try {
+//						AuthGUI frame = new AuthGUI();
+//						frame.setVisible(true);
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			});
+//			
+//		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 893, 604);
@@ -112,23 +107,13 @@ public class App extends JFrame {
 		JButton btnNewButton = new JButton("New button");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LibraryQuery lq=new LibraryQuery();
-				lq.setVisible(true);
+        /* 请修改此处内容以快速进行前后端联调 */
+				Student_interface interface1=new Student_interface();
+				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				interface1.setVisible(true);
 			}
 		});
 		panel_1.add(btnNewButton);
-	}
-	
-	public static void requireRouting() {
-		if (App.session.getUserType() == UserType.STUDENT) {
-			
-		} else if (App.session.getUserType() == UserType.TEACHER) {
-			
-		} else if (App.session.getUserType() == UserType.MANAGER) {
-			if (App.session.getManager().getManagerType() == ManagerType.LIBRARY) {
-				
-			}
-		}
 	}
 
 }

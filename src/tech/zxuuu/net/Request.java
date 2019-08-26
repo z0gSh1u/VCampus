@@ -37,7 +37,6 @@ public class Request implements Serializable {
 		this.hash = String.valueOf(this.hashCode());
 		String json = JSON.toJSONString(this);
 		this.connectionToServer.write(json);
-
 		return this.hash;
 	}
 
