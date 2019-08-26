@@ -1,5 +1,7 @@
 package tech.zxuuu.net;
 
+import java.io.Serializable;
+
 import com.alibaba.fastjson.*;
 
 /**
@@ -8,7 +10,7 @@ import com.alibaba.fastjson.*;
  * @author z0gSh1u
  */
 
-public class Request {
+public class Request implements Serializable {
 
 	private ConnectionToServer connectionToServer; // 到服务器的连接，依靠它来发送请求
 	private ConnectionToClient connectionToClient; // 到客户端的连接，依靠它来发送响应，由底层的RequestListener设定
@@ -35,6 +37,7 @@ public class Request {
 		this.hash = String.valueOf(this.hashCode());
 		String json = JSON.toJSONString(this);
 		this.connectionToServer.write(json);
+
 		return this.hash;
 	}
 
