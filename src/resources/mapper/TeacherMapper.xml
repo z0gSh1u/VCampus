@@ -4,6 +4,8 @@
  
 <mapper namespace="tech.zxuuu.dao.ITeacherMapper">
 
-
+	<select id="verifyTeacher" parameterType="Teacher" resultType="boolean">
+		SELECT COUNT(*) FROM `tb_teacher` WHERE `card_number`=#{cardNumber} AND `password`=#{password}
+	</select>
 
 </mapper>
