@@ -7,13 +7,5 @@
 	<select id="verifyStudent" parameterType="Student" resultType="boolean">
 		SELECT COUNT(*) FROM `tb_student` WHERE `card_number`=#{cardNumber} AND `password`=#{password}
 	</select>
-	
-	<select id="getNameByCardNumber" parameterType="String" resultType="String">
-		SELECT `name` FROM `tb_student` WHERE `card_number`=#{cardNumber}
-	</select>
-	
-	<select id="getPasswordByUsername" parameterType="String" resultType="String">
-		SELECT `password` FROM `tb_student` WHERE `card_number`=#{cardNumber}
-	</select>
 
 </mapper>
