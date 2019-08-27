@@ -25,19 +25,19 @@ public class Auth {
 	}
 	
 	// 教师登陆后端接口
-	public static Teacher verifyTeacher(Teacher teacher) {
-		Boolean result = false;
-		try {
-			SqlSession sqlSession = App.sqlSessionFactory.openSession();
-//			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
-//			result = studentMapper.verifyStudent(student);
-			sqlSession.commit();
-		} catch (Exception e) {
-			// sqlSession.rollback();
-			e.printStackTrace();
-		}
-		return result;
-	}
+//	public static Teacher verifyTeacher(Teacher teacher) {
+//		Boolean result = false;
+//		try {
+//			SqlSession sqlSession = App.sqlSessionFactory.openSession();
+////			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
+////			result = studentMapper.verifyStudent(student);
+//			sqlSession.commit();
+//		} catch (Exception e) {
+//			// sqlSession.rollback();
+//			e.printStackTrace();
+//		}
+//		//return result;
+//	}
 	
 
 }
