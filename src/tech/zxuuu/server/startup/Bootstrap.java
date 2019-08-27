@@ -23,7 +23,6 @@ public class Bootstrap {
 		}
 
 		EventQueue.invokeLater(new Runnable() {
-			@Override
 			public void run() {
 				try {
 					App frame = new App();

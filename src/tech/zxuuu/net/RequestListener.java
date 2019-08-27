@@ -26,7 +26,6 @@ public class RequestListener extends Thread {
 		this.port = port;
 	}
 
-	@Override
 	public void run() {
 		try {
 			serverSocket = new ServerSocket(this.port);

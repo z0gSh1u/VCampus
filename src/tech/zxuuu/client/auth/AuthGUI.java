@@ -1,21 +1,29 @@
 package tech.zxuuu.client.auth;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import sun.net.NetworkServer;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 
+import tech.zxuuu.client.auth.*;
 import tech.zxuuu.client.main.App;
+import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.entity.UserType;
 import tech.zxuuu.net.Session;
@@ -38,7 +46,6 @@ public class AuthGUI extends JFrame {
 	public static void main(String[] args) {
 		
 		EventQueue.invokeLater(new Runnable() {
-			@Override
 			public void run() {
 				try {
 					AuthGUI frame = new AuthGUI();
@@ -105,7 +112,6 @@ public class AuthGUI extends JFrame {
 		
 		JButton btnLogin = new JButton("登陆");
 		btnLogin.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				// 输入合法检查
 				if (SwingUtils.isTxtEmpty(txtPassword) || SwingUtils.isTxtEmpty(txtUsername)) {

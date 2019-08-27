@@ -16,8 +16,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 设置别名和包扫描 -->
 	<typeAliases>
 		<typeAlias type="tech.zxuuu.entity.Student" alias="Student"/>
-		<typeAlias type="tech.zxuuu.entity.Teacher" alias="Teacher"/>
-		<typeAlias type="tech.zxuuu.entity.Manager" alias="Manager"/>
 	</typeAliases>
 	
 	<!-- 环境配置 -->
@@ -39,7 +37,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  <mapper resource="resources/mapper/StudentMapper.xml"/>
 	  <mapper resource="resources/mapper/TeacherMapper.xml"/>
 	  <mapper resource="resources/mapper/ManagerMapper.xml"/>
-	  <mapper resource="resources/mapper/BookMapper.xml"/>
 	</mappers>
 	
 </configuration>

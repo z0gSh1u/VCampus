@@ -14,7 +14,6 @@ public class ConnectionToClient extends Connection {
 		super(socket);
 	}
 
-	@Override
 	public void write(String content) {
 		System.out.println("半同步方法Connection.write被进入了");
 		synchronized (ConnectionToClient.class) {
@@ -24,7 +23,6 @@ public class ConnectionToClient extends Connection {
 		}
 	}
 
-	@Override
 	public synchronized String readLine() {
 		//synchronized (ConnectionToClient.class) {
 			try {
