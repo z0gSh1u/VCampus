@@ -2,28 +2,23 @@ package tech.zxuuu.client.main;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.auth.AuthGUI;
-import tech.zxuuu.client.library.AddBook;
-import tech.zxuuu.client.library.BookManage;
-import tech.zxuuu.client.library.QueryBook;
-import tech.zxuuu.client.library.ReturnBook;
-import tech.zxuuu.client.library.RenewBook;
 import tech.zxuuu.client.library.Student_interface;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
 import tech.zxuuu.util.SwingUtils;
-
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class App extends JFrame {
 
@@ -42,6 +37,7 @@ public class App extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					App frame = new App();
@@ -106,12 +102,10 @@ public class App extends JFrame {
 		JButton btnNewButton = new JButton("New button");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Student_interface interface1=new Student_interface();
+        /* 请修改此处内容以快速进行前后端联调 */
+				AuthGUI interface1=new AuthGUI();
 				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				interface1.setVisible(true);
-				/*BookManage manager =new BookManage();
-				manager.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				manager.setVisible(true);*/
 			}
 		});
 		panel_1.add(btnNewButton);

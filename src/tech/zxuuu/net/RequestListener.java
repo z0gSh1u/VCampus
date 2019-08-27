@@ -26,6 +26,7 @@ public class RequestListener extends Thread {
 		this.port = port;
 	}
 
+	@Override
 	public void run() {
 		try {
 			serverSocket = new ServerSocket(this.port);
@@ -35,6 +36,7 @@ public class RequestListener extends Thread {
 				if (socket != null) {
 					ConnectionToClient connectionToThisClient = new ConnectionToClient(socket);
 					// 建立一个线程专门处理这个用户的请求（持久化连接）
+					App.appendLog("到一个用户的连接已建立，代号=" + connectionToThisClient.hashCode());
 					new Thread() {
 						@Override
 						public void run() {

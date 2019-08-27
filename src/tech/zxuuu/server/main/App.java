@@ -12,17 +12,16 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import tech.zxuuu.net.RequestListener;
-import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.server.messageQueue.RequestHandler;
 import tech.zxuuu.server.messageQueue.RequestQueue;
 import tech.zxuuu.util.ServerUtils;
 import tech.zxuuu.util.SwingUtils;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
-import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JTextPane;
+import javax.swing.JScrollPane;
 
 public class App extends JFrame {
 
@@ -34,12 +33,15 @@ public class App extends JFrame {
 	public static RequestQueue requestQueue;	
 	public static RequestHandler requestHandler;
 	public static SqlSessionFactory sqlSessionFactory;
+	
+	public static JTextPane paneLog;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					App frame = new App();
@@ -55,6 +57,7 @@ public class App extends JFrame {
 	 * Create the frame.
 	 */
 	public App() {
+		setTitle("服务器端 - VCampus");
 		
 		/**
 		 * 新增部分
@@ -87,14 +90,30 @@ public class App extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.NORTH);
-		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(null);
 		
-		SwingUtils.showMessage(null, "开始服务器端侦听", "信息");
+		JLabel label = new JLabel("服务器日志");
+		label.setBounds(302, 13, 75, 18);
+		panel_1.add(label);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(14, 38, 662, 385);
+		panel_1.add(scrollPane);
+		
+		App.paneLog = new JTextPane();
+		App.paneLog.setEditable(false);
+		scrollPane.setViewportView(paneLog);
+		
+		
+		App.paneLog.setText(paneLog.getText() + (paneLog.getText().equals("") ? "" : "\n") + 
+				"开始服务器端侦听...端口=" + ServerUtils.getMainPort());;
 		
 	}
-
+	
+	public static void appendLog(String msg) {
+		App.paneLog.setText(App.paneLog.getText() + "\n" + msg);
+	}
+	
 }

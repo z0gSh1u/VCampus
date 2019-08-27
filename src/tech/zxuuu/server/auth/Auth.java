@@ -1,13 +1,6 @@
 package tech.zxuuu.server.auth;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import tech.zxuuu.dao.IStudentMapper;
 import tech.zxuuu.entity.Student;
@@ -32,19 +25,19 @@ public class Auth {
 	}
 	
 	// 教师登陆后端接口
-	public static Boolean verifyTeacher(Teacher teacher) {
-		Boolean result = false;
-		try {
-			SqlSession sqlSession = App.sqlSessionFactory.openSession();
-//			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
-//			result = studentMapper.verifyStudent(student);
-			sqlSession.commit();
-		} catch (Exception e) {
-			// sqlSession.rollback();
-			e.printStackTrace();
-		}
-		return result;
-	}
+//	public static Teacher verifyTeacher(Teacher teacher) {
+//		Boolean result = false;
+//		try {
+//			SqlSession sqlSession = App.sqlSessionFactory.openSession();
+////			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
+////			result = studentMapper.verifyStudent(student);
+//			sqlSession.commit();
+//		} catch (Exception e) {
+//			// sqlSession.rollback();
+//			e.printStackTrace();
+//		}
+//		//return result;
+//	}
 	
 
 }
