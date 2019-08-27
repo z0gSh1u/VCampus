@@ -63,7 +63,7 @@ public class StuMenuGUI extends JFrame {
 	//显示公开课列表
 	private void showCourseList() {
 		Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.opencourse.StuMenu.getCourseList",
-				new Object[] {"smjb"});
+				null);
 		String hash = req.send();
 		ResponseUtils.blockAndWaitResponse(hash);
 		Response resp = ResponseQueue.getInstance().consume(hash);
