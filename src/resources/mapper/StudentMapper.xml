@@ -4,6 +4,15 @@
  
 <mapper namespace="tech.zxuuu.dao.IStudentMapper">
 
+	<select id="getOpenCourseList" resultType="tech.zxuuu.entity.OpenCourseInfo">
+		SELECT 
+			`Id`				as "id",
+			`CourseName`		as "courseName",
+			`Speaker`			as "speaker",
+			`Preview` 			as "preview"
+			FROM `tb_opencourse`
+	</select>
+	
 	<select id="verifyStudent" parameterType="Student" resultType="boolean">
 		SELECT COUNT(*) FROM `tb_student` WHERE `card_number`=#{cardNumber} AND `password`=#{password}
 	</select>
