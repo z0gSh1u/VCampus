@@ -6,6 +6,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import tech.zxuuu.client.main.App;
+import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.net.Request;
+import tech.zxuuu.net.Response;
+import tech.zxuuu.util.ResponseUtils;
+import tech.zxuuu.util.SwingUtils;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -16,8 +24,6 @@ public class DeleteBook extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtISBN;
-	private JTextField txtTitle;
-	private JTextField txtAuthor;
 
 	/**
 	 * Launch the application.
@@ -51,34 +57,23 @@ public class DeleteBook extends JFrame {
 		contentPane.add(txtISBN);
 		txtISBN.setColumns(10);
 		
-		txtTitle = new JTextField();
-		txtTitle.setBounds(89, 103, 86, 24);
-		contentPane.add(txtTitle);
-		txtTitle.setColumns(10);
-		
-		txtAuthor = new JTextField();
-		txtAuthor.setBounds(89, 158, 86, 24);
-		contentPane.add(txtAuthor);
-		txtAuthor.setColumns(10);
-		
 		JLabel lblISBN = new JLabel("ISBN");
 		lblISBN.setBounds(3, 60, 72, 18);
 		contentPane.add(lblISBN);
 		
-		JLabel lblTitle = new JLabel("题名");
-		lblTitle.setBounds(3, 103, 72, 18);
-		contentPane.add(lblTitle);
-		
-		JLabel lblAuthor = new JLabel("作者");
-		lblAuthor.setBounds(3, 161, 72, 18);
-		contentPane.add(lblAuthor);
-		
 		JButton btnComfirm = new JButton("确定");
 		btnComfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				    Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.Book.deleteBook", 
+						new Object[] {txtISBN.getText()});
+					String hash = req.send();
+					ResponseUtils.blockAndWaitResponse(hash);
+					Response response = ResponseQueue.getInstance().consume(hash);
+					Boolean ret = response.getReturn(Boolean.class);
+					SwingUtils.showMessage(null, "Succeed deleting", "test");
 			}
 		});
-		btnComfirm.setBounds(251, 117, 113, 27);
+		btnComfirm.setBounds(88, 139, 113, 27);
 		contentPane.add(btnComfirm);
 	}
 

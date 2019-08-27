@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.auth.AuthGUI;
 import tech.zxuuu.client.library.AddBook;
+import tech.zxuuu.client.library.BookManage;
 import tech.zxuuu.client.library.QueryBook;
 import tech.zxuuu.client.library.ReturnBook;
 import tech.zxuuu.client.library.RenewBook;
@@ -108,6 +109,9 @@ public class App extends JFrame {
 				Student_interface interface1=new Student_interface();
 				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				interface1.setVisible(true);
+				/*BookManage manager =new BookManage();
+				manager.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				manager.setVisible(true);*/
 			}
 		});
 		panel_1.add(btnNewButton);
