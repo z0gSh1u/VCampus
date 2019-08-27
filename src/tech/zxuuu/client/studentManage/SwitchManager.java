@@ -6,16 +6,22 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import tech.zxuuu.util.SwingUtils;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SwitchManager extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textCardNumber;
+	private JTextField textNewStudentNumber;
 
 	/**
 	 * Launch the application.
@@ -49,23 +55,31 @@ public class SwitchManager extends JFrame {
 		contentPane.add(lblSwitch);
 		
 		textCardNumber = new JTextField();
-		textCardNumber.setBounds(247, 155, 304, 35);
+		textCardNumber.setBounds(247, 113, 304, 35);
 		contentPane.add(textCardNumber);
 		textCardNumber.setColumns(10);
 		
 		JLabel lblCardNumber = new JLabel("一卡通号");
-		lblCardNumber.setBounds(80, 141, 161, 57);
+		lblCardNumber.setBounds(79, 102, 161, 57);
 		contentPane.add(lblCardNumber);
 		
 		JLabel lblSubjectNumber = new JLabel("转系系号");
-		lblSubjectNumber.setBounds(79, 200, 139, 64);
+		lblSubjectNumber.setBounds(79, 155, 139, 64);
 		contentPane.add(lblSubjectNumber);
 		
 		JComboBox comboSubjectNumber = new JComboBox();
-		comboSubjectNumber.setBounds(247, 220, 304, 35);
+		comboSubjectNumber.setBounds(247, 170, 304, 35);
 		contentPane.add(comboSubjectNumber);
 		
 		JButton buttonYes = new JButton("确定");
+		buttonYes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!(textNewStudentNumber.getText().substring(0, 2).equals(comboSubjectNumber.getSelectedItem()))) {
+					SwingUtils.showMessage(null, "学号与系号不匹配！", "错误");
+				}
+				else {}
+			}
+		});
 		buttonYes.setBounds(264, 353, 153, 37);
 		contentPane.add(buttonYes);
 		
@@ -100,6 +114,15 @@ public class SwitchManager extends JFrame {
 		comboSubjectNumber.addItem("61");
 		comboSubjectNumber.addItem("71");
 		comboSubjectNumber.addItem("88");
+		
+		JLabel lblNewStudentNumber = new JLabel("新学号");
+		lblNewStudentNumber.setBounds(79, 230, 99, 25);
+		contentPane.add(lblNewStudentNumber);
+		
+		textNewStudentNumber = new JTextField();
+		textNewStudentNumber.setBounds(247, 227, 304, 31);
+		contentPane.add(textNewStudentNumber);
+		textNewStudentNumber.setColumns(10);
 
 	}
 }
