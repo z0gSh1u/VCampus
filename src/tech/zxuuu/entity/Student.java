@@ -59,6 +59,8 @@ public class Student {
 		this.academy = academy;
 	}
 
+	public Student() {}
+	
 	public Student(String cardNumber, String password) {
 		this.cardNumber = cardNumber;
 		this.password = password;

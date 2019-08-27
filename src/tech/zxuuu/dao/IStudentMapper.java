@@ -10,4 +10,14 @@ public interface IStudentMapper {
 	
 	public String getPasswordByUsername(String cardNumber);
 	
+	public Boolean insertStudent(Student student);
+	
+	public int deleteStudent(String cardnumber);
+	
+	public int searchStudentByCardNumber(String cardnumber);
+	
+	public int searchStudentByStudentNumber(String studentnumber);
+	
+	public int switchStudent(Student student);
+	
 }
