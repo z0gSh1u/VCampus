@@ -6,7 +6,14 @@ public class Book {
 	private int numofborrowed;
 	private String ISBN;
 	private Boolean chargable;
+	private String borrower;
 	
+	public String getBorrower() {
+		return borrower;
+	}
+	public void setBorrower(String borrower) {
+		this.borrower = borrower;
+	}
 	public Boolean getChargable() {
 		return chargable;
 	}

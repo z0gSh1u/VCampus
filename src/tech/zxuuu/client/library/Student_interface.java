@@ -51,8 +51,9 @@ public class Student_interface extends JFrame {
 		btnBorrow.setBounds(35, 75, 113, 27);
 		btnBorrow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LibraryQuery lq = new LibraryQuery();
+				QueryBook lq = new QueryBook();
 				lq.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				lq.setModal(true);
 				lq.setVisible(true);//打开另一个窗口
 			}
 		});
@@ -63,8 +64,9 @@ public class Student_interface extends JFrame {
 		btnReturn.setBounds(35, 153, 113, 27);
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Return re=new Return();
+				ReturnBook re=new ReturnBook();
 				re.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				re.setModal(true);
 				re.setVisible(true);
 			}
 		});
