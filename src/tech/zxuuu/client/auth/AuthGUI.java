@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 import tech.zxuuu.client.main.App;
+import tech.zxuuu.entity.Manager;
 import tech.zxuuu.entity.Student;
+import tech.zxuuu.entity.Teacher;
 import tech.zxuuu.entity.UserType;
 import tech.zxuuu.net.Session;
 import tech.zxuuu.util.SwingUtils;
@@ -142,22 +144,42 @@ public class AuthGUI extends JFrame {
 				UserType type = null;
 				if (rdoStudent.isSelected()) {
 					type = UserType.STUDENT;
-					Boolean res = AuthHelper.verifyStudent(txtUsername.getText(), txtPassword.getText());
-					if (res) {
+					Student res = AuthHelper.verifyStudent(txtUsername.getText(), txtPassword.getText());
+					if (res != null) {
 						SwingUtils.showMessage(null, "学生登陆成功！", "信息");
 						App.hasLogon = true;
-						// TODO 后端接口返回学生对象
-						App.session = new Session(new Student(txtUsername.getText(), txtPassword.getText()));
-						//App.requireRouting();
+						App.session = new Session(res);
+						setVisible(false);
+						App.requireRouting();
 					} else {
 						SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
 					}
+				// -------------
 				} else if (rdoTeacher.isSelected()) {
 					type = UserType.TEACHER;
-					// TODO: 添加处理逻辑
+					Teacher res = AuthHelper.verifyTeacher(txtUsername.getText(), txtPassword.getText());
+					if (res != null) {
+						SwingUtils.showMessage(null, "欢迎您，"+res.getName()+" 教师！", "信息");
+						App.hasLogon = true;
+						App.session = new Session(res);
+						setVisible(false);
+						App.requireRouting();
+					} else {
+						SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
+					}
+				// -------------
 				} else if (rdoManager.isSelected()) {
 					type = UserType.MANAGER;
-					// TODO: 添加处理逻辑
+					Manager res = AuthHelper.verifyManager(txtUsername.getText(), txtPassword.getText());
+					if (res != null) {
+						SwingUtils.showMessage(null, res.getManagerType().toString()+" 管理员登陆成功！", "信息");
+						App.hasLogon = true;
+						App.session = new Session(res);
+						setVisible(false);
+						App.requireRouting();
+					} else {
+						SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
+					}
 				}
 			}
 		});
