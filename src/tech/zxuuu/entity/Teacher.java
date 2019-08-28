@@ -7,17 +7,17 @@ package tech.zxuuu.entity;
 
 public class Teacher {
 
-	private String username; // 用户名
+	private String cardNumber; // 用户名
 	private String password; // 密码（MD5）
 	private String name; // 姓名
 	private String academy; // 学院代码
 
-	public String getUsername() {
-		return username;
+	public String getCardNumber() {
+		return cardNumber;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 
 	public String getPassword() {
@@ -44,9 +44,9 @@ public class Teacher {
 		this.academy = academy;
 	}
 
-	public Teacher(String username, String password, String name, String academy) {
+	public Teacher(String cardNumber, String password, String name, String academy) {
 		super();
-		this.username = username;
+		this.cardNumber = cardNumber;
 		this.password = password;
 		this.name = name;
 		this.academy = academy;
@@ -54,7 +54,8 @@ public class Teacher {
 
 	@Override
 	public String toString() {
-		return "Teacher [username=" + username + ", password=" + password + ", name=" + name + ", academy=" + academy + "]";
+		return "Teacher [cardNumber=" + cardNumber + ", password=" + password + ", name=" + name + ", academy=" + academy
+				+ "]";
 	}
 
 }

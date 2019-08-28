@@ -7,31 +7,31 @@ package tech.zxuuu.entity;
 
 public class Manager {
 
-	private String username; // 用户名
+	private String cardNumber; // 用户名
 	private String password; // 密码（MD5）
 	/**
 	 * @see ManagerType
 	 */
 	private ManagerType managerType; // 管理员类型
 	
-	public Manager(String username, String password, ManagerType managerType) {
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+
+	public Manager(String cardNumber, String password, ManagerType managerType) {
 		super();
-		this.username = username;
+		this.cardNumber = cardNumber;
 		this.password = password;
 		this.managerType = managerType;
 	}
 
 	@Override
 	public String toString() {
-		return "Manager [username=" + username + ", password=" + password + ", managerType=" + managerType + "]";
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+		return "Manager [cardNumber=" + cardNumber + ", password=" + password + ", managerType=" + managerType + "]";
 	}
 
 	public String getPassword() {

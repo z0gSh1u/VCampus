@@ -41,11 +41,7 @@ public static Boolean deleteStudent(String cardnumber) {
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
-			
 			ret = studentMapper.deleteStudent(cardnumber);
-			
-			
-			
 			sqlSession.commit();
 		} catch (Exception e) {
 			sqlSession.rollback();
@@ -57,28 +53,35 @@ public static Boolean deleteStudent(String cardnumber) {
 	}
 	
 
-public static Boolean switchStudent(String cardnumber,String academy) {
+public static String switchStudent(String cardnumber, String academy, String studentnumber) {
 	
 
-	Boolean result = false;
 	SqlSession sqlSession = null;
-	int ret = 0;
 	try {
 		sqlSession = App.sqlSessionFactory.openSession();
 		IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 		
-		ret = studentMapper.deleteStudent(cardnumber);
-		
-		
-		
+		int one = studentMapper.searchStudentByCardNumber(cardnumber);
+		if (one == 0) {
+			return "Nocard";
+		}
+		int two = studentMapper.searchStudentByStudentNumber(studentnumber);
+		if (two == 1) {
+			return "Repeat";
+		}
+		Student baigei = new Student();
+		baigei.setAcademy(academy);
+		baigei.setCardNumber(cardnumber);
+		baigei.setStudentNumber(studentnumber);
+		studentMapper.switchStudent(baigei);
 		sqlSession.commit();
 	} catch (Exception e) {
 		sqlSession.rollback();
 		e.printStackTrace();
 	}
-	
-	return (ret == 0 ? false : true);	
-	
+	return "Ok";	
     }
+
+
 
 }

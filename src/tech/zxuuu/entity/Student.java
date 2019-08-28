@@ -12,11 +12,20 @@ public class Student {
 	private String password; // 密码（MD5）
 	private String name; // 姓名
 	private String academy; // 学院代码
+	private Double balance; // 一卡通余额
 
 	@Override
 	public String toString() {
 		return "Student [cardNumber=" + cardNumber + ", studentNumber=" + studentNumber + ", password=" + password
-				+ ", name=" + name + ", academy=" + academy + "]";
+				+ ", name=" + name + ", academy=" + academy + ", balance=" + balance + "]";
+	}
+
+	public Double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Double balance) {
+		this.balance = balance;
 	}
 
 	public String getCardNumber() {
@@ -59,17 +68,14 @@ public class Student {
 		this.academy = academy;
 	}
 
-	public Student(String cardNumber, String password) {
-		this.cardNumber = cardNumber;
-		this.password = password;
-	}
+	public Student() {}
 	
-//	public Student(String cardNumber, String studentNumber, String password, String name) {
-//		this.cardNumber = cardNumber;
-//		this.studentNumber = studentNumber;
-//		this.password = password;
-//		this.name = name;
-//		this.academy = studentNumber.substring(0, 2);
-//	}
+	public Student(String cardNumber, String studentNumber, String password, String name) {
+		this.cardNumber = cardNumber;
+		this.studentNumber = studentNumber;
+		this.password = password;
+		this.name = name;
+		this.academy = studentNumber == null ? null : studentNumber.substring(0, 2);
+	}
 	
 }
