@@ -4,6 +4,15 @@
  
 <mapper namespace="tech.zxuuu.dao.IManagerMapper">
 
-
+	<!-- Used By Auth Module -->
+	
+	<select id="verifyManager" parameterType="Manager" resultType="boolean">
+		SELECT COUNT(*) FROM `tb_manager` WHERE `card_number`=#{cardNumber} AND `password`=#{password}
+	</select>
+	<select id="getManagerDetailByCardNumber" parameterType="String" resultType="Manager">
+		SELECT * FROM `tb_manager` WHERE `card_number`=#{cardNumber}
+	</select>
+	
+	<!-- Used By Auth Module -->
 
 </mapper>

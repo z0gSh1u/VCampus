@@ -4,6 +4,8 @@ import tech.zxuuu.entity.Teacher;
 
 public interface ITeacherMapper {
 
-	public Teacher verifyTeacher(String cardNumber, String password);
+	public Boolean verifyTeacher(Teacher teacher);
+	
+	public Teacher getTeacherDetailByCardNumber(String cardNumber);
 	
 }

@@ -114,7 +114,7 @@ public class InManager extends JFrame {
 				else if(!(passwordField.getText().equals(passwordConfirm.getText()))) {SwingUtils.showMessage(null, "两次输入密码不一致！", "错误");}
 				else 
 				{
-				Student student = new Student(textCardNumber.getText(), passwordField.getText());
+				Student student = new Student(textCardNumber.getText(), null, passwordField.getText(), null);
 				student.setName(textName.getText());
 				student.setStudentNumber(textStudentNumber.getText());
 				student.setAcademy(textStudentNumber.getText().substring(0, 2));

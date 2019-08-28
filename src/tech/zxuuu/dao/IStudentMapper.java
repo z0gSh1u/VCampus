@@ -4,7 +4,10 @@ import tech.zxuuu.entity.Student;
 
 public interface IStudentMapper {
 
+	/* Auth模块 */
 	public Boolean verifyStudent(Student student);
+	public Student getStudentDetailByCardNumber(String cardNumber);
+	/* Auth模块 */
 	
 	public String getNameByCardNumber(String cardNumber);
 	

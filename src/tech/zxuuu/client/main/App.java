@@ -11,10 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.ibatis.javassist.tools.framedump;
+
 import tech.zxuuu.client.auth.AuthGUI;
 import tech.zxuuu.client.library.Student_interface;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
+import tech.zxuuu.entity.ManagerType;
+import tech.zxuuu.entity.UserType;
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
@@ -41,6 +45,7 @@ public class App extends JFrame {
 			public void run() {
 				try {
 					App frame = new App();
+					/* 不调试时setVisible(false) */
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,6 +54,31 @@ public class App extends JFrame {
 		});
 	}
 
+	
+	/**
+	 * 要求进行界面路由
+	 */
+	public static void requireRouting() {
+		JFrame target = null;
+		UserType userType = App.session.getUserType();
+		ManagerType managerType = 
+				(userType == UserType.MANAGER ? App.session.getManager().getManagerType() : null);
+		
+		target = userType == UserType.STUDENT ? new AppStudent()
+				: userType == userType.TEACHER ? new AppTeacher()
+						: userType == userType.MANAGER
+								? (managerType == ManagerType.LIBRARY ? new AppLibraryManager()
+										: managerType == ManagerType.OPENCOURSE ? new AppOpencourseManager()
+												: managerType == ManagerType.SHOP ? new AppShopManager()
+														: managerType == ManagerType.TEACHING ? new AppTeachingManager() : null)
+								: null;											
+		if (target == null) {
+			System.err.println("Failed routing.");
+			System.exit(1);
+		}
+		target.setVisible(true);
+	}
+	
 	/**
 	 * Create the frame.
 	 */
