@@ -7,9 +7,23 @@ public class Book {
 	private String ISBN;
 	private Boolean chargable;
 	private String borrower;
+	private String category;
+	private String details;
 	
 	public String getBorrower() {
 		return borrower;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getDetails() {
+		return details;
+	}
+	public void setDetails(String details) {
+		this.details = details;
 	}
 	public void setBorrower(String borrower) {
 		this.borrower = borrower;

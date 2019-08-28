@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
 
 public class AddBook extends JFrame {
 
@@ -30,6 +31,9 @@ public class AddBook extends JFrame {
 	private JTextField txtSetISBN;
 	private JLabel lblSetISBN;
 	private JButton btnComfirm;
+	private JTextField txtDetails;
+	private JTextField txtCategory;
+	private JLabel lblCategory;
 
 	/**
 	 * Launch the application.
@@ -52,7 +56,7 @@ public class AddBook extends JFrame {
 	 */
 	public AddBook() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 473, 383);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -86,22 +90,40 @@ public class AddBook extends JFrame {
 		contentPane.add(lblSetISBN);
 		
 		btnComfirm = new JButton("确定");
+		btnComfirm.setBounds(290, 276, 113, 27);
 		btnComfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.addBook", 
-						new Object[] {txtSetISBN.getText(),txtTitle.getText(),txtauthor.getText()});
+						new Object[] {txtSetISBN.getText(),txtTitle.getText(),txtauthor.getText(),txtCategory.getText(),txtDetails.getText()});
 					String hash = req.send();
 					ResponseUtils.blockAndWaitResponse(hash);
 					Response response = ResponseQueue.getInstance().consume(hash);
 					Boolean ret = response.getReturn(Boolean.class);
-					if(ret==true)
+					if(ret)
 					  SwingUtils.showMessage(null, "Succeed adding", "test");
 					else {
-						SwingUtils.showError(null, "Fail adding", "test");
+						SwingUtils.showError(null, "Fail adding maybe invalid ISBN", "test");
 					}
 			}
 		});
-		btnComfirm.setBounds(280, 213, 113, 27);
 		contentPane.add(btnComfirm);
+		
+		txtDetails = new JTextField();
+		txtDetails.setBounds(292, 57, 140, 89);
+		contentPane.add(txtDetails);
+		txtDetails.setColumns(10);
+		
+		JLabel lblDetails = new JLabel("图书详情");
+		lblDetails.setBounds(207, 92, 72, 18);
+		contentPane.add(lblDetails);
+		
+		txtCategory = new JTextField();
+		txtCategory.setBounds(107, 214, 86, 24);
+		contentPane.add(txtCategory);
+		txtCategory.setColumns(10);
+		
+		lblCategory = new JLabel("类别");
+		lblCategory.setBounds(3, 217, 72, 18);
+		contentPane.add(lblCategory);
 	}
 }

@@ -12,7 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.auth.AuthGUI;
-import tech.zxuuu.client.library.Student_interface;
+import tech.zxuuu.client.library.BookManage;
+import tech.zxuuu.client.library.StudentInterface;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.net.ConnectionToServer;
@@ -103,9 +104,13 @@ public class App extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
         /* 请修改此处内容以快速进行前后端联调 */
-				AuthGUI interface1=new AuthGUI();
+				/*AuthGUI interface1=new AuthGUI();
 				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				interface1.setVisible(true);*/
+				StudentInterface interface1=new StudentInterface();
 				interface1.setVisible(true);
+				/*BookManage manager=new BookManage();
+				manager.setVisible(true);*/
 			}
 		});
 		panel_1.add(btnNewButton);

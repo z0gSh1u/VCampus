@@ -15,5 +15,9 @@ public interface IStudentMapper {
 	public String getPasswordByUsername(String cardNumber);
 	
 	public List<OpenCourseInfo> getOpenCourseList();
+
+	public Boolean insertStudent(Student student);
+
+	public int deleteStudent(String cardnumber);
 	
 }

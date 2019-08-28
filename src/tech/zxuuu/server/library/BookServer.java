@@ -133,7 +133,7 @@ public class BookServer {
 
 		
 	}
-	public static Boolean addBook(String ISBN,String title,String author)
+	public static Boolean addBook(String ISBN,String title,String author,String category,String details)
 	{
 		
 		SqlSession sqlSession = null;
@@ -152,6 +152,8 @@ public class BookServer {
 				book2.setISBN(ISBN);
 				book2.setTitle(title);
 				book2.setAuthor(author);
+				book2.setCategory(category);
+				book2.setDetails(details);
 				bookMapper.addBook(book2);
 				sqlSession.commit();
 				return true;

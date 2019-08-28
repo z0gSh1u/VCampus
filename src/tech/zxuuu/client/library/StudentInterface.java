@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 
-public class Student_interface extends JFrame {
+public class StudentInterface extends JFrame {
 
 	private JPanel contentPane;
 	private JTable tblPopular;
@@ -28,7 +28,7 @@ public class Student_interface extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Student_interface frame = new Student_interface();
+					StudentInterface frame = new StudentInterface();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class Student_interface extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Student_interface() {
+	public StudentInterface() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 611, 510);
 		contentPane = new JPanel();
