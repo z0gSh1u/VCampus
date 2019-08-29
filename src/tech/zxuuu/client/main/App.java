@@ -24,6 +24,11 @@ import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
 import tech.zxuuu.util.SwingUtils;
 
+/**
+ * 客户端全局根对象（App）
+ * 
+ * @author z0gSh1u
+ */
 public class App extends JFrame {
 
   /******* 新增部分 *******/
@@ -45,7 +50,6 @@ public class App extends JFrame {
 			public void run() {
 				try {
 					App frame = new App();
-					/* 不调试时setVisible(false) */
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -99,19 +103,19 @@ public class App extends JFrame {
 		this.responseListener.start();
 	  /***********************/
 		
-//		if (!App.hasLogon) {
-//			EventQueue.invokeLater(new Runnable() {
-//				public void run() {
-//					try {
-//						AuthGUI frame = new AuthGUI();
-//						frame.setVisible(true);
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			});
-//			
-//		}
+		if (!App.hasLogon) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						AuthGUI frame = new AuthGUI();
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
+		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 893, 604);
