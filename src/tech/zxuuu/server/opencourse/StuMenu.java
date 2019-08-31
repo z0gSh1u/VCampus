@@ -17,8 +17,8 @@ public class StuMenu {
 		List<OpenCourseInfo> list = null;
 		try {
 			SqlSession sqlSession = App.sqlSessionFactory.openSession();
-			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
-			list = studentMapper.getOpenCourseList();
+//			IOpen studentMapper = sqlSession.getMapper(IStudentMapper.class);
+			//list = studentMapper.getOpenCourseList();
 			sqlSession.commit();
 			//list.add(new OpenCourseInfo(Integer.parseInt(res.get("Id")), res.get("CourseName"), res.get("Speaker"), res.get("Preview")));
 		} catch (Exception e) {
