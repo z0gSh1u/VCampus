@@ -11,9 +11,12 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.mysql.jdbc.RowData;
+
 import tech.zxuuu.client.auth.AuthGUI;
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.entity.ClassInfo;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.Request;
@@ -37,6 +40,28 @@ public class ClassSelectGUI extends JFrame {
 	private DefaultTableModel model;
 	private Panel panel_1;
 	private Panel pBody;
+	public String[][] rowData;
+	String[] head = {"ID","课程","时间","教师","教室","选择状况"};
+	
+	public void selectClass(int row) {
+		rowData[row][5]="true";
+		DefaultTableModel newModel=new DefaultTableModel(rowData,head){
+			public boolean isCellEditable(int a, int b) {
+				return false;
+			}
+		};
+		tblClassList.setModel(newModel);
+	}
+	
+	public void dropCourse(int row) {
+		rowData[row][5]="";
+		DefaultTableModel newModel=new DefaultTableModel(rowData,head){
+			public boolean isCellEditable(int a, int b) {
+				return false;
+			}
+		};
+		tblClassList.setModel(newModel);
+	}
 
 	/**
 	 * Launch the application.
@@ -70,37 +95,38 @@ public class ClassSelectGUI extends JFrame {
 		Panel panel = new Panel();
 		getContentPane().add(panel, BorderLayout.NORTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 575, 558);
+		setBounds(100, 100, 600, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		String[] head = {"ID","课程","时间","教师","教室"};
+		
 		List<ClassInfo> CI = this.getClassInfo();
-		String[][] rowData= new String [CI.size()][5];
+		rowData= new String [CI.size()][6];
 		for (int i=0;i<CI.size();i++) {
 			rowData[i][0]=CI.get(i).getID();
 			rowData[i][1]=CI.get(i).getClassName();
 			rowData[i][2]=CI.get(i).getTime();
 			rowData[i][3]=CI.get(i).getTeacher();
 			rowData[i][4]=CI.get(i).getClassroom();
+			rowData[i][5]="";
 		}
-		model=new DefaultTableModel(rowData,head);
+		model=new DefaultTableModel(rowData,head){
+			public boolean isCellEditable(int a, int b) {
+				return false;
+			}
+		};
 		
 		pBody = new Panel();
-		pBody.setBounds(10, 0, 512, 458);
+		pBody.setBounds(10, 0, 534, 458);
 		contentPane.add(pBody);
 		pBody.setLayout(null);
 		tblClassList = new JTable();
 		JScrollPane jsp=new JScrollPane(tblClassList);
-		jsp.setBounds(30, 13, 468, 425);
+		jsp.setBounds(14, 13, 518, 425);
 		pBody.add(jsp);
 		
-		tblClassList.setModel(new DefaultTableModel(rowData,head) {
-			public boolean isCellEditable(int a, int b) {
-				return false;
-			}}
-		);
+		tblClassList.setModel(model);
 
 		
 		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(130);
@@ -109,21 +135,38 @@ public class ClassSelectGUI extends JFrame {
 		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(136);
 		tblClassList.setBounds(5, 5, 512, 390);
 		
+		ClassSelectGUI csg=this;
+		
 		tblClassList.addMouseListener(new MouseAdapter() 
 		{ 
 		   public void mousePressed(MouseEvent evt) 
 		   { 
 		        if (evt.getClickCount() == 2) { 
 		        	int row =((JTable)evt.getSource()).rowAtPoint(evt.getPoint());
-		        	AffirmClassSelectionGUI acsg =new AffirmClassSelectionGUI();
+		        	if (rowData[row][5]=="") {
+			        	AffirmClassSelectionGUI acsg =new AffirmClassSelectionGUI(csg,row);
+			        	
+			        	acsg.txtClassID.setText((String) tblClassList.getValueAt(row, 0));
+			        	acsg.btnConfirm.setEnabled(acsg.judgeConflict());
+			        	acsg.txtClassName.setText((String) tblClassList.getValueAt(row, 1));
+			        	acsg.txtTime.setText((String) tblClassList.getValueAt(row, 2));
+			        	acsg.txtTeacher.setText((String) tblClassList.getValueAt(row, 3));
+			        	acsg.txtClassroom.setText((String) tblClassList.getValueAt(row, 4));
+			        	acsg.setModal(true);
+			        	
+			        	acsg.setVisible(true);
+		        	}
+		        	else {
+		        		DropCourseGUI dcg=new DropCourseGUI(csg,row);
+			        	dcg.txtClassID.setText((String) tblClassList.getValueAt(row, 0));
+			        	dcg.txtClassName.setText((String) tblClassList.getValueAt(row, 1));
+			        	dcg.txtTime.setText((String) tblClassList.getValueAt(row, 2));
+			        	dcg.txtTeacher.setText((String) tblClassList.getValueAt(row, 3));
+			        	dcg.txtClassroom.setText((String) tblClassList.getValueAt(row, 4));
+			        	dcg.setModal(true);
+			        	dcg.setVisible(true);
+		        	}
 		        	
-		        	acsg.txtClassID.setText((String) tblClassList.getValueAt(row, 0));
-		        	acsg.txtClassName.setText((String) tblClassList.getValueAt(row, 1));
-		        	acsg.txtTime.setText((String) tblClassList.getValueAt(row, 2));
-		        	acsg.txtTeacher.setText((String) tblClassList.getValueAt(row, 3));
-		        	acsg.txtClassroom.setText((String) tblClassList.getValueAt(row, 4));
-		        	acsg.setModal(true);
-		        	acsg.setVisible(true);
 		        } 
 		   } 
 		}); 

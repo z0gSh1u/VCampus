@@ -1,5 +1,8 @@
 package tech.zxuuu.server.studentManage;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.sun.org.apache.bcel.internal.generic.RET;
@@ -21,7 +24,7 @@ public class StudentManage {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 			
-			result = studentMapper.insertStudent(student);
+			/*result = studentMapper.insertStudent(student);*/
 			sqlSession.commit();
 		} catch (Exception e) {
 			sqlSession.rollback();
@@ -41,7 +44,12 @@ public static Boolean deleteStudent(String cardnumber) {
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
+
+
+			
+
 			ret = studentMapper.deleteStudent(cardnumber);
+
 			sqlSession.commit();
 		} catch (Exception e) {
 			sqlSession.rollback();
@@ -55,12 +63,16 @@ public static Boolean deleteStudent(String cardnumber) {
 
 public static String switchStudent(String cardnumber, String academy, String studentnumber) {
 	
+	System.out.println(cardnumber + " " + academy + " " + studentnumber);
 
 	SqlSession sqlSession = null;
 	try {
 		sqlSession = App.sqlSessionFactory.openSession();
 		IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 		
+
+		//ret = studentMapper.deleteStudent(cardnumber);
+
 		int one = studentMapper.searchStudentByCardNumber(cardnumber);
 		if (one == 0) {
 			return "Nocard";
@@ -73,15 +85,43 @@ public static String switchStudent(String cardnumber, String academy, String stu
 		baigei.setAcademy(academy);
 		baigei.setCardNumber(cardnumber);
 		baigei.setStudentNumber(studentnumber);
-		studentMapper.switchStudent(baigei);
+		
+		System.out.println(baigei.toString());
+
+		
+		int rows = studentMapper.switchStudent(baigei);
+		
+		System.out.println("rows="+rows);
+		
 		sqlSession.commit();
+		if (rows == 0) {
+			return "Nocard";
+		} else {
+			return "Ok";
+		}
 	} catch (Exception e) {
 		sqlSession.rollback();
 		e.printStackTrace();
 	}
-	return "Ok";	
-    }
+	return "...";
+}
 
-
+public static List<Student> tableDisplay(String academy, String grade) {
+	List<Student> result = null;
+	SqlSession sqlSession = null;
+	HashMap<String,Object> map = new HashMap<String, Object>();
+	map.put("academy", academy);
+	map.put("grade", grade);
+	try {
+		sqlSession = App.sqlSessionFactory.openSession();
+		IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
+		result = studentMapper.tableDisplay(map);
+		sqlSession.commit();
+	} catch (Exception e) {
+		// sqlSession.rollback();
+		e.printStackTrace();
+	}
+	return result;
+}
 
 }
