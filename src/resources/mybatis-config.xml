@@ -51,9 +51,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 	  <mapper resource="resources/mapper/BookMapper.xml"/>
 
-   	  <mapper resource="resources/mapper/ProductMapper.xml"/>
+
 
 	  <mapper resource="resources/mapper/ClassMapper.xml"/>
+
+	  <mapper resource="resources/mapper/OpenCourseMapper.xml"/>
+
+
 
 	</mappers>
 	

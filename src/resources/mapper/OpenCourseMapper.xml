@@ -12,5 +12,13 @@
 			`Preview` 			as "preview"
 			FROM `tb_opencourse`
 	</select>
+	
+	<select id="getEmoticon" parameterType="String" resultType="String">
+	    SELECT `URL` FROM tb_emoticon WHERE `Name`=#{emoName}
+	</select>
+	
+	<select id="getEmoticon" resultType="String">
+	    SELECT * FROM tb_emoticon
+	</select>
     
 </mapper>

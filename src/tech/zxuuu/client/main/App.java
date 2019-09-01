@@ -27,6 +27,9 @@ import tech.zxuuu.client.library.RenewBook;
 import tech.zxuuu.client.library.Student_interface;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
 
+import tech.zxuuu.client.opencourse.StuCourseGUI;
+
+
 import tech.zxuuu.client.shop.ShopFirstPage;
 import tech.zxuuu.client.shop.Blocks;
 
@@ -36,8 +39,10 @@ import tech.zxuuu.client.shop.ShopFirstPage;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
 
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+
 import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.entity.ManagerType;
+import tech.zxuuu.entity.Student;
 import tech.zxuuu.entity.UserType;
 
 import tech.zxuuu.net.ConnectionToServer;
@@ -119,6 +124,7 @@ public class App extends JFrame {
 		this.responseListener = new ResponseListener(App.connectionToServer);
 		this.responseListener.start();
 	  /***********************/
+
 		
 //		if (!App.hasLogon) {
 //			EventQueue.invokeLater(new Runnable() {
@@ -155,18 +161,15 @@ public class App extends JFrame {
 			public void actionPerformed(ActionEvent e) {
         /* 请修改此处内容以快速进行前后端联调 */
 
-				/*AuthGUI interface1=new AuthGUI();
-				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				interface1.setVisible(true);*/
 				StudentInterface interface1=new StudentInterface();
 				interface1.setVisible(true);
-				/*BookManage manager=new BookManage();
-				manager.setVisible(true);*/
+
 
 
 			}
 		});
 		panel_1.setLayout(null);
+
 
 
 	}
