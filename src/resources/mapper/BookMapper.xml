@@ -14,6 +14,10 @@
     <select id="searchTitleByISBN" parameterType="String" resultType="String">
         SELECT title from tb_book WHERE isbn=#{ISBN}
     </select>
+    
+    <select id="searchChargableByISBN" parameterType="String" resultType="int">
+        SELECT chargable FROM tb_book WHERE isbn=#{ISBN}
+    </select>
     <update id="changeNumberByTitle" parameterType="String">
         UPDATE tb_book SET number=number+1 WHERE title=#{title}
     </update>
@@ -27,8 +31,8 @@
      </update>
      
      <insert id="addBook" parameterType="Book">
-	     INSERT INTO tb_book (isbn,title,author,number,chargable,borrower,category,details)
-	     VALUES(#{ISBN},#{title},#{author},0,1,"",#{category},#{details})
+	     INSERT INTO tb_book (isbn,title,author,number,chargable,borrower,category,details,pictureURL)
+	     VALUES(#{ISBN},#{title},#{author},0,1,"",#{category},#{details},#{pictureURL})
      </insert>
      
      <delete id="deleteBook">
@@ -47,6 +51,19 @@
      </select>
      <select id="fuzzySearchByTitleAndAuthor" parameterType="Book" resultType="Book">
      	SELECT *FROM tb_book WHERE title LIKE '%${title}%' AND author LIKE '%${author}%'
+     </select>
+     
+     <select id="searchSimilarBook" parameterType="Book" resultType="Book">
+     SELECT DISTINCT `isbn`,`title`,`author`,`number` AS "numofborrowed" FROM tb_book WHERE
+     category=#{category} AND title!=#{title} ORDER BY number DESC LIMIT 2
+     </select>
+     
+     <select id="searchPicture" parameterType="String" resultType="String">
+     SELECT pictureURL from tb_book WHERE isbn=#{ISBN}
+     </select>
+     
+     <select id="searchHotBook" resultType="Book">
+     SELECT DISTINCT `title`,`author`,`number`AS "numofborrowed",`pictureURL`FROM tb_book ORDER BY number DESC LIMIT 5
      </select>
      
 </mapper>

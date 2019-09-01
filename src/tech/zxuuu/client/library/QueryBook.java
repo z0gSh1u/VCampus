@@ -94,8 +94,13 @@ public class QueryBook extends JDialog {
 			public void mousePressed(MouseEvent e) {
 				if(e.getClickCount()==2) {
 					int row=((JTable)e.getSource()).rowAtPoint(e.getPoint());
-		            BookDetails details=new BookDetails();
-		            details.txtDetails.setText(list.get(row).getDetails());
+		            BookDetails details=
+		            		new BookDetails(
+		            				list.get(row).getTitle(),
+		            				list.get(row).getISBN(),
+		            				list.get(row).getCategory(),
+		            				list.get(row).getDetails());
+
 		            details.setModal(true);
 		            details.setVisible(true);
 			}
@@ -153,7 +158,6 @@ public class QueryBook extends JDialog {
 		tblSearch.setBounds(2, 2, 300, 300);
 		
 		txtISBN = new JTextField();
-		txtISBN.setEditable(false);
 		txtISBN.setBounds(125, 217, 86, 24);
 		contentPanel.add(txtISBN);
 		txtISBN.setColumns(10);
@@ -171,10 +175,14 @@ public class QueryBook extends JDialog {
 				String hash=request.send();
 				ResponseUtils.blockAndWaitResponse(hash);
 				Response response=ResponseQueue.getInstance().consume(hash);
-				Boolean result=response.getReturn(Boolean.class);
-				if(result==true)
+				int result=response.getReturn(Integer.class);
+				System.out.println(result);
+				if(result==2)
 				  SwingUtils.showMessage(null, "Succeed borrowing", "test");
-				
+				if(result==1)
+					SwingUtils.showError(null, "The book has been borrowed", "test");
+				if(result==0)
+					SwingUtils.showError(null, "The ISBN is invalid", "test");
 			}
 		});
 		contentPanel.add(btnComfirm);

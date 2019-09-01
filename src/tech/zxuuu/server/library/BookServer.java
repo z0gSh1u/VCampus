@@ -44,19 +44,31 @@ public class BookServer {
 		return result;
 
 	}
-	public static Boolean borrowBook(String ISBN)
+	public static int borrowBook(String ISBN)
 	{
-		Boolean result=null;
+		int result=0;
 		SqlSession sqlSession = null;
 		try {
 			sqlSession =App.sqlSessionFactory.openSession();//连接数据库
 			IBookMapper bookMapper =sqlSession.getMapper(IBookMapper.class);//取了Mapper，知道要执行哪个查询
-			bookMapper.changeChargableByISBN(ISBN);
-			String title=bookMapper.searchTitleByISBN(ISBN);
-			bookMapper.changeNumberByTitle(title);//一次操作可以有多次数据库操作；
-			 
-			sqlSession.commit();//提交查询
+			String TITLE=bookMapper.searchTitleByISBN(ISBN);
+			System.out.println(TITLE);
+			if(TITLE!=null) 
+		    {
+			 int chargable=bookMapper.searchChargableByISBN(ISBN);
+			 result=1;
+			 System.out.println(chargable);
+			 if(chargable==1) 
+			{
+			 bookMapper.changeChargableByISBN(ISBN);
+			 String title=bookMapper.searchTitleByISBN(ISBN);
+			 bookMapper.changeNumberByTitle(title);//一次操作可以有多次数据库操作；
+			 result=2;
+			}
 		    }
+			 sqlSession.commit();//提交查询
+		    }
+		
 	    catch(Exception e) {
 	    	sqlSession.rollback();
 	    	e.printStackTrace();
@@ -114,16 +126,25 @@ public class BookServer {
 			}
 		return list;
 	}
-	public static Boolean returnBook(String ISBN)
+	public static int returnBook(String ISBN)
 	{
-		Boolean result=null;
+		int result=0;
 		SqlSession sqlSession=null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
 
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
-
-			result = bookMapper.returnBookByISBN(ISBN);
+            String TITLE=bookMapper.searchTitleByISBN(ISBN);
+            if(TITLE!=null) 
+            {
+            	int chargable=bookMapper.searchChargableByISBN(ISBN);
+            	result=1;
+            	if(chargable==0)
+            {
+            		bookMapper.returnBookByISBN(ISBN);
+            		result=2;
+            }
+            }
 			sqlSession.commit();
 			} catch (Exception e) {
 			sqlSession.rollback();
@@ -133,7 +154,7 @@ public class BookServer {
 
 		
 	}
-	public static Boolean addBook(String ISBN,String title,String author,String category,String details)
+	public static Boolean addBook(String ISBN,String title,String author,String category,String details,String pictureURL)
 	{
 		
 		SqlSession sqlSession = null;
@@ -154,6 +175,7 @@ public class BookServer {
 				book2.setAuthor(author);
 				book2.setCategory(category);
 				book2.setDetails(details);
+				book2.setPictureURL(pictureURL);
 				bookMapper.addBook(book2);
 				sqlSession.commit();
 				return true;
@@ -167,16 +189,21 @@ public class BookServer {
 	
 	public static Boolean deleteBook(String ISBN)
 	{
-		Boolean result=null;
+		Boolean result=false;
 		SqlSession sqlSession=null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
 
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
-            Book book=new Book();
-            book.setISBN(ISBN);
-			result = bookMapper.deleteBook(book);
-			sqlSession.commit();
+			String TITLE=bookMapper.searchTitleByISBN(ISBN);
+			if(TITLE!=null)
+			{
+             Book book=new Book();
+             book.setISBN(ISBN);
+			 result = bookMapper.deleteBook(book);
+			 result=true;
+			}
+			 sqlSession.commit();
 			} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -201,7 +228,68 @@ public class BookServer {
 		}
 		return result;
 	}
-	
+	public static List<Book> searchSimilarBook(String title,String category)
+	{
+		List<Book> list=new ArrayList<>(); 
+		SqlSession sqlSession=null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+
+			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
+            Book book=new Book();
+            book.setTitle(title);
+            book.setCategory(category);
+			list = bookMapper.searchSimilarBook(book);
+			sqlSession.commit();
+			System.out.println(list);
+			} 
+		catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public static String searchPicture(String ISBN)
+	{
+		String result=null;
+		SqlSession sqlSession=null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+
+			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
+            result= bookMapper.searchPicture(ISBN);
+            
+            System.out.println("isbn="+ISBN);
+            
+			sqlSession.commit();
+			System.out.println(result);
+			} 
+		catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public static List<Book> searchHotBook()
+	{
+		List<Book> list=new ArrayList<>();
+		SqlSession sqlSession=null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+
+			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
+            list= bookMapper.searchHotBook();
+            
+			sqlSession.commit();
+			System.out.println(list);
+			} 
+		catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
 
 }
 

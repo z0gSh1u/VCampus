@@ -20,6 +20,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JTextArea;
+import javax.swing.JEditorPane;
 
 public class AddBook extends JFrame {
 
@@ -31,9 +33,11 @@ public class AddBook extends JFrame {
 	private JTextField txtSetISBN;
 	private JLabel lblSetISBN;
 	private JButton btnComfirm;
-	private JTextField txtDetails;
 	private JTextField txtCategory;
 	private JLabel lblCategory;
+	private JTextArea txtAreaDetails;
+	
+	private JTextField txtPictureURL;
 
 	/**
 	 * Launch the application.
@@ -94,7 +98,8 @@ public class AddBook extends JFrame {
 		btnComfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.addBook", 
-						new Object[] {txtSetISBN.getText(),txtTitle.getText(),txtauthor.getText(),txtCategory.getText(),txtDetails.getText()});
+						new Object[] {txtSetISBN.getText(),txtTitle.getText(),txtauthor.getText(),
+								txtCategory.getText(),txtAreaDetails.getText(),txtPictureURL.getText()});
 					String hash = req.send();
 					ResponseUtils.blockAndWaitResponse(hash);
 					Response response = ResponseQueue.getInstance().consume(hash);
@@ -108,11 +113,6 @@ public class AddBook extends JFrame {
 		});
 		contentPane.add(btnComfirm);
 		
-		txtDetails = new JTextField();
-		txtDetails.setBounds(292, 57, 140, 89);
-		contentPane.add(txtDetails);
-		txtDetails.setColumns(10);
-		
 		JLabel lblDetails = new JLabel("图书详情");
 		lblDetails.setBounds(207, 92, 72, 18);
 		contentPane.add(lblDetails);
@@ -125,5 +125,18 @@ public class AddBook extends JFrame {
 		lblCategory = new JLabel("类别");
 		lblCategory.setBounds(3, 217, 72, 18);
 		contentPane.add(lblCategory);
+		
+		txtAreaDetails = new JTextArea();
+		txtAreaDetails.setBounds(284, 90, 157, 72);
+		contentPane.add(txtAreaDetails);
+		
+		JLabel lblurl = new JLabel("图片URL");
+		lblurl.setBounds(207, 190, 72, 18);
+		contentPane.add(lblurl);
+		
+		txtPictureURL = new JTextField();
+		txtPictureURL.setBounds(290, 199, 151, 39);
+		contentPane.add(txtPictureURL);
+		txtPictureURL.setColumns(10);
 	}
 }
