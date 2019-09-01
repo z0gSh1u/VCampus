@@ -1,12 +1,16 @@
 package tech.zxuuu.client.shop;
 
 import java.awt.BorderLayout;
+<<<<<<< HEAD
 import java.awt.Dimension;
+=======
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+<<<<<<< HEAD
 
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
@@ -26,6 +30,12 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+=======
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 
 public class ShopCart extends JFrame {
 
@@ -57,6 +67,7 @@ public class ShopCart extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+<<<<<<< HEAD
 //		
           JPanel pnl_CartList = new JPanel(); pnl_CartList.setLayout(new GridLayout(0,1));
 		  
@@ -69,6 +80,9 @@ public class ShopCart extends JFrame {
 		  contentPane.revalidate(); //告诉其他部件,我的宽高变了 this.setVisible(true);
 		  this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		
+=======
+		
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 		JLabel lbl_Message = new JLabel("网上商店·购物车");
 		lbl_Message.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_Message.setFont(new Font("幼圆", Font.BOLD, 30));
@@ -76,6 +90,7 @@ public class ShopCart extends JFrame {
 		contentPane.add(lbl_Message);
 		
 		JButton btn_FIrstPage = new JButton("首页");
+<<<<<<< HEAD
 		btn_FIrstPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShopFirstPage shopFirstPage = new ShopFirstPage();
@@ -83,10 +98,13 @@ public class ShopCart extends JFrame {
 				shopFirstPage.setVisible(true);
 			}
 		});
+=======
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 		btn_FIrstPage.setBounds(88, 644, 92, 55);
 		contentPane.add(btn_FIrstPage);
 		
 		JButton btn_Message = new JButton("消息");
+<<<<<<< HEAD
 		btn_Message.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShopMessage shopMessage = new ShopMessage();
@@ -94,10 +112,13 @@ public class ShopCart extends JFrame {
 				shopMessage.setVisible(true);
 			}
 		});
+=======
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 		btn_Message.setBounds(221, 644, 92, 55);
 		contentPane.add(btn_Message);
 		
 		JButton btn_Cart = new JButton("购物车");
+<<<<<<< HEAD
 		btn_Cart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShopCart shopCart = new ShopCart();
@@ -105,10 +126,13 @@ public class ShopCart extends JFrame {
 				shopCart.setVisible(true);
 			}
 		});
+=======
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 		btn_Cart.setBounds(349, 644, 92, 55);
 		contentPane.add(btn_Cart);
 		
 		JButton btn_Mine = new JButton("我的");
+<<<<<<< HEAD
 		btn_Mine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShopMine shopMine = new ShopMine();
@@ -116,10 +140,13 @@ public class ShopCart extends JFrame {
 				shopMine.setVisible(true);
 			}
 		});
+=======
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 		btn_Mine.setBounds(478, 644, 92, 55);
 		contentPane.add(btn_Mine);
 		
 		JButton btn_Set = new JButton("设置");
+<<<<<<< HEAD
 		btn_Set.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShopSet shopSet = new ShopSet();
@@ -162,5 +189,9 @@ public class ShopCart extends JFrame {
 		});
 		btn_AllProduct.setBounds(603, 83, 128, 81);
 		contentPane.add(btn_AllProduct);
+=======
+		btn_Set.setBounds(603, 644, 92, 55);
+		contentPane.add(btn_Set);
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 	}
 }

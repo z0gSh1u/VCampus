@@ -16,9 +16,17 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 设置别名和包扫描 -->
 	<typeAliases>
 		<typeAlias type="tech.zxuuu.entity.Student" alias="Student"/>
+<<<<<<< HEAD
+		<typeAlias type="tech.zxuuu.entity.Product" alias="Product"/>
+=======
 		<typeAlias type="tech.zxuuu.entity.Teacher" alias="Teacher"/>
 		<typeAlias type="tech.zxuuu.entity.Book" alias="Book"/>
+<<<<<<< HEAD
 		<typeAlias type="tech.zxuuu.entity.Product" alias="Product"/>
+=======
+		<typeAlias type="tech.zxuuu.entity.Manager" alias="Manager"/>
+>>>>>>> 31196a258411756ee02883e33f97cd19fad7aef9
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 	</typeAliases>
 	
 	<!-- 环境配置 -->
@@ -40,8 +48,15 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  <mapper resource="resources/mapper/StudentMapper.xml"/>
 	  <mapper resource="resources/mapper/TeacherMapper.xml"/>
 	  <mapper resource="resources/mapper/ManagerMapper.xml"/>
+<<<<<<< HEAD
+	  <mapper resource="resources/mapper/ProductMapper.xml"/>
+=======
 	  <mapper resource="resources/mapper/BookMapper.xml"/>
+<<<<<<< HEAD
    	  <mapper resource="resources/mapper/ProductMapper.xml"/>
+=======
+>>>>>>> 31196a258411756ee02883e33f97cd19fad7aef9
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 	</mappers>
 	
 </configuration>

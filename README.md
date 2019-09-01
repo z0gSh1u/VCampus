@@ -1,10 +1,12 @@
 # 虚拟校园系统VCampus
 
+![logo](https://s2.ax1x.com/2019/08/25/mRCnHI.png)
+
 VCampus是一款基于C/S架构的软件，主要模拟了东南大学校内与学生、教师、行政人员相关的各类功能情境。
 
 本项目是东南大学大三短学期的软件实践课程项目，开发者由东南大学计算机科学与工程学院六名大三学生组成。欢迎访问他们的Github页面：
 
-[z0gSh1u](https://github.com/z0gSh1u)，[LongChen2018](https://github.com/LongChen2018)，……
+[z0gSh1u](https://github.com/z0gSh1u)，[LongChen2018](https://github.com/LongChen2018)，[LY000001](https://github.com/LY000001)，[ZCLK2019](https://github.com/ZCLK2019)，[shilofel](https://github.com/shilofel)，[Twileon](https://github.com/Twileon)
 
 ## 开始
 

@@ -15,8 +15,16 @@ import tech.zxuuu.client.library.ReturnBook;
 import tech.zxuuu.client.library.RenewBook;
 import tech.zxuuu.client.library.Student_interface;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+<<<<<<< HEAD
 import tech.zxuuu.client.shop.ShopFirstPage;
 import tech.zxuuu.client.shop.Blocks;
+=======
+<<<<<<< HEAD
+import tech.zxuuu.client.shop.ShopFirstPage;
+=======
+import tech.zxuuu.client.opencourse.StuMenuGUI;
+>>>>>>> 31196a258411756ee02883e33f97cd19fad7aef9
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
@@ -44,6 +52,7 @@ public class App extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					App frame = new App();
@@ -102,6 +111,16 @@ public class App extends JFrame {
 		JLabel lblClientMainPage = new JLabel("Client Main Page");
 		panel.add(lblClientMainPage);
 		
+<<<<<<< HEAD
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShopFirstPage s = new ShopFirstPage();
+				s.setVisible(true);
+			}
+		});
+		contentPane.add(btnNewButton, BorderLayout.CENTER);
+=======
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		
@@ -109,6 +128,7 @@ public class App extends JFrame {
 		btnNewButton.setBounds(435, 5, 244, 235);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+        /* 请修改此处内容以快速进行前后端联调 */
 				Student_interface interface1=new Student_interface();
 				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				interface1.setVisible(true);
@@ -130,7 +150,11 @@ public class App extends JFrame {
 		btnNewButton_1.setBounds(106, 5, 315, 235);
 		panel_1.add(btnNewButton_1);
 		panel_1.add(btnNewButton);
+<<<<<<< HEAD
 		
 		
+=======
+>>>>>>> 31196a258411756ee02883e33f97cd19fad7aef9
+>>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
 	}
 }

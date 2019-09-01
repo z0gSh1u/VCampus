@@ -23,4 +23,9 @@ public final class SwingUtils {
 		JOptionPane.showMessageDialog(parent, msg, title, JOptionPane.ERROR_MESSAGE);
 	}
 	
+	// 弹出小型输入框，返回输入内容
+	static public String popInput(String msg) {
+		return JOptionPane.showInputDialog(msg);
+	}
+	
 }

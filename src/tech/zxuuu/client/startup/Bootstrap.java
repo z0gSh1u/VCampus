@@ -4,7 +4,6 @@ import tech.zxuuu.util.SwingUtils;
 
 import java.awt.EventQueue;
 
-import tech.zxuuu.client.auth.*;
 import tech.zxuuu.client.main.App;
 
 /**
@@ -26,6 +25,7 @@ public class Bootstrap {
 		}
 
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					App frame = new App();
