@@ -15,6 +15,10 @@ import org.apache.ibatis.javassist.tools.framedump;
 
 import tech.zxuuu.client.auth.AuthGUI;
 
+import tech.zxuuu.client.library.BookManage;
+import tech.zxuuu.client.library.StudentInterface;
+
+
 import tech.zxuuu.client.library.AddBook;
 import tech.zxuuu.client.library.BookManage;
 import tech.zxuuu.client.library.QueryBook;
@@ -31,29 +35,16 @@ import tech.zxuuu.client.shop.ShopFirstPage;
 
 import tech.zxuuu.client.opencourse.StuMenuGUI;
 
-
 import tech.zxuuu.client.messageQueue.ResponseQueue;
-import tech.zxuuu.client.studentManage.StudentTableGUI;
-import tech.zxuuu.client.studentManage.SwitchManager;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
-
-import tech.zxuuu.client.teaching.ClassSelectGUI;
-import tech.zxuuu.client.teaching.ScheduleTableGUI;
-
 import tech.zxuuu.entity.ManagerType;
 import tech.zxuuu.entity.UserType;
-
 
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
 import tech.zxuuu.util.SwingUtils;
 
-/**
- * 客户端全局根对象（App）
- * 
- * @author z0gSh1u
- */
 public class App extends JFrame {
 
   /******* 新增部分 *******/
@@ -75,6 +66,7 @@ public class App extends JFrame {
 			public void run() {
 				try {
 					App frame = new App();
+					/* 不调试时setVisible(false) */
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -128,19 +120,19 @@ public class App extends JFrame {
 		this.responseListener.start();
 	  /***********************/
 		
-		if (!App.hasLogon) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						AuthGUI frame = new AuthGUI();
-						frame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-			
-		}
+//		if (!App.hasLogon) {
+//			EventQueue.invokeLater(new Runnable() {
+//				public void run() {
+//					try {
+//						AuthGUI frame = new AuthGUI();
+//						frame.setVisible(true);
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			});
+//			
+//		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 893, 604);
@@ -163,9 +155,14 @@ public class App extends JFrame {
 			public void actionPerformed(ActionEvent e) {
         /* 请修改此处内容以快速进行前后端联调 */
 
-				Student_interface interface1=new Student_interface();
+				/*AuthGUI interface1=new AuthGUI();
 				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				interface1.setVisible(true);*/
+				StudentInterface interface1=new StudentInterface();
 				interface1.setVisible(true);
+				/*BookManage manager=new BookManage();
+				manager.setVisible(true);*/
+
 
 			}
 		});
