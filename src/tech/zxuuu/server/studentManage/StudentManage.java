@@ -21,7 +21,7 @@ public class StudentManage {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 			
-			result = studentMapper.insertStudent(student);
+			/*result = studentMapper.insertStudent(student);*/
 			sqlSession.commit();
 		} catch (Exception e) {
 			sqlSession.rollback();
@@ -42,7 +42,7 @@ public static Boolean deleteStudent(String cardnumber) {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 			
-			ret = studentMapper.deleteStudent(cardnumber);
+			//ret = studentMapper.deleteStudent(cardnumber);
 			
 			
 			
@@ -67,7 +67,7 @@ public static Boolean switchStudent(String cardnumber,String academy) {
 		sqlSession = App.sqlSessionFactory.openSession();
 		IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 		
-		ret = studentMapper.deleteStudent(cardnumber);
+		//ret = studentMapper.deleteStudent(cardnumber);
 		
 		
 		
