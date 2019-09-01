@@ -64,6 +64,7 @@ public class ReturnBook extends JDialog {
 				String hash=request.send();
 				ResponseUtils.blockAndWaitResponse(hash);
 				Response response=ResponseQueue.getInstance().consume(hash);
+
 				int result=response.getReturn(Integer.class);
 				if(result==2)
 				   SwingUtils.showMessage(null, "Succeed returnning", "test");
@@ -72,6 +73,8 @@ public class ReturnBook extends JDialog {
 				if(result==0)
 					SwingUtils.showError(null, "The ISBN is invalid", "test");
 				}
+
+
 		});
 		btnComfirm.setBounds(76, 140, 113, 27);
 		lblISBN.add(btnComfirm);

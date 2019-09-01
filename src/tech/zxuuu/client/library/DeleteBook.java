@@ -70,10 +70,12 @@ public class DeleteBook extends JFrame {
 					ResponseUtils.blockAndWaitResponse(hash);
 					Response response = ResponseQueue.getInstance().consume(hash);
 					Boolean ret = response.getReturn(Boolean.class);
+
 					if(ret)
 					   SwingUtils.showMessage(null, "Succeed deleting", "test");
 					else
 					   SwingUtils.showError(null, "The ISBN is invalid", "test");
+
 			}
 		});
 		btnComfirm.setBounds(88, 139, 113, 27);

@@ -98,16 +98,20 @@ public class AddBook extends JFrame {
 		btnComfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.addBook", 
+
 						new Object[] {txtSetISBN.getText(),txtTitle.getText(),txtauthor.getText(),
 								txtCategory.getText(),txtAreaDetails.getText(),txtPictureURL.getText()});
+
 					String hash = req.send();
 					ResponseUtils.blockAndWaitResponse(hash);
 					Response response = ResponseQueue.getInstance().consume(hash);
 					Boolean ret = response.getReturn(Boolean.class);
+
 					if(ret)
 					  SwingUtils.showMessage(null, "Succeed adding", "test");
 					else {
 						SwingUtils.showError(null, "Fail adding maybe invalid ISBN", "test");
+
 					}
 			}
 		});

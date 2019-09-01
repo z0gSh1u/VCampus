@@ -126,6 +126,7 @@ public class BookServer {
 			}
 		return list;
 	}
+
 	public static int returnBook(String ISBN)
 	{
 		int result=0;
@@ -187,7 +188,9 @@ public class BookServer {
 		return false;
 	}
 	
-	public static Boolean deleteBook(String ISBN)
+
+	public static Boolean returnBook(String ISBN)
+
 	{
 		Boolean result=false;
 		SqlSession sqlSession=null;
@@ -290,6 +293,46 @@ public class BookServer {
 		return list;
 		
 	}
+
+	
+	public static Boolean deleteBook(String ISBN)
+	{
+		Boolean result=null;
+		SqlSession sqlSession=null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+
+			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
+            Book book=new Book();
+            book.setISBN(ISBN);
+			result = bookMapper.deleteBook(book);
+			sqlSession.commit();
+			} catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public static int searchHowManyByISBN(String ISBN)
+	{
+		int result=0;
+		SqlSession sqlSession=null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+
+			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
+            Book book=new Book();
+            book.setISBN(ISBN);
+			result = bookMapper.searchHowManyByISBN(ISBN);
+			sqlSession.commit();
+			} catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+
 
 }
 

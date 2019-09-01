@@ -14,12 +14,32 @@ import javax.swing.border.EmptyBorder;
 import org.apache.ibatis.javassist.tools.framedump;
 
 import tech.zxuuu.client.auth.AuthGUI;
+
 import tech.zxuuu.client.library.BookManage;
 import tech.zxuuu.client.library.StudentInterface;
+
+
+import tech.zxuuu.client.library.AddBook;
+import tech.zxuuu.client.library.BookManage;
+import tech.zxuuu.client.library.QueryBook;
+import tech.zxuuu.client.library.ReturnBook;
+import tech.zxuuu.client.library.RenewBook;
+import tech.zxuuu.client.library.Student_interface;
+import tech.zxuuu.client.messageQueue.ResponseQueue;
+
+import tech.zxuuu.client.shop.ShopFirstPage;
+import tech.zxuuu.client.shop.Blocks;
+
+
+import tech.zxuuu.client.shop.ShopFirstPage;
+
+import tech.zxuuu.client.opencourse.StuMenuGUI;
+
 import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.entity.ManagerType;
 import tech.zxuuu.entity.UserType;
+
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
@@ -127,13 +147,14 @@ public class App extends JFrame {
 		JLabel lblClientMainPage = new JLabel("Client Main Page");
 		panel.add(lblClientMainPage);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
-		
+
 		JButton btnNewButton = new JButton("New button");
+
+
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
         /* 请修改此处内容以快速进行前后端联调 */
+
 				/*AuthGUI interface1=new AuthGUI();
 				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				interface1.setVisible(true);*/
@@ -141,9 +162,12 @@ public class App extends JFrame {
 				interface1.setVisible(true);
 				/*BookManage manager=new BookManage();
 				manager.setVisible(true);*/
+
+
 			}
 		});
-		panel_1.add(btnNewButton);
-	}
+		panel_1.setLayout(null);
 
+
+	}
 }

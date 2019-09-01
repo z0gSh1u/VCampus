@@ -21,7 +21,7 @@ import com.sun.org.apache.bcel.internal.generic.RETURN;
 import jdk.nashorn.internal.runtime.linker.LinkerCallSite;
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
-import tech.zxuuu.client.teaching.AffirmClassSelectionGUI;
+
 import tech.zxuuu.entity.Book;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
@@ -117,6 +117,7 @@ public class QueryBook extends JDialog {
 				String hash = req.send();
 				ResponseUtils.blockAndWaitResponse(hash);
 				Response response = ResponseQueue.getInstance().consume(hash);
+
 				list = response.getListReturn(Book.class);
 				String[][] listData=new String[list.size()][3];
 				model.setRowCount(0);
@@ -137,8 +138,10 @@ public class QueryBook extends JDialog {
 					};
 				    tblSearch.setModel(model);
 					SwingUtils.showMessage(null,"Success", "test");
+
 				}
 			}
+			
 		});
 
 		contentPanel.add(btnSearch);
@@ -175,6 +178,7 @@ public class QueryBook extends JDialog {
 				String hash=request.send();
 				ResponseUtils.blockAndWaitResponse(hash);
 				Response response=ResponseQueue.getInstance().consume(hash);
+
 				int result=response.getReturn(Integer.class);
 				System.out.println(result);
 				if(result==2)
@@ -183,6 +187,7 @@ public class QueryBook extends JDialog {
 					SwingUtils.showError(null, "The book has been borrowed", "test");
 				if(result==0)
 					SwingUtils.showError(null, "The ISBN is invalid", "test");
+
 			}
 		});
 		contentPanel.add(btnComfirm);

@@ -31,8 +31,10 @@
      </update>
      
      <insert id="addBook" parameterType="Book">
+
 	     INSERT INTO tb_book (isbn,title,author,number,chargable,borrower,category,details,pictureURL)
 	     VALUES(#{ISBN},#{title},#{author},0,1,"",#{category},#{details},#{pictureURL})
+
      </insert>
      
      <delete id="deleteBook">
@@ -40,6 +42,7 @@
      </delete>
      
      <select id="searchHowManyByISBN" parameterType="String" resultType="int">
+
 	     SELECT COUNT(*) AS number FROM tb_book WHERE isbn=#{ISBN}
      </select>
      
@@ -64,6 +67,17 @@
      
      <select id="searchHotBook" resultType="Book">
      SELECT DISTINCT `title`,`author`,`number`AS "numofborrowed",`pictureURL`FROM tb_book ORDER BY number DESC LIMIT 5
+     </select>
+     
+     <select id="fuzzySearchByTitle" parameterType="String" resultType="Book">
+     SELECT *FROM tb_book WHERE title LIKE '%${title}%'
+     </select>
+     <select id="fuzzySearchByAuthor" parameterType="String" resultType="Book">
+     SELECT *FROM tb_book WHERE title LIKE '%${author}%'
+     </select>
+     <select id="fuzzySearchByTitleAndAuthor" parameterType="Book" resultType="Book">
+     SELECT *FROM tb_book WHERE title LIKE '%${title}%' AND author LIKE '%${author}%'
+
      </select>
      
 </mapper>
