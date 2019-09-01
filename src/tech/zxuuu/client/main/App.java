@@ -14,8 +14,10 @@ import javax.swing.border.EmptyBorder;
 import org.apache.ibatis.javassist.tools.framedump;
 
 import tech.zxuuu.client.auth.AuthGUI;
-import tech.zxuuu.client.library.Student_interface;
+
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.client.studentManage.StudentTableGUI;
+import tech.zxuuu.client.studentManage.SwitchManager;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.entity.ManagerType;
 import tech.zxuuu.entity.UserType;
@@ -137,7 +139,7 @@ public class App extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
         /* 请修改此处内容以快速进行前后端联调 */
-				AuthGUI interface1=new AuthGUI();
+				StudentTableGUI interface1=new StudentTableGUI();
 				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				interface1.setVisible(true);
 			}
