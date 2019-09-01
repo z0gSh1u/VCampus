@@ -8,7 +8,7 @@ import tech.zxuuu.entity.ClassInfo;
 import tech.zxuuu.entity.Student;
 
 public interface IClassMapper {
-	public List<ClassInfo> getClassInfo(Student a);
+	public List<ClassInfo> getClassInfo();
 
 	public Boolean takeClass(Student student);
 

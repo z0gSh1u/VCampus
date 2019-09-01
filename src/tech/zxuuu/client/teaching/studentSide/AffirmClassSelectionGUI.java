@@ -1,4 +1,4 @@
-package tech.zxuuu.client.teaching;
+package tech.zxuuu.client.teaching.studentSide;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -48,7 +48,7 @@ import java.awt.event.ActionEvent;
 		 */
 		public static void main(String[] args) {
 			try {
-				AffirmClassSelectionGUI dialog = new AffirmClassSelectionGUI(new ClassSelectGUI(),0);
+				AffirmClassSelectionGUI dialog = new AffirmClassSelectionGUI(new ClassSelectPane(),0);
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				dialog.setVisible(true);
 			} catch (Exception e) {
@@ -83,7 +83,7 @@ import java.awt.event.ActionEvent;
 			return true;	
 		}
 
-	public AffirmClassSelectionGUI(ClassSelectGUI csg,int row) {
+	public AffirmClassSelectionGUI(ClassSelectPane csg,int row) {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 436, 292);
 		contentPane = new JPanel();
@@ -150,7 +150,7 @@ import java.awt.event.ActionEvent;
 		btnConfirm = new JButton("确认选择");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Student stu=new Student("213171077","123456");
+				Student stu=new Student("213171077","123456",null, null);
 				stu.setClassNumber("0900021122560014203");
 				// TODO Student stu=App.session.getStudent();
 				stu.setClassNumber(txtClassID.getText()+","+stu.getClassNumber());

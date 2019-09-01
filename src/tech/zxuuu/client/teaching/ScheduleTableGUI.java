@@ -73,7 +73,7 @@ public class ScheduleTableGUI extends JFrame {
 	
 	public void studentSchedule(){
 	    //TODO Student stu=App.session.getStudent();
-	    Student stu=new Student("213171077","123456");
+	    Student stu=new Student("213171077","123456",null,null);
 	    String[] course=getClassSeletion(stu).split(",");  
 	    for(int i=0;i<course.length;i++) {
 	    	ClassInfo cla=getOneClass(course[i]);

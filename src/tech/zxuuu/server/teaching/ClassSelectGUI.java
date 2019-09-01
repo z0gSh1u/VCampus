@@ -16,12 +16,12 @@ import tech.zxuuu.server.main.App;
 
 public class ClassSelectGUI {
 	
-	public static List<ClassInfo> getClassInfo(Student a) {
+	public static List<ClassInfo> getClassInfo() {
 		List<ClassInfo> result =null;
 		try {
 			SqlSession sqlSession = App.sqlSessionFactory.openSession();
 			IClassMapper classMapper = sqlSession.getMapper(IClassMapper.class);
-			result = classMapper.getClassInfo(a);
+			result = classMapper.getClassInfo();
 			sqlSession.commit();
 		} catch (Exception e) {
 			// sqlSession.rollback();

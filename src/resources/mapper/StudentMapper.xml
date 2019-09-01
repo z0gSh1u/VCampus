@@ -24,7 +24,7 @@
 	</select>
 	
 	<insert id="insertStudent" parameterType="Student">
-		INSERT INTO `tb_student` VALUES (#{cardNumber}, #{studentNumber}, #{password}, #{academy}, #{name}, 0)
+		INSERT INTO `tb_student` VALUES (#{cardNumber}, #{studentNumber}, #{password}, #{academy}, #{name}, 0, "")
 	</insert>
 	
 	<delete id="deleteStudent" parameterType="String">

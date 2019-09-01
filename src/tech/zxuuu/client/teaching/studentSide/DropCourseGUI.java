@@ -1,4 +1,4 @@
-package tech.zxuuu.client.teaching;
+package tech.zxuuu.client.teaching.studentSide;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -54,7 +54,7 @@ public class DropCourseGUI extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DropCourseGUI(ClassSelectGUI csg,int row) {
+	public DropCourseGUI(ClassSelectPane csg,int row) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 432, 216);
@@ -121,7 +121,7 @@ public class DropCourseGUI extends JDialog {
 				JButton btnDrop = new JButton("退选课程");
 				btnDrop.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						Student stu=new Student("213171077","123456");
+						Student stu=new Student("213171077","123456",null,null);
 						stu.setClassNumber("0900011122340014203,0900021122560014203");
 						//TODO Student stu=App.session.getStudent();
 						stu.setClassNumber(stu.getClassNumber().replace(txtClassID.getText()+",", ""));

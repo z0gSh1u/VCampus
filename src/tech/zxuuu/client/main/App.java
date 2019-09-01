@@ -16,12 +16,7 @@ import org.apache.ibatis.javassist.tools.framedump;
 import tech.zxuuu.client.auth.AuthGUI;
 
 import tech.zxuuu.client.messageQueue.ResponseQueue;
-import tech.zxuuu.client.studentManage.StudentTableGUI;
-import tech.zxuuu.client.studentManage.SwitchManager;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
-
-import tech.zxuuu.client.teaching.ClassSelectGUI;
-import tech.zxuuu.client.teaching.ScheduleTableGUI;
 
 import tech.zxuuu.entity.ManagerType;
 import tech.zxuuu.entity.UserType;
