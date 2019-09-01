@@ -10,7 +10,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import tech.zxuuu.client.main.App;
-import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
@@ -91,6 +90,7 @@ public class InManagePane extends JPanel {
 		JButton buttonYes = new JButton("确认");
 		buttonYes.setIcon(new ImageIcon(InManagePane.class.getResource("/resources/assets/icon/tick.png")));
 		buttonYes.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (textCardNumber.getText().length() != 9) {
 					SwingUtils.showError(null, "一卡通长度错误！", "错误");

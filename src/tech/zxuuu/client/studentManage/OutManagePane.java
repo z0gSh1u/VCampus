@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import tech.zxuuu.client.main.App;
-import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
@@ -35,6 +34,7 @@ public class OutManagePane extends JPanel {
 		buttonYes.setIcon(new ImageIcon(OutManagePane.class.getResource("/resources/assets/icon/tick.png")));
 		buttonYes.setBounds(385, 187, 115, 57);
 		buttonYes.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (textCardNumber.getText().length() != 9) {
 					SwingUtils.showError(null, "一卡通长度错误！", "错误");

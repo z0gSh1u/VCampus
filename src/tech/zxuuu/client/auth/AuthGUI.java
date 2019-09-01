@@ -9,18 +9,11 @@ import javax.swing.border.EmptyBorder;
 
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.Image;
-
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.awt.event.ActionEvent;
 
 import tech.zxuuu.client.main.App;
@@ -105,6 +98,7 @@ public class AuthGUI extends JFrame {
 		JRadioButton rdoTeacher = new JRadioButton("教师");
 		JRadioButton rdoManager = new JRadioButton("管理员");
 		rdoStudent.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (rdoStudent.isSelected()) {
 					rdoTeacher.setSelected(false);
@@ -115,6 +109,7 @@ public class AuthGUI extends JFrame {
 			}
 		});
 		rdoTeacher.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (rdoTeacher.isSelected()) {
 					rdoStudent.setSelected(false);
@@ -125,6 +120,7 @@ public class AuthGUI extends JFrame {
 			}
 		});
 		rdoManager.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (rdoManager.isSelected()) {
 					rdoTeacher.setSelected(false);
@@ -143,6 +139,7 @@ public class AuthGUI extends JFrame {
 		rdoStudent.setSelected(true);
 		
 		JButton btnLogin = new JButton("登陆");
+		btnLogin.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		btnLogin.setIcon(new ImageIcon(AuthGUI.class.getResource("/resources/assets/icon/right-circle.png")));
 		btnLogin.addActionListener(new ActionListener() {
 			@Override

@@ -1,13 +1,10 @@
 package tech.zxuuu.server.opencourse;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
 import tech.zxuuu.dao.IOpenCourseMapper;
-import tech.zxuuu.dao.IStudentMapper;
 import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.server.main.App;
 

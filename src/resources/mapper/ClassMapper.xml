@@ -3,9 +3,9 @@
  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
 <mapper namespace="tech.zxuuu.dao.IClassMapper">
-	<select id="getClassInfo"
+	<select id="getClassInfo" parameterType="String"
 		resultType="ClassInfo">
-		SELECT * FROM `tb_class`
+		SELECT * FROM `tb_class` WHERE `id` LIKE CONCAT(#{academy}, "%")
 	</select>
 	<update id="takeClass" parameterType="Student">
 		UPDATE tb_student SET selected_course=#{classNumber} WHERE

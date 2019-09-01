@@ -11,13 +11,6 @@ import javax.swing.JEditorPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import tech.zxuuu.client.main.App;
-import tech.zxuuu.client.messageQueue.ResponseQueue;
-import tech.zxuuu.entity.Product;
-import tech.zxuuu.net.Request;
-import tech.zxuuu.net.Response;
-import tech.zxuuu.util.ResponseUtils;
-import tech.zxuuu.util.SwingUtils;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -35,6 +28,7 @@ public class CartBlocks extends JPanel {
 		JButton btn_AddProduct = new JButton("移出购物车");
 		btn_AddProduct.setFont(new Font("幼圆", Font.BOLD, 20));
 		btn_AddProduct.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 			}
 		});

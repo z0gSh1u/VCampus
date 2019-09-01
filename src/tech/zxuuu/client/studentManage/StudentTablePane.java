@@ -16,18 +16,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import tech.zxuuu.client.main.App;
-import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.Request;
-import tech.zxuuu.net.Response;
 import tech.zxuuu.util.OtherUtils;
 import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
 import javax.swing.border.BevelBorder;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 
 /**
  * 学生列表功能面板
@@ -81,6 +75,7 @@ public class StudentTablePane extends JPanel {
 		JButton buttonSearch = new JButton("查询");
 
 		buttonSearch.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (textGrade.getText().length() != 2) {
 					SwingUtils.showMessage(null, "请输入正确的年级！", "错误");

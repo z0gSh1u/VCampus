@@ -10,7 +10,6 @@ import tech.zxuuu.util.OtherUtils;
 import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
 
-import javax.print.attribute.standard.MediaSize.Other;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -138,6 +137,7 @@ public class NewCoursePane extends JPanel {
 
 		JButton btnNewButton = new JButton("添加");
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				
 				
@@ -159,6 +159,7 @@ public class NewCoursePane extends JPanel {
 
 		JButton btnAutoLoad = new JButton("自动装填");
 		btnAutoLoad.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (txtAca.getText().length() != 2) {
 					SwingUtils.showError(null, "院系代码长度错误！", "错误");

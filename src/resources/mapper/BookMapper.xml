@@ -37,23 +37,13 @@
 
      </insert>
      
-     <delete id="deleteBook">
-     DELETE from tb_book WHERE isbn=#{ISBN}
+     <delete id="deleteBook" parameterType="Book">
+     	DELETE from tb_book WHERE isbn=#{ISBN}
      </delete>
      
      <select id="searchHowManyByISBN" parameterType="String" resultType="int">
 
 	     SELECT COUNT(*) AS number FROM tb_book WHERE isbn=#{ISBN}
-     </select>
-     
-     <select id="fuzzySearchByTitle" parameterType="String" resultType="Book">
-	     SELECT *FROM tb_book WHERE title LIKE '%${title}%'
-     </select>
-     <select id="fuzzySearchByAuthor" parameterType="String" resultType="Book">
-     	SELECT *FROM tb_book WHERE title LIKE '%${author}%'
-     </select>
-     <select id="fuzzySearchByTitleAndAuthor" parameterType="Book" resultType="Book">
-     	SELECT *FROM tb_book WHERE title LIKE '%${title}%' AND author LIKE '%${author}%'
      </select>
      
      <select id="searchSimilarBook" parameterType="Book" resultType="Book">

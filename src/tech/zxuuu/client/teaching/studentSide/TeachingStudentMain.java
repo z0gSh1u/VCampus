@@ -1,6 +1,5 @@
 package tech.zxuuu.client.teaching.studentSide;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,6 +15,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class TeachingStudentMain extends JFrame {
 
@@ -31,6 +32,7 @@ public class TeachingStudentMain extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					TeachingStudentMain frame = new TeachingStudentMain();
@@ -46,7 +48,8 @@ public class TeachingStudentMain extends JFrame {
 	 * Create the frame.
 	 */
 	public TeachingStudentMain() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(TeachingStudentMain.class.getResource("/resources/assets/icon/fav.png")));
+		setIconImage(
+				Toolkit.getDefaultToolkit().getImage(TeachingStudentMain.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("教务管理系统（学生端） - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 958, 767);
@@ -57,12 +60,13 @@ public class TeachingStudentMain extends JFrame {
 
 		JButton btnNewButton = new JButton("学生选课");
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				currentDisplay.setVisible(false);
 				classSelectPane.setVisible(true);
 				currentDisplay = classSelectPane;
-				
+
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(TeachingStudentMain.class.getResource("/resources/assets/icon/xk.png")));
@@ -72,12 +76,13 @@ public class TeachingStudentMain extends JFrame {
 		JButton btnNewButton_1 = new JButton("查看课表");
 		btnNewButton_1.setIcon(new ImageIcon(TeachingStudentMain.class.getResource("/resources/assets/icon/table.png")));
 		btnNewButton_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				currentDisplay.setVisible(false);
 				scheduleTablePane.setVisible(true);
 				currentDisplay = scheduleTablePane;
-				
+
 			}
 		});
 		btnNewButton_1.setBounds(769, 20, 145, 57);
@@ -103,6 +108,7 @@ public class TeachingStudentMain extends JFrame {
 		label_3.setText(App.session.getStudent().getCardNumber());
 
 		defaultPanel = new JPanel();
+		defaultPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		defaultPanel.setBounds(24, 90, 889, 617);
 		contentPane.add(defaultPanel);
 		defaultPanel.setLayout(null);
@@ -111,17 +117,18 @@ public class TeachingStudentMain extends JFrame {
 		defaultPanel.add(label_4);
 
 		currentDisplay = defaultPanel;
-		
+
 		classSelectPane = new ClassSelectPane();
 		classSelectPane.setBounds(24, 90, 889, 617);
-		contentPane.add(defaultPanel);
+		classSelectPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		contentPane.add(classSelectPane);
 		classSelectPane.setVisible(false);
-		
+
 		scheduleTablePane = new ScheduleTablePane();
 		scheduleTablePane.setBounds(24, 90, 889, 617);
+		scheduleTablePane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		contentPane.add(scheduleTablePane);
 		scheduleTablePane.setVisible(false);
-
 
 	}
 }

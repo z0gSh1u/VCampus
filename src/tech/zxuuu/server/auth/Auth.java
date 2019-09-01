@@ -6,7 +6,6 @@ import tech.zxuuu.dao.IManagerMapper;
 import tech.zxuuu.dao.IStudentMapper;
 import tech.zxuuu.dao.ITeacherMapper;
 import tech.zxuuu.entity.Manager;
-import tech.zxuuu.entity.ManagerType;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.entity.Teacher;
 import tech.zxuuu.server.main.*;

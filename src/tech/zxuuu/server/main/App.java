@@ -17,10 +17,7 @@ import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.RequestListener;
 import tech.zxuuu.server.messageQueue.RequestHandler;
 import tech.zxuuu.server.messageQueue.RequestQueue;
-import tech.zxuuu.server.opencourse.ChatManager;
 import tech.zxuuu.util.ServerUtils;
-import tech.zxuuu.util.SwingUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import javax.swing.JLabel;

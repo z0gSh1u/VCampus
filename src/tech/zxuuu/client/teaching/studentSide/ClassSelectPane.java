@@ -1,24 +1,18 @@
 package tech.zxuuu.client.teaching.studentSide;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Panel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.entity.ClassInfo;
-import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
@@ -34,8 +28,9 @@ public class ClassSelectPane extends JPanel {
 	String[] head = { "ID", "课程", "时间", "教师", "教室", "选择状况" };
 
 	public void selectClass(int row) {
-		rowData[row][5] = "true";
+		rowData[row][5] = "√";
 		DefaultTableModel newModel = new DefaultTableModel(rowData, head) {
+			@Override
 			public boolean isCellEditable(int a, int b) {
 				return false;
 			}
@@ -46,6 +41,7 @@ public class ClassSelectPane extends JPanel {
 	public void dropCourse(int row) {
 		rowData[row][5] = "";
 		DefaultTableModel newModel = new DefaultTableModel(rowData, head) {
+			@Override
 			public boolean isCellEditable(int a, int b) {
 				return false;
 			}
@@ -55,7 +51,7 @@ public class ClassSelectPane extends JPanel {
 
 	public List<ClassInfo> getClassInfo() {
 		Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassInfo",
-				null);
+				new Object[] {App.session.getStudent().getAcademy()});
 		String hash = req.send();
 		ResponseUtils.blockAndWaitResponse(hash);
 		Response resp = ResponseQueue.getInstance().consume(hash);
@@ -80,6 +76,7 @@ public class ClassSelectPane extends JPanel {
 			rowData[i][5] = "";
 		}
 		model = new DefaultTableModel(rowData, head) {
+			@Override
 			public boolean isCellEditable(int a, int b) {
 				return false;
 			}
@@ -105,6 +102,7 @@ public class ClassSelectPane extends JPanel {
 		ClassSelectPane csg = this;
 
 		tblClassList.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mousePressed(MouseEvent evt) {
 				if (evt.getClickCount() == 2) {
 					int row = ((JTable) evt.getSource()).rowAtPoint(evt.getPoint());
@@ -113,6 +111,11 @@ public class ClassSelectPane extends JPanel {
 
 						acsg.txtClassID.setText((String) tblClassList.getValueAt(row, 0));
 						acsg.btnConfirm.setEnabled(acsg.judgeConflict());
+						
+						if (!acsg.judgeConflict()) {
+							acsg.btnConfirm.setText("课程冲突");
+						}
+						
 						acsg.txtClassName.setText((String) tblClassList.getValueAt(row, 1));
 						acsg.txtTime.setText((String) tblClassList.getValueAt(row, 2));
 						acsg.txtTeacher.setText((String) tblClassList.getValueAt(row, 3));

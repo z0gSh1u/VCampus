@@ -1,8 +1,5 @@
 package tech.zxuuu.client.teaching.studentSide;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -37,19 +34,6 @@ public class DropCourseGUI extends JDialog {
 		Response resp =ResponseQueue.getInstance().consume(hash);
 		return resp.getReturn(Boolean.class);
 	}
-
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		try {
-			DropCourseGUI dialog = new DropCourseGUI();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
 
 	/**
 	 * Create the dialog.
@@ -120,10 +104,9 @@ public class DropCourseGUI extends JDialog {
 			{
 				JButton btnDrop = new JButton("退选课程");
 				btnDrop.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						Student stu=new Student("213171077","123456",null,null);
-						stu.setClassNumber("0900011122340014203,0900021122560014203");
-						//TODO Student stu=App.session.getStudent();
+						Student stu=App.session.getStudent();
 						stu.setClassNumber(stu.getClassNumber().replace(txtClassID.getText()+",", ""));
 						takeClass(stu);
 						csg.dropCourse(row);
@@ -138,6 +121,7 @@ public class DropCourseGUI extends JDialog {
 			{
 				JButton btnCancel = new JButton("返回");
 				btnCancel.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent e) {
 						dcg.dispose();
 					}

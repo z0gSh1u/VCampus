@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.sun.xml.internal.bind.v2.model.core.ClassInfo;
 
-import tech.zxuuu.dao.IStudentMapper;
 import tech.zxuuu.dao.ITeacherMapper;
 import tech.zxuuu.server.main.App;
 
