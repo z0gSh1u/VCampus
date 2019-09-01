@@ -81,7 +81,7 @@ public class ClassSelectGUI extends JFrame {
 	
 	public List<ClassInfo> getClassInfo() {
 		Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassInfo",
-				new Object[] {new Student("a","b")});
+				new Object[] {new Student("a","b", null, null)});
 		String hash = req.send();
 		ResponseUtils.blockAndWaitResponse(hash);
 		Response resp =ResponseQueue.getInstance().consume(hash);

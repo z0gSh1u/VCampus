@@ -11,17 +11,31 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.ibatis.javassist.tools.framedump;
+
 import tech.zxuuu.client.auth.AuthGUI;
-import tech.zxuuu.client.library.Student_interface;
+
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.client.studentManage.StudentTableGUI;
+import tech.zxuuu.client.studentManage.SwitchManager;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
+
 import tech.zxuuu.client.teaching.ClassSelectGUI;
 import tech.zxuuu.client.teaching.ScheduleTableGUI;
+
+import tech.zxuuu.entity.ManagerType;
+import tech.zxuuu.entity.UserType;
+
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
 import tech.zxuuu.util.SwingUtils;
 
+/**
+ * 客户端全局根对象（App）
+ * 
+ * @author z0gSh1u
+ */
 public class App extends JFrame {
 
   /******* 新增部分 *******/
@@ -51,6 +65,31 @@ public class App extends JFrame {
 		});
 	}
 
+	
+	/**
+	 * 要求进行界面路由
+	 */
+	public static void requireRouting() {
+		JFrame target = null;
+		UserType userType = App.session.getUserType();
+		ManagerType managerType = 
+				(userType == UserType.MANAGER ? App.session.getManager().getManagerType() : null);
+		
+		target = userType == UserType.STUDENT ? new AppStudent()
+				: userType == userType.TEACHER ? new AppTeacher()
+						: userType == userType.MANAGER
+								? (managerType == ManagerType.LIBRARY ? new AppLibraryManager()
+										: managerType == ManagerType.OPENCOURSE ? new AppOpencourseManager()
+												: managerType == ManagerType.SHOP ? new AppShopManager()
+														: managerType == ManagerType.TEACHING ? new AppTeachingManager() : null)
+								: null;											
+		if (target == null) {
+			System.err.println("Failed routing.");
+			System.exit(1);
+		}
+		target.setVisible(true);
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -71,19 +110,19 @@ public class App extends JFrame {
 		this.responseListener.start();
 	  /***********************/
 		
-//		if (!App.hasLogon) {
-//			EventQueue.invokeLater(new Runnable() {
-//				public void run() {
-//					try {
-//						AuthGUI frame = new AuthGUI();
-//						frame.setVisible(true);
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			});
-//			
-//		}
+		if (!App.hasLogon) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						AuthGUI frame = new AuthGUI();
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
+		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 893, 604);
@@ -105,8 +144,7 @@ public class App extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
         /* 请修改此处内容以快速进行前后端联调 */
-				ScheduleTableGUI csg=new ScheduleTableGUI();
-				csg.setVisible(true);
+
 			}
 		});
 		panel_1.add(btnNewButton);

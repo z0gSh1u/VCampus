@@ -84,7 +84,7 @@ public class Student_interface extends JFrame {
 	    model=new DefaultTableModel(null,popularBook);
 		tblPopular= new JTable();
 		JScrollPane jsp = new JScrollPane(tblPopular);
-		jsp.setBounds(201, 165, 325, 127);
+		jsp.setBounds(199, 255, 325, 127);
 		contentPane.add(jsp);
 		tblPopular.setModel(model);
 		tblPopular.setBounds(2, 2, 300, 300);

@@ -6,16 +6,33 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import tech.zxuuu.client.main.App;
+import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.entity.Student;
+import tech.zxuuu.net.Request;
+import tech.zxuuu.net.Response;
+import tech.zxuuu.util.OtherUtils;
+import tech.zxuuu.util.ResponseUtils;
+import tech.zxuuu.util.SwingUtils;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.sound.sampled.LineListener;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.awt.event.ActionEvent;
 
 public class SwitchManager extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textCardNumber;
+	private JTextField textNewStudentNumber;
 
 	/**
 	 * Launch the application.
@@ -49,57 +66,80 @@ public class SwitchManager extends JFrame {
 		contentPane.add(lblSwitch);
 		
 		textCardNumber = new JTextField();
-		textCardNumber.setBounds(247, 155, 304, 35);
+		textCardNumber.setBounds(247, 113, 304, 35);
 		contentPane.add(textCardNumber);
 		textCardNumber.setColumns(10);
 		
 		JLabel lblCardNumber = new JLabel("一卡通号");
-		lblCardNumber.setBounds(80, 141, 161, 57);
+		lblCardNumber.setBounds(79, 102, 161, 57);
 		contentPane.add(lblCardNumber);
 		
 		JLabel lblSubjectNumber = new JLabel("转系系号");
-		lblSubjectNumber.setBounds(79, 200, 139, 64);
+		lblSubjectNumber.setBounds(79, 155, 139, 64);
 		contentPane.add(lblSubjectNumber);
 		
 		JComboBox comboSubjectNumber = new JComboBox();
-		comboSubjectNumber.setBounds(247, 220, 304, 35);
+		comboSubjectNumber.setBounds(247, 170, 304, 35);
 		contentPane.add(comboSubjectNumber);
 		
 		JButton buttonYes = new JButton("确定");
+		buttonYes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textCardNumber.getText().length()!=9) {SwingUtils.showMessage(null, "一卡通长度错误！！", "错误");}
+				else if(!(textNewStudentNumber.getText().substring(0, 2).equals(((String)comboSubjectNumber.getSelectedItem()).substring(0, 2)))) {
+					SwingUtils.showMessage(null, "学号与系号不匹配！", "错误");
+				}
+				else if(textNewStudentNumber.getText().length()!=8) {SwingUtils.showMessage(null, "学号长度错误！", "错误");}
+				else {
+						Student student = new Student(textCardNumber.getText(), null);
+						student.setStudentNumber(textNewStudentNumber.getText());
+						student.setAcademy(textNewStudentNumber.getText().substring(0, 2));
+						Request request = new Request(App.connectionToServer, null, "tech.zxuuu.server.studentManage.StudentManage.switchStudent", 
+								new Object[] {student.getCardNumber(),student.getAcademy(),student.getStudentNumber()});
+						String hash = request.send();			
+						ResponseUtils.blockAndWaitResponse(hash);
+						Response resp = ResponseQueue.getInstance().consume(hash);
+						String result = resp.getReturn(String.class);
+						
+						System.out.println("result="+result);
+						
+						if (result.equals("Nocard")) {
+							SwingUtils.showMessage(null, "无此学生！", "错误");
+						}
+						else if(result.equals("Repeat")) {
+							SwingUtils.showMessage(null, "此学号已有人使用！", "错误");
+						}
+						else if(result.equals("Ok")) {
+							SwingUtils.showMessage(null, "转系成功！", "hint");
+						}
+						else {SwingUtils.showMessage(null, "系统错误！", "错误");}
+				}
+				
+			}
+		});
 		buttonYes.setBounds(264, 353, 153, 37);
 		contentPane.add(buttonYes);
 		
 		
+		List<String> academies = new ArrayList<>(
+			Arrays.asList(
+				"01","02","03","04","05","06","07","08","09","10","11","12",
+				"13","14","15","16","17","19","21","22","24","25","41","42","43","57","61","71","88")
+			);
+		for (String academy : academies) {
+			comboSubjectNumber.addItem(academy + " - " + OtherUtils.getAcademyByNumber(academy));
+		}
+
 		
-		comboSubjectNumber.addItem("01");
-		comboSubjectNumber.addItem("02");
-		comboSubjectNumber.addItem("03");
-		comboSubjectNumber.addItem("04");
-		comboSubjectNumber.addItem("05");
-		comboSubjectNumber.addItem("06");
-		comboSubjectNumber.addItem("07");
-		comboSubjectNumber.addItem("08");
-		comboSubjectNumber.addItem("09");
-		comboSubjectNumber.addItem("10");
-		comboSubjectNumber.addItem("11");
-		comboSubjectNumber.addItem("12");
-		comboSubjectNumber.addItem("13");
-		comboSubjectNumber.addItem("14");
-		comboSubjectNumber.addItem("15");
-		comboSubjectNumber.addItem("16");
-		comboSubjectNumber.addItem("17");
-		comboSubjectNumber.addItem("19");
-		comboSubjectNumber.addItem("21");
-		comboSubjectNumber.addItem("22");
-		comboSubjectNumber.addItem("24");
-		comboSubjectNumber.addItem("25");
-		comboSubjectNumber.addItem("41");
-		comboSubjectNumber.addItem("42");
-		comboSubjectNumber.addItem("43");
-		comboSubjectNumber.addItem("57");
-		comboSubjectNumber.addItem("61");
-		comboSubjectNumber.addItem("71");
-		comboSubjectNumber.addItem("88");
+		
+		JLabel lblNewStudentNumber = new JLabel("新学号");
+		lblNewStudentNumber.setBounds(79, 230, 99, 25);
+		contentPane.add(lblNewStudentNumber);
+		
+		textNewStudentNumber = new JTextField();
+		textNewStudentNumber.setBounds(247, 227, 304, 31);
+		contentPane.add(textNewStudentNumber);
+		textNewStudentNumber.setColumns(10);
 
 	}
 }
