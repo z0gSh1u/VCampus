@@ -6,6 +6,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import tech.zxuuu.client.main.App;
+import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.net.Request;
+import tech.zxuuu.net.Response;
+import tech.zxuuu.util.ResponseUtils;
+import tech.zxuuu.util.SwingUtils;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -80,6 +88,17 @@ public class AddBook extends JFrame {
 		btnComfirm = new JButton("确定");
 		btnComfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.addBook", 
+						new Object[] {txtSetISBN.getText(),txtTitle.getText(),txtauthor.getText()});
+					String hash = req.send();
+					ResponseUtils.blockAndWaitResponse(hash);
+					Response response = ResponseQueue.getInstance().consume(hash);
+					Boolean ret = response.getReturn(Boolean.class);
+					if(ret==true)
+					  SwingUtils.showMessage(null, "Succeed adding", "test");
+					else {
+						SwingUtils.showError(null, "Fail adding", "test");
+					}
 			}
 		});
 		btnComfirm.setBounds(280, 213, 113, 27);
