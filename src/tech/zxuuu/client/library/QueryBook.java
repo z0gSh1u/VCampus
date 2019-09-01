@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.entity.Book;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
@@ -81,14 +83,26 @@ public class QueryBook extends JDialog {
 		btnSearch.setBounds(29, 156, 63, 27);
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.Book.searchAuthorByTitle", 
-					new Object[] {txtTitle.getText()});
+				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.fuzzySearchByTitleAndAuthor", 
+					new Object[] {txtTitle.getText(),txtAuthor.getText()});
 				String hash = req.send();
 				ResponseUtils.blockAndWaitResponse(hash);
 				Response response = ResponseQueue.getInstance().consume(hash);
-				String ret = response.getReturn(String.class);
-				SwingUtils.showMessage(null, ret, "test");
+				List<Book> list = response.getListReturn(Book.class);
+				model.setRowCount(0);
+				if(list==null)
+					SwingUtils.showMessage(null, "No finding","test");
+				else {
+				for (int i = 0; i < list.size(); i++) {
+					Object[] toAdd = new Object[] {
+							list.get(i).getISBN(), list.get(i).getTitle(), list.get(i).getAuthor()
+					};
+					model.addRow(toAdd);
+				}
+				SwingUtils.showMessage(null,"Success", "test");
+				}
 			}
+			
 		});
 		contentPanel.add(btnSearch);
 		
@@ -119,7 +133,7 @@ public class QueryBook extends JDialog {
 		contentPanel.add(lblISBN);
 		
 		JButton btnComfirm = new JButton("确认");
-		btnComfirm.setBounds(125, 270, 63, 27);
+		btnComfirm.setBounds(125, 271, 63, 27);
 		btnComfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Request request=new Request(App.connectionToServer,App.session,"tech.zxuuu.server.library.BookServer.borrowBook",
@@ -128,9 +142,8 @@ public class QueryBook extends JDialog {
 				ResponseUtils.blockAndWaitResponse(hash);
 				Response response=ResponseQueue.getInstance().consume(hash);
 				Boolean result=response.getReturn(Boolean.class);
-				
-				SwingUtils.showMessage(null, "Success", "test");
-				
+				if(result==true)
+				  SwingUtils.showMessage(null, "Succeed borrowing", "test");
 				
 			}
 		});

@@ -9,11 +9,14 @@ import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.auth.AuthGUI;
 import tech.zxuuu.client.library.AddBook;
+import tech.zxuuu.client.library.BookManage;
 import tech.zxuuu.client.library.QueryBook;
 import tech.zxuuu.client.library.ReturnBook;
 import tech.zxuuu.client.library.RenewBook;
 import tech.zxuuu.client.library.Student_interface;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.client.shop.ShopFirstPage;
+import tech.zxuuu.client.shop.Blocks;
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
@@ -102,15 +105,32 @@ public class App extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		
-		JButton btnNewButton = new JButton("New button");
+		JButton btnNewButton = new JButton("图书馆");
+		btnNewButton.setBounds(435, 5, 244, 235);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Student_interface interface1=new Student_interface();
 				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				interface1.setVisible(true);
+				/*BookManage manager =new BookManage();
+				manager.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				manager.setVisible(true);*/
 			}
 		});
+		panel_1.setLayout(null);
+		
+		JButton btnNewButton_1 = new JButton("Shop");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShopFirstPage shopFirstPage = new ShopFirstPage();
+				shopFirstPage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				shopFirstPage.setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(106, 5, 315, 235);
+		panel_1.add(btnNewButton_1);
 		panel_1.add(btnNewButton);
+		
+		
 	}
-
 }

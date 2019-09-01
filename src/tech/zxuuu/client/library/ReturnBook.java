@@ -65,7 +65,7 @@ public class ReturnBook extends JDialog {
 				ResponseUtils.blockAndWaitResponse(hash);
 				Response response=ResponseQueue.getInstance().consume(hash);
 				Boolean boolean1=response.getReturn(Boolean.class);
-				SwingUtils.showMessage(null, "Success", "test");
+				SwingUtils.showMessage(null, "Succeed returnning", "test");
 				
 				
 			}
