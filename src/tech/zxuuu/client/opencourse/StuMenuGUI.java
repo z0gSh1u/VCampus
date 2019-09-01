@@ -62,12 +62,8 @@ public class StuMenuGUI extends JFrame {
 	
 	//显示公开课列表
 	private void showCourseList() {
-		Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.opencourse.StuMenu.getCourseList",
-				null);
-		String hash = req.send();
-		ResponseUtils.blockAndWaitResponse(hash);
-		Response resp = ResponseQueue.getInstance().consume(hash);
-		List<OpenCourseInfo> courseList =  resp.getListReturn(OpenCourseInfo.class);
+		List<OpenCourseInfo> courseList =  ResponseUtils.getResponseByHash(new Request(App.connectionToServer, null, "tech.zxuuu.server.opencourse.StuMenu.getCourseList",
+				null).send()).getListReturn(OpenCourseInfo.class);
 		
 		for(OpenCourseInfo course : courseList) {
 			pnlCourseList.add(new CourseInfoGUI(course.getId(), course.getCourseName(), course.getSpeaker(), course.getPreview()));
@@ -114,6 +110,17 @@ public class StuMenuGUI extends JFrame {
 		spnCourseList.setViewportView(pnlCourseList);
 		pnlCourseList.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		showCourseList();
+		new Thread(new Runnable() {
+			public void run() {
+				showCourseList();
+				try {
+					wait(2000);
+				}catch(Exception e) {
+					System.out.println(e.getMessage());
+				}
+				pnlCourseList.paintImmediately(pnlCourseList.getBounds());
+			}
+		}).start();
+		//showCourseList();
 	}
 }

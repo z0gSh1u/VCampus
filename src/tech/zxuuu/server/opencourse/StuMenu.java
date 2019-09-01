@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import tech.zxuuu.dao.IOpenCourseMapper;
 import tech.zxuuu.dao.IStudentMapper;
 import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.server.main.App;
@@ -17,8 +18,8 @@ public class StuMenu {
 		List<OpenCourseInfo> list = null;
 		try {
 			SqlSession sqlSession = App.sqlSessionFactory.openSession();
-			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
-//			list = studentMapper.getOpenCourseList();
+			IOpenCourseMapper openCourseMapper = sqlSession.getMapper(IOpenCourseMapper.class);
+			list = openCourseMapper.getOpenCourseList();
 			sqlSession.commit();
 			//list.add(new OpenCourseInfo(Integer.parseInt(res.get("Id")), res.get("CourseName"), res.get("Speaker"), res.get("Preview")));
 		} catch (Exception e) {

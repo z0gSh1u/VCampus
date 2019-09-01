@@ -2,6 +2,7 @@ package tech.zxuuu.server.startup;
 
 import java.awt.EventQueue;
 import tech.zxuuu.server.main.App;
+import tech.zxuuu.server.opencourse.ChatManager;
 import tech.zxuuu.util.SwingUtils;
 
 /**
@@ -28,6 +29,7 @@ public class Bootstrap {
 				try {
 					App frame = new App();
 					frame.setVisible(true);
+					ChatManager.getInstance().start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
