@@ -13,12 +13,14 @@ import tech.zxuuu.server.main.App;
 public class StuMenu {
 
 	//获取公开课列表
-	public static List<OpenCourseInfo> getCourseList(String parameter){
+	public static List<OpenCourseInfo> getCourseList(){
 		List<OpenCourseInfo> list = null;
 		try {
 			SqlSession sqlSession = App.sqlSessionFactory.openSession();
-			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
-			list = studentMapper.getOpenCourseList();
+
+		//	IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
+			//list = studentMapper.getOpenCourseList();
+
 			sqlSession.commit();
 			//list.add(new OpenCourseInfo(Integer.parseInt(res.get("Id")), res.get("CourseName"), res.get("Speaker"), res.get("Preview")));
 		} catch (Exception e) {

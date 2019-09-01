@@ -47,6 +47,10 @@ public class Response {
 			System.err.println("[Response.getReturn] List and/or Map class type can't be used in getReturn(Class<T> clazz).");
 		}
 		
+		if (this.param == null) {
+			return null;
+		}
+		
 		if (JSONUtils.isBasicClass(clazz)) {
 			// 对于基本类型，不解析
 			return clazz.cast(this.param);
@@ -60,6 +64,10 @@ public class Response {
 	
 	// 获取数组型业务数据
 	public <T> List<T> getListReturn(Class<T> elementClazz) {
+		
+		if (this.param == null) {
+			return null;
+		}
 		
 		JSONArray tempParam = (JSONArray) this.param;
 		
@@ -87,6 +95,10 @@ public class Response {
 	
 	// 获取Map型业务数据
 	public <T> Map<String, T> getMapReturn(Class<T> valueClazz) {
+		
+		if (this.param == null) {
+			return null;
+		}
 		
 		JSONObject tempParam = (JSONObject) this.param;
 		Map<String, Object> unparsedMap = JSON.parseObject(tempParam.toJSONString());

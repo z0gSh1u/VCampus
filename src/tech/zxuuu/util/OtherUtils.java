@@ -1,7 +1,11 @@
 package tech.zxuuu.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 public class OtherUtils {
 
@@ -37,5 +41,20 @@ public class OtherUtils {
 		map.put("71", "软件学院");
 		return map.getOrDefault(number, "");
 	}
-
+	
+	/**
+	 * 获取调用者端的本地时间Date对象
+	 * 注意，如果需要准确可靠的时间，必须要在服务器端调用，不可以信任客户端的时间。
+	 */
+	public static Date getLocalTime() {
+		Date now = new Date();
+		return now;
+	}
+	
+	public static Integer getDay(long unixTimeStamp) {
+		// 1 ~ 7
+		Date date = new Date(unixTimeStamp);
+		return date.getDay() == 0 ? 7 : date.getDay();
+	}
+	
 }

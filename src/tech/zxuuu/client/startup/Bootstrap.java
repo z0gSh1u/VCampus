@@ -29,7 +29,8 @@ public class Bootstrap {
 			public void run() {
 				try {
 					App frame = new App();
-					frame.setVisible(true);
+					/* 不调试时setVisible(false) */
+//					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -49,21 +49,29 @@ public class RequestHandler extends Thread {
 					}
 					// 调用方法（接口），获取返回值。接口必须是静态的
 					Method method = clazz.getMethod(methodName, paramTypes);
-					Object[] processedParams = new Object[paramTypes.length];
-					for (int i = 0; i < req.getParams().length; i++) {
-						if (JSONUtils.isBasicClass(paramTypes[i])) {
-							processedParams[i] = paramTypes[i].cast(req.getParams()[i]);
-						} else {
-							JSONObject temp = (JSONObject) req.getParams()[i];
-							processedParams[i] = JSON.parseObject(temp.toJSONString(), paramTypes[i]);
+					Object ret = null;
+					if (req.getParams() == null) {
+						ret = method.invoke(null);
+					} else {
+						Object[] processedParams = new Object[paramTypes.length];
+						for (int i = 0; i < req.getParams().length; i++) {
+							if (JSONUtils.isBasicClass(paramTypes[i])) {
+								processedParams[i] = paramTypes[i].cast(req.getParams()[i]);
+							} else {
+								JSONObject temp = (JSONObject) req.getParams()[i];
+								processedParams[i] = JSON.parseObject(temp.toJSONString(), paramTypes[i]);
+							}
 						}
+						ret = method.invoke(null, processedParams);
 					}
-					Object ret = method.invoke(null, processedParams);
-
+					App.appendLog("调用了接口：" + methodName);
 					// 组织并发送响应
 					new Response(
 						req.getConnectionToClient(), req.getHash(), req.getTargetApi(), ret
 					).send();
+					
+					System.out.println("res hash=" + req.getHash());
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

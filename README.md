@@ -1,6 +1,6 @@
 # 虚拟校园系统VCampus
 
-![logo](https://s2.ax1x.com/2019/08/25/mRCnHI.png)
+![logo](https://s2.ax1x.com/2019/08/27/m40U2j.png)
 
 VCampus是一款基于C/S架构的软件，主要模拟了东南大学校内与学生、教师、行政人员相关的各类功能情境。
 
@@ -13,7 +13,6 @@ VCampus是一款基于C/S架构的软件，主要模拟了东南大学校内与�
 如果您不使用Release版本，而计划自行编译运行，则在运行前，请先完成下列配置文件的配置：
 
 - 数据库配置 - `/src/resources/database.properties`（在开发周期内，该文件不会被上传）
-
 - 服务器端配置 - `/src/resources/server.properties`
 
 然后借助启动类先后启动服务器端和客户端即可：
