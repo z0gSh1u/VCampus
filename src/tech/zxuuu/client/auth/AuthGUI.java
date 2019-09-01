@@ -35,6 +35,7 @@ import java.awt.Toolkit;
 
 /**
  * 登陆界面GUI
+ * 
  * @author z0gSh1u
  */
 public class AuthGUI extends JFrame {
@@ -147,9 +148,11 @@ public class AuthGUI extends JFrame {
 					Student res = AuthHelper.verifyStudent(txtUsername.getText(), txtPassword.getText());
 					if (res != null) {
 						SwingUtils.showMessage(null, "学生登陆成功！", "信息");
+						// 填充App.session
 						App.hasLogon = true;
 						App.session = new Session(res);
 						setVisible(false);
+						// 要求界面路由
 						App.requireRouting();
 					} else {
 						SwingUtils.showError(null, "密码错误，登陆失败！", "错误");

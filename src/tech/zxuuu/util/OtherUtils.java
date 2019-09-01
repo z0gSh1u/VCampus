@@ -51,4 +51,10 @@ public class OtherUtils {
 		return now;
 	}
 	
+	public static Integer getDay(long unixTimeStamp) {
+		// 1 ~ 7
+		Date date = new Date(unixTimeStamp);
+		return date.getDay() == 0 ? 7 : date.getDay();
+	}
+	
 }
