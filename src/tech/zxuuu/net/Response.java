@@ -8,11 +8,8 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-<<<<<<< HEAD
 
-import tech.zxuuu.entity.Student;
-=======
->>>>>>> 31196a258411756ee02883e33f97cd19fad7aef9
+
 import tech.zxuuu.util.JSONUtils;
 
 /**

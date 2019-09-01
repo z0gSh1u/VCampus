@@ -77,6 +77,7 @@ public class RenewBook extends JDialog {
 		JButton btnComfirm = new JButton("确认");
 		btnComfirm.setBounds(80, 313, 63, 27);
 		btnComfirm.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				
 			}
@@ -87,6 +88,7 @@ public class RenewBook extends JDialog {
 		 
 		btnCheck = new JButton("查看所借书");
 		btnCheck.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.searchBeBorrowed", 
 						new Object[] {txtName.getText()});

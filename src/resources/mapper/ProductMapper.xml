@@ -1,40 +1,22 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="UTF-8" ?> 
-=======
-<?xml version="1.0" encoding="UTF-8"?>
->>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
+<?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
 <mapper namespace="tech.zxuuu.dao.IProductMapper">
-    
-    <select id="searchProduct" parameterType="String" resultType="Product">
-<<<<<<< HEAD
-    	SELECT * FROM tb_product WHERE p_name LIKE "%"#{p_name}"%"
-    </select>
-<!--     <select id="searchTypeByP_name" parameterType="String" resultType="String">
-    	SELECT `type` FROM `tb_product` WHERE `p_name` = #{p_name}
-    </select>
-	<select id="listProductByType" parameterType="String" resultType="String">
-		SELECT `p_name` FROM `tb_product` WHERE `type` = #{type} LIMIT 1
+
+	<select id="searchProduct" parameterType="String"
+		resultType="Product">
+		SELECT * FROM tb_product WHERE p_name LIKE "%"#{p_name}"%"
 	</select>
-	
-	<select id="listProductPicture" parameterType="String"
-		resultType="String">
-		SELECT `picture` FROM `tb_product` WHERE `type` = #{p_name}
-	</select> -->
 	<select id="listProductByType" parameterType="String"
 		resultType="Product">
 		SELECT * FROM tb_product WHERE type = #{type}
 	</select>
-	<select id="cartProduct" parameterType="String"
-		resultType="Product">
-		SELECT * FROM `tb_product` WHERE `buyer` LIKE "%"#{buyer}"%"
-	</select>
-=======
-    	SELECT * FROM `tb_product` WHERE `product` = #{product}
-    </select>
 
->>>>>>> 34e7912ff789559df32cb4e6a2ca946e890d0d4b
+	<insert id="insertNewProcut" parameterType="Product">
+		INSERT INTO `tb_product` VALUES (#{p_name}, #{type},
+		#{price}, #{picture}, #{number}, #{p_name})
+	</insert>
+
 
 </mapper>

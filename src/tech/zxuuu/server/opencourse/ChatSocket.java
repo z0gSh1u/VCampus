@@ -3,18 +3,15 @@ package tech.zxuuu.server.opencourse;
 import java.io.IOException;
 import java.net.Socket;
 
-import com.alibaba.fastjson.JSON;
-
 import tech.zxuuu.entity.UserType;
 import tech.zxuuu.net.Connection;
-import tech.zxuuu.net.Session;
 
 public class ChatSocket extends Connection implements Runnable {
 	private ReceivePredicate receiveResponse;
 	private UserType userType;
 	private String name;
 	private int courseId;
-		
+
 	public ChatSocket(Socket socket, ReceivePredicate receiveResponse) {
 		super(socket);
 		// TODO Auto-generated constructor stub
@@ -24,12 +21,12 @@ public class ChatSocket extends Connection implements Runnable {
 		this.name = "";
 		new Thread(this).start();
 	}
-	
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		String str = "";
-		while((str = this.readLine()) != null) {
+		while ((str = this.readLine()) != null) {
 			receiveResponse.callResponse(str, this);
 		}
 	}
@@ -54,17 +51,9 @@ public class ChatSocket extends Connection implements Runnable {
 		return null;
 	}
 
-
-
-
-
-
-
 	public int getCourseId() {
 		return courseId;
 	}
-
-
 
 	public void setCourseId(int courseId) {
 		this.courseId = courseId;
