@@ -22,6 +22,10 @@ import tech.zxuuu.entity.Book;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
+import tech.zxuuu.util.SwingUtils;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class RenewBook extends JDialog {
 
@@ -31,6 +35,7 @@ public class RenewBook extends JDialog {
 	private DefaultTableModel model;
 	private JButton btnCheck;
 	private JTextField txtName;
+	private List<Book> list=null;
 	/**
 	 * Launch the application.
 	 */
@@ -59,24 +64,27 @@ public class RenewBook extends JDialog {
 		}
 		contentPanel.setLayout(null);
 		txtISBN = new JTextField();
-		txtISBN.setBounds(151, 11, 86, 24);
+		txtISBN.setEditable(false);
+		txtISBN.setBounds(80, 256, 105, 24);
+		
 		contentPanel.add(txtISBN);
 		txtISBN.setColumns(10);
 		
 		JLabel lblISBN = new JLabel("ISBN");
-		lblISBN.setBounds(60, 14, 32, 18);
+		lblISBN.setBounds(34, 259, 32, 18);
 		contentPanel.add(lblISBN);
 		
 		JButton btnComfirm = new JButton("确认");
-		btnComfirm.setBounds(151, 69, 63, 27);
+		btnComfirm.setBounds(80, 313, 63, 27);
 		btnComfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		contentPanel.add(btnComfirm);
 		
-		String[] head= {"isbn","title","author"};
-		
+		String[] tblhead= {"isbn","title","author"};
+		 
 		btnCheck = new JButton("查看所借书");
 		btnCheck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -85,41 +93,61 @@ public class RenewBook extends JDialog {
 					String hash = req.send();
 					ResponseUtils.blockAndWaitResponse(hash);
 					Response response = ResponseQueue.getInstance().consume(hash); 
-					List<Book> list =response.getListReturn(Book.class);
+					list =response.getListReturn(Book.class);
+					String[][] listData=new String[list.size()][3];
 					model.setRowCount(0);
 					// 填充新数据
-					for (int i = 0; i < list.size(); i++) {
-						Object[] toAdd = new Object[] {
-								list.get(i).getISBN(), list.get(i).getTitle(), list.get(i).getAuthor()
-						};
-						model.addRow(toAdd);
+					if(list == null) {
+						SwingUtils.showMessage(null, "No finding","test");
 					}
-			}					
-		});
-		btnCheck.setBounds(89, 280, 107, 27);
+					else {
+						for(int i=0;i<list.size();i++) {
+							listData[i][0]=list.get(i).getISBN();
+							listData[i][1]=list.get(i).getTitle();
+							listData[i][2]=list.get(i).getAuthor();
+						}
+						model= new DefaultTableModel(listData, tblhead) {
+							@Override
+							public boolean isCellEditable(int a,int b) {
+								   return false;
+							}
+						};
+					    tblBeborrowed.setModel(model);
+						SwingUtils.showMessage(null,"Success", "test");
+					}
+				}
+			});
+		btnCheck.setBounds(78, 101, 107, 27);
 		contentPanel.add(btnCheck);
 	
-		model=new DefaultTableModel(null,head);
-
-	
+		
+		model=new DefaultTableModel(null,tblhead);
 		tblBeborrowed = new JTable();
 		tblBeborrowed.setModel(model);
 		tblBeborrowed.setBounds(2, 2, 300, 300);
 		
 		JScrollPane jsp = new JScrollPane(tblBeborrowed);
-		jsp.setLocation(210, 127);
+		tblBeborrowed.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(e.getClickCount()==2) {
+					int row=((JTable)e.getSource()).rowAtPoint(e.getPoint());
+		            txtISBN.setText(list.get(row).getISBN());
+		            }
+		}});
+		jsp.setLocation(234, 13);
 		jsp.setSize(320, 199);
 		contentPanel.add(jsp);
 		
 
 		
 		txtName = new JTextField();
-		txtName.setBounds(107, 227, 86, 24);
+		txtName.setBounds(80, 32, 86, 24);
 		contentPanel.add(txtName);
 		txtName.setColumns(10);
 		
 		JLabel lblName = new JLabel("姓名");
-		lblName.setBounds(60, 230, 30, 18);
+		lblName.setBounds(34, 38, 30, 18);
 		contentPanel.add(lblName);
 	}
 

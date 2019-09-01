@@ -64,11 +64,17 @@ public class ReturnBook extends JDialog {
 				String hash=request.send();
 				ResponseUtils.blockAndWaitResponse(hash);
 				Response response=ResponseQueue.getInstance().consume(hash);
-				Boolean boolean1=response.getReturn(Boolean.class);
-				SwingUtils.showMessage(null, "Success", "test");
-				
-				
-			}
+
+				int result=response.getReturn(Integer.class);
+				if(result==2)
+				   SwingUtils.showMessage(null, "Succeed returnning", "test");
+				if(result==1)
+				   SwingUtils.showError(null,"This book has not been borrowed", "test");
+				if(result==0)
+					SwingUtils.showError(null, "The ISBN is invalid", "test");
+				}
+
+
 		});
 		btnComfirm.setBounds(76, 140, 113, 27);
 		lblISBN.add(btnComfirm);
