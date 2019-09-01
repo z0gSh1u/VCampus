@@ -6,6 +6,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import tech.zxuuu.client.main.App;
+import tech.zxuuu.client.messageQueue.ResponseQueue;
+import tech.zxuuu.entity.ClassInfo;
+import tech.zxuuu.entity.Student;
+import tech.zxuuu.net.Request;
+import tech.zxuuu.net.Response;
+import tech.zxuuu.util.ResponseUtils;
+
 import java.awt.FlowLayout;
 import java.awt.Frame;
 
@@ -13,6 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.awt.event.ActionEvent;
 
 
 	
@@ -25,28 +37,53 @@ import javax.swing.JDialog;
 		private JPanel contentPane;
 		public JTextField txtClassID;
 		public JTextField txtClassName;
-		public JTextField txtTeacher;
 		public JTextField txtTime;
+		public JTextField txtTeacher;
 		public JTextField txtClassroom;
 		private final JPanel contentPanel = new JPanel();
+		JButton btnConfirm;
 
 		/**
 		 * Launch the application.
 		 */
 		public static void main(String[] args) {
 			try {
-				AffirmClassSelectionGUI dialog = new AffirmClassSelectionGUI();
+				AffirmClassSelectionGUI dialog = new AffirmClassSelectionGUI(new ClassSelectGUI(),0);
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				dialog.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		
+		public Boolean takeClass(Student student) {
+			Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.takeClass",
+					new Object[]{student}) ;
+			String hash = req.send();
+			ResponseUtils.blockAndWaitResponse(hash);
+			Response resp =ResponseQueue.getInstance().consume(hash);
+			return resp.getReturn(Boolean.class);
+		}
 
-	/**
-	 * Create the frame.
-	 */
-	public AffirmClassSelectionGUI() {
+		public Boolean judgeConflict() {
+			//TODO String cn=App.session.getStudent().getClassNumber();
+			String cn="0900011122340014203,0900022122560014203,";
+			int num=cn.length()/20;
+			String[] course =new String [num*2];
+			for (int i=0;i<num;i++) {
+				course[i*2]=cn.substring(i*20+6,i*20+9);
+				course[i*2+1]=cn.substring(i*20+9,i*20+12);
+			}
+			for (int i=0;i<num*2;i++) {
+				System.out.println(course[i]);
+				System.out.println(txtClassID.getText().substring(6,9));
+				if (txtClassID.getText().substring(6,9).equals(course[i])||txtClassID.getText().substring(9,12).contentEquals(course[i])) 
+					return false;
+			}
+			return true;	
+		}
+
+	public AffirmClassSelectionGUI(ClassSelectGUI csg,int row) {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 436, 292);
 		contentPane = new JPanel();
@@ -55,7 +92,7 @@ import javax.swing.JDialog;
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(0, 0, 0, 0));
-		panel.setBounds(0, 0, 455, 187);
+		panel.setBounds(0, 0, 404, 187);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -91,30 +128,48 @@ import javax.swing.JDialog;
 		txtClassName.setBounds(105, 44, 278, 24);
 		panel.add(txtClassName);
 		
-		txtTeacher = new JTextField();
-		txtTeacher.setEditable(false);
-		txtTeacher.setColumns(10);
-		txtTeacher.setBounds(105, 78, 278, 24);
-		panel.add(txtTeacher);
-		
 		txtTime = new JTextField();
 		txtTime.setEditable(false);
 		txtTime.setColumns(10);
-		txtTime.setBounds(105, 109, 278, 24);
+		txtTime.setBounds(105, 78, 278, 24);
 		panel.add(txtTime);
+		
+		txtTeacher = new JTextField();
+		txtTeacher.setEditable(false);
+		txtTeacher.setColumns(10);
+		txtTeacher.setBounds(105, 109, 278, 24);
+		panel.add(txtTeacher);
 		
 		txtClassroom = new JTextField();
 		txtClassroom.setEditable(false);
 		txtClassroom.setColumns(10);
 		txtClassroom.setBounds(105, 140, 278, 24);
 		panel.add(txtClassroom);
+		AffirmClassSelectionGUI acsg=this;
 		
-		JButton btnConfirm = new JButton("确认选择");
+		btnConfirm = new JButton("确认选择");
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Student stu=new Student("213171077","123456");
+				stu.setClassNumber("0900021122560014203");
+				// TODO Student stu=App.session.getStudent();
+				stu.setClassNumber(txtClassID.getText()+","+stu.getClassNumber());
+				takeClass(stu);
+				csg.selectClass(row);
+				acsg.dispose();
+			}
+		});
+		
 		btnConfirm.setBounds(72, 205, 107, 27);
 		contentPane.add(btnConfirm);
 		
-		JButton btnExit = new JButton("退出");
-		btnExit.setBounds(261, 205, 113, 27);
-		contentPane.add(btnExit);
+		JButton btnReturn = new JButton("返回");
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				acsg.dispose();
+			}
+		});
+		btnReturn.setBounds(261, 205, 113, 27);
+		contentPane.add(btnReturn);
 	}
 }

@@ -12,7 +12,11 @@ public class Student {
 	private String password; // 密码（MD5）
 	private String name; // 姓名
 	private String academy; // 学院代码
+
+	private String classNumber;
+
 	private Double balance; // 一卡通余额
+
 
 	@Override
 	public String toString() {
@@ -26,6 +30,14 @@ public class Student {
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
+	}
+
+	public String getClassNumber() {
+		return classNumber;
+	}
+
+	public void setClassNumber(String classNumber) {
+		this.classNumber = classNumber;
 	}
 
 	public String getCardNumber() {
@@ -78,4 +90,23 @@ public class Student {
 		this.academy = studentNumber == null ? null : studentNumber.substring(0, 2);
 	}
 	
+
+	public Student() {
+		
+	}
+
+		// TODO Auto-generated constructor stub
+
+	
+	public Student(String cardNumber, String studentNumber, String password, String name) {
+		this.cardNumber = cardNumber;
+		this.studentNumber = studentNumber;
+		this.password = password;
+		this.name = name;
+		this.academy = studentNumber.substring(0, 2);
+	}
+	
+
+
 }
+

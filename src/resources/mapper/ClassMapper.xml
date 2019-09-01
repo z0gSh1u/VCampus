@@ -6,4 +6,16 @@
     <select id="getClassInfo" parameterType="Student" resultType="ClassInfo">
 		SELECT * FROM `tb_class` 
 	</select>
+	<update id="takeClass" parameterType="Student">
+        UPDATE tb_student SET selected_course=#{classNumber} WHERE card_number=#{cardNumber}
+    </update>
+     <select id="getClassSelection" parameterType="Student" resultType="String">
+		SELECT selected_course FROM `tb_student` WHERE card_number=#{cardNumber}
+	</select>
+	 <select id="getOneClass" parameterType="String" resultType="ClassInfo">
+		SELECT * FROM `tb_class` WHERE id=#{id}
+	</select>
+	 <select id="getClassOfOneTeacher" parameterType="String" resultType="ClassInfo">
+		SELECT * FROM `tb_class` WHERE teacher=#{name}
+	</select>
 </mapper>

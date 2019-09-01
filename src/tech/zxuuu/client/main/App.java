@@ -19,8 +19,13 @@ import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.client.studentManage.StudentTableGUI;
 import tech.zxuuu.client.studentManage.SwitchManager;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
+
+import tech.zxuuu.client.teaching.ClassSelectGUI;
+import tech.zxuuu.client.teaching.ScheduleTableGUI;
+
 import tech.zxuuu.entity.ManagerType;
 import tech.zxuuu.entity.UserType;
+
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
@@ -139,9 +144,7 @@ public class App extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
         /* 请修改此处内容以快速进行前后端联调 */
-				StudentTableGUI interface1=new StudentTableGUI();
-				interface1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				interface1.setVisible(true);
+
 			}
 		});
 		panel_1.add(btnNewButton);

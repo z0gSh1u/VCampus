@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="tech.zxuuu.entity.Teacher" alias="Teacher"/>
 		<typeAlias type="tech.zxuuu.entity.Book" alias="Book"/>
 		<typeAlias type="tech.zxuuu.entity.Manager" alias="Manager"/>
-		<typeAlias type="tech.zxuuu.client.teaching.ClassInfo" alias="ClassInfo"/>
+		<typeAlias type="tech.zxuuu.entity.ClassInfo" alias="ClassInfo"/>
 	</typeAliases>
 	
 	<!-- 环境配置 -->

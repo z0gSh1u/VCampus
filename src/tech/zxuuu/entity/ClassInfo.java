@@ -1,4 +1,4 @@
-package tech.zxuuu.client.teaching;
+package tech.zxuuu.entity;
 
 public class ClassInfo {
 	private String id;
@@ -48,4 +48,8 @@ public class ClassInfo {
 	public void setClassroom(String classroom) {
 		this.classroom = classroom;
 	}    
+	
+	public ClassInfo(String id) {
+		this.id=id;
+	}
 }

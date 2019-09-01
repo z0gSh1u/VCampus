@@ -24,7 +24,7 @@ public class StudentManage {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 			
-			result = studentMapper.insertStudent(student);
+			/*result = studentMapper.insertStudent(student);*/
 			sqlSession.commit();
 		} catch (Exception e) {
 			sqlSession.rollback();
@@ -44,7 +44,12 @@ public static Boolean deleteStudent(String cardnumber) {
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
+
+
+			
+
 			ret = studentMapper.deleteStudent(cardnumber);
+
 			sqlSession.commit();
 		} catch (Exception e) {
 			sqlSession.rollback();
@@ -65,6 +70,9 @@ public static String switchStudent(String cardnumber, String academy, String stu
 		sqlSession = App.sqlSessionFactory.openSession();
 		IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 		
+
+		//ret = studentMapper.deleteStudent(cardnumber);
+
 		int one = studentMapper.searchStudentByCardNumber(cardnumber);
 		if (one == 0) {
 			return "Nocard";
@@ -79,6 +87,7 @@ public static String switchStudent(String cardnumber, String academy, String stu
 		baigei.setStudentNumber(studentnumber);
 		
 		System.out.println(baigei.toString());
+
 		
 		int rows = studentMapper.switchStudent(baigei);
 		
