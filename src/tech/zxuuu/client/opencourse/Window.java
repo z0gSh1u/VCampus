@@ -14,6 +14,8 @@ import javax.swing.event.ChangeListener;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Window extends JFrame {
 
@@ -26,7 +28,13 @@ public class Window extends JFrame {
 	private JSlider slider; // 声音控制块
 	EmbeddedMediaPlayerComponent playerComponent; // 媒体播放器组件
 
-	public Window() {
+	public Window(JFrame wolf) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				wolf.dispose();
+			}
+		});
 		setTitle("在线课程播放器 - VCampus");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(200, 80, 900, 600);
