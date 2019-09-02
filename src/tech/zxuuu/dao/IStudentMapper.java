@@ -1,5 +1,8 @@
 package tech.zxuuu.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import tech.zxuuu.entity.Student;
 
 public interface IStudentMapper {
@@ -17,10 +20,14 @@ public interface IStudentMapper {
 	
 	public int deleteStudent(String cardnumber);
 	
-	public int searchStudentByCardNumber(String cardnumber);
+	public Integer searchStudentByCardNumber(String cardnumber);
 	
-	public int searchStudentByStudentNumber(String studentnumber);
+	public Integer searchStudentByStudentNumber(String studentnumber);
 	
 	public int switchStudent(Student student);
+	
+	public List<Student> tableDisplay(Map map);
+	
+	public Boolean chargeCard(Map map);
 	
 }
