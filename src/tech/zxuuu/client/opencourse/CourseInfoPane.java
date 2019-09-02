@@ -66,12 +66,12 @@ public class CourseInfoPane extends JPanel {
 
 		this.lblCourseName = new JLabel("这里是课程名");
 		lblCourseName.setFont(new Font("宋体", Font.PLAIN, 50));
-		lblCourseName.setBounds(122, 0, 307, 58);
+		lblCourseName.setBounds(122, 0, 477, 58);
 		add(lblCourseName);
 
 		this.lblSpeaker = new JLabel("这里是主讲人");
 		lblSpeaker.setFont(new Font("宋体", Font.PLAIN, 35));
-		lblSpeaker.setBounds(122, 80, 219, 41);
+		lblSpeaker.setBounds(122, 80, 465, 41);
 		add(lblSpeaker);
 
 		JButton btnNewButton = new JButton("进入");
@@ -84,7 +84,7 @@ public class CourseInfoPane extends JPanel {
 				stuCourseGUI.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(430, 80, 99, 41);
+		btnNewButton.setBounds(608, 80, 99, 41);
 		add(btnNewButton);
 	}
 

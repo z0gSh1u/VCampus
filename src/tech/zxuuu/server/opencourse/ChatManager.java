@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.alibaba.fastjson.JSON;
 
+import tech.zxuuu.client.main.Utils;
 import tech.zxuuu.dao.IOpenCourseMapper;
 import tech.zxuuu.entity.UserType;
 import tech.zxuuu.server.main.App;
@@ -25,7 +26,7 @@ public class ChatManager extends Thread {
 
 	private ChatManager() {
 		try {
-			serverSocket = new ServerSocket(1984);
+			serverSocket = new ServerSocket(Utils.getChatPort());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return;
@@ -38,6 +39,7 @@ public class ChatManager extends Thread {
 	private ServerSocket serverSocket;
 	private Map<Integer, Vector<ChatSocket>> userLists;
 
+	/*
 	private String toEmoticon(String str) {
 		int curPos = str.indexOf("\\");
 		while (curPos > -1) {
@@ -45,7 +47,7 @@ public class ChatManager extends Thread {
 			if (endPos == -1)
 				break;
 			String name = str.substring(curPos + 1, endPos);
-			String emo = "";
+			String emo = null;
 			try {
 				SqlSession sqlSession = App.sqlSessionFactory.openSession();
 				IOpenCourseMapper openCourseMapper = sqlSession.getMapper(IOpenCourseMapper.class);
@@ -57,18 +59,19 @@ public class ChatManager extends Thread {
 				emo = "";
 			}
 
-			if (!"".equals(emo)) {
+			if (emo != null) {
 				str = str.substring(0, curPos) + emo + str.substring(endPos + 1);
 				System.out.println(str);
 			}
-			curPos = str.indexOf("{", curPos);
+			curPos = str.indexOf("\\", curPos+1);
 		}
 		return str;
 	}
+	*/
 
 	private void broadcast(String str, ChatSocket speaker) {
 		String text = "";
-		str = toEmoticon(str);
+		//str = toEmoticon(str);
 		switch (speaker.getUserType()) {
 		case STUDENT:
 			text = "[学生]";

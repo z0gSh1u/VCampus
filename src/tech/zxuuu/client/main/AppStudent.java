@@ -51,7 +51,7 @@ public class AppStudent extends JFrame {
 	 * Create the frame.
 	 */
 	public AppStudent() {
-		
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AppStudent.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("学生主页 - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -236,6 +236,7 @@ public class AppStudent extends JFrame {
 
 				if (result) {
 					SwingUtils.showMessage(null, "充值成功！", "提示");
+					lblBalance.setText(String.format("%.2f", (App.session.getStudent().getBalance() + Double.valueOf(money))));
 				} else {
 					SwingUtils.showError(null, "充值失败！", "错误");
 				}
@@ -246,10 +247,11 @@ public class AppStudent extends JFrame {
 		panel.add(btnNewButton);
 
 		// TODO Uncomment this when release.
-//		Integer today = OtherUtils.getDay(ResponseUtils.getResponseByHash(
-//				new Request(App.connectionToServer, null, "tech.zxuuu.server.main.UtilsApi.getTrustedUnixTimeStamp", null)
-//						.send())
-//				.getReturn(Long.class));
+		// Integer today = OtherUtils.getDay(ResponseUtils.getResponseByHash(
+		// new Request(App.connectionToServer, null,
+		// "tech.zxuuu.server.main.UtilsApi.getTrustedUnixTimeStamp", null)
+		// .send())
+		// .getReturn(Long.class));
 		Integer today = 5;
 		lblToday.setText("今天是星期" + (today == 1 ? "一"
 				: today == 2 ? "二"

@@ -9,10 +9,18 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.alibaba.fastjson.JSON;
 
 import tech.zxuuu.client.main.App;
+import tech.zxuuu.client.main.Utils;
+import tech.zxuuu.dao.IOpenCourseMapper;
+import tech.zxuuu.entity.EmoticonInfo;
+import tech.zxuuu.entity.OpenCourseInfo;
+import tech.zxuuu.net.Request;
 import tech.zxuuu.server.opencourse.ChatSocket;
+import tech.zxuuu.util.ResponseUtils;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
@@ -22,6 +30,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import com.sun.jna.Native;
@@ -29,6 +40,13 @@ import com.sun.jna.NativeLibrary;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.Color;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class StuCourseGUI extends JFrame {
 
@@ -42,8 +60,11 @@ public class StuCourseGUI extends JFrame {
 	private int frameHeight;
 	private int courseId;
 	private ChatSocket chatSocket;
+	private Map<String, String> emoticonMap;
 
 	static Window videoFrame;
+	private JScrollPane scpEmoticonList;
+	private JPanel pnlEmoticonList;
 
 	private void updateMessage(String str, ChatSocket listener) {
 		System.out.println("[StuCourseGUI]收到新信息:" + str);
@@ -52,14 +73,39 @@ public class StuCourseGUI extends JFrame {
 		int f = text.lastIndexOf("</body>");
 		text = text.substring(s + 11, f - 3);
 		epnChatBox.setText(text + str);
-		epnChatBox.grabFocus();
-		epnInputBox.grabFocus();
+		try{
+			epnChatBox.validate();
+			epnChatBox.repaint();
+		epnChatBox.updateUI();
+		epnChatBox.revalidate();
+		}catch(Exception e) {
+			System.out.println("无事发生");
+		}
+		
 	}
 
+	private String toEmoticon(String str) {
+		int curPos = str.indexOf("\\");
+		while (curPos > -1) {
+			int endPos = str.indexOf("/", curPos);
+			if (endPos == -1)
+				break;
+			String name = str.substring(curPos + 1, endPos);
+			String emo = emoticonMap.get(name);
+			if (emo != null) {
+				str = str.substring(0, curPos) + emo + str.substring(endPos + 1);
+				System.out.println(str);
+			}
+			curPos = str.indexOf("\\", curPos+1);
+		}
+		return str;
+	}
+	
 	private Boolean sendMessage(String str) {
-
 		if (str.isEmpty())
 			return false;
+		scpEmoticonList.setVisible(false);
+		str = toEmoticon(str);
 		str = str.replaceAll("\n", "<br/>");
 		str = str.replaceAll("\r", "");
 
@@ -69,7 +115,7 @@ public class StuCourseGUI extends JFrame {
 
 	private Boolean connect() {
 		try {
-			new Thread((this.chatSocket = new ChatSocket(new Socket("127.0.0.1", 1984),
+			new Thread((this.chatSocket = new ChatSocket(new Socket(Utils.getServerHost(), Utils.getChatPort()),
 					(String str, ChatSocket chatSocket) -> updateMessage(str, chatSocket)))).start();
 			this.chatSocket.setUserType(App.session.getUserType());
 			switch (this.chatSocket.getUserType()) {
@@ -92,29 +138,68 @@ public class StuCourseGUI extends JFrame {
 		}
 		return true;
 	}
+	
+	private Boolean listEmoticon() {
+		this.emoticonMap = new HashMap<String, String>();
+		System.out.println("正在获取表情");
+		List<EmoticonInfo> emoticonList = ResponseUtils.getResponseByHash(
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.opencourse.StuCourse.getEmoticonList", null).send())
+				.getListReturn(EmoticonInfo.class);
+		System.out.println("表情获取完成");
+		if(emoticonList.isEmpty())
+			return false;
+		System.out.println("即将列出表情");
+		for(EmoticonInfo emoInfo : emoticonList) {
+			emoticonMap.put(emoInfo.getName(), emoInfo.getAddr());
+			JEditorPane newEmo = new JEditorPane();
+			newEmo.setContentType("text/html");
+			newEmo.setText(emoInfo.getAddr());
+			newEmo.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					epnInputBox.setText(epnInputBox.getText() + "\\" + emoInfo.getName() + "/");
+				}
+			});
+			newEmo.setEditable(false);
+			pnlEmoticonList.add(newEmo);
+		}
+		return true;
+	}
 
 	private void init() {
 		connect();
+		listEmoticon();
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public StuCourseGUI(int courseId, String videoUrl) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				videoFrame.dispose();
+			}
+		});
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(StuCourseGUI.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("实时聊天 - VCampus");
 
-		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "D:\\Program Files\\VideoLAN\\VLC\\sdk\\lib"); // 导入的路径是vlc的安装路径
+		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "P:\\VLC"); // 导入的路径是vlc的安装路径
 		Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
 
+		JFrame that = this;
+		
 		EventQueue.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				try {
-					videoFrame = new Window();
+					videoFrame = new Window(that);
+					videoFrame.setBounds((screenWidth - videoFrame.getWidth() - frameWidth) / 2, (screenHeight - videoFrame.getHeight()) / 2, videoFrame.getWidth(), videoFrame.getHeight());
+					that.setBounds((screenWidth - videoFrame.getWidth() - frameWidth) / 2 + videoFrame.getWidth(), (screenHeight - videoFrame.getHeight()) / 2, frameWidth, frameHeight);
+					
 					videoFrame.setVisible(true);
 					videoFrame.getMediaPlayer().playMedia(videoUrl);
 
@@ -147,29 +232,31 @@ public class StuCourseGUI extends JFrame {
 		});
 
 		this.courseId = courseId;
-
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		screenWidth = (int) screenSize.getWidth();
-		screenHeight = (int) screenSize.getHeight();
-		frameWidth = 800;
-		frameHeight = 600;
+		this.screenWidth = (int) screenSize.getWidth();
+		this.screenHeight = (int) screenSize.getHeight();
+		this.frameWidth = 406;
+		this.frameHeight = 600;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, 406, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		scpEmoticonList = new JScrollPane();
+		scpEmoticonList.setBounds(33, 84, 322, 293);
+		contentPane.add(scpEmoticonList);
+		scpEmoticonList.setVisible(false);
+		
+		pnlEmoticonList = new JPanel();
+		scpEmoticonList.setViewportView(pnlEmoticonList);
+		pnlEmoticonList.setBackground(Color.LIGHT_GRAY);
+		pnlEmoticonList.setLayout(new GridLayout(0, 4, 0, 0));
 
 		epnInputBox = new JEditorPane();
-		epnInputBox.setBounds(137, 416, 218, 75);
+		epnInputBox.setBounds(33, 398, 322, 62);
 		contentPane.add(epnInputBox);
-
-		epnChatBox = new JEditorPane();
-		epnChatBox.setEditable(false);
-		epnChatBox.setContentType("text/html");
-		epnChatBox.setBounds(33, 13, 322, 390);
-		contentPane.add(epnChatBox);
 
 		JButton btnSendMess = new JButton("发送");
 		btnSendMess.addActionListener(new ActionListener() {
@@ -188,13 +275,39 @@ public class StuCourseGUI extends JFrame {
 				}
 			}
 		});
-		btnSendMess.setBounds(33, 504, 322, 37);
+		btnSendMess.setBounds(33, 473, 322, 37);
 		contentPane.add(btnSendMess);
-
-		JPanel pnlEmoticon = new JPanel();
-		pnlEmoticon.setBounds(33, 416, 90, 75);
-		contentPane.add(pnlEmoticon);
-		pnlEmoticon.setLayout(new GridLayout(0, 10, 0, 0));
+				
+		JScrollPane scpChatBox = new JScrollPane();
+		scpChatBox.setBounds(33, 13, 322, 365);
+		contentPane.add(scpChatBox);
+		
+		epnChatBox = new JEditorPane();
+		scpChatBox.setViewportView(epnChatBox);
+		epnChatBox.setEditable(false);
+		epnChatBox.setContentType("text/html");
+		
+		JEditorPane epnShowEmoticon = new JEditorPane();
+		epnShowEmoticon.setEditable(false);
+		epnShowEmoticon.setContentType("text/html");
+		epnShowEmoticon.setBounds(33, 376, 22, 22);
+		epnShowEmoticon.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				scpEmoticonList.setVisible(!scpEmoticonList.isVisible());
+			}
+		});
+		contentPane.add(epnShowEmoticon);
+		
+		epnChatBox.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				scpEmoticonList.setVisible(false);
+			}
+		});
+		this.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				scpEmoticonList.setVisible(false);
+			}
+		});
 
 		init();
 	}
@@ -239,5 +352,4 @@ public class StuCourseGUI extends JFrame {
 	public static void setVol(int v) {
 		videoFrame.getMediaPlayer().setVolume(v);
 	}
-
 }

@@ -32,4 +32,13 @@ public final class ServerUtils {
 		return prop.getProperty("mainport");
 	}
 
+	public static String getChatPort() {
+		Properties prop = new Properties();
+		try {
+			prop.load(ServerUtils.class.getResourceAsStream(CONFIGPATH));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return prop.getProperty("chatport");
+	}
 }
