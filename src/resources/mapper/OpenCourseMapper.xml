@@ -4,21 +4,25 @@
 
 <mapper namespace="tech.zxuuu.dao.IOpenCourseMapper">
 
-	<select id="getOpenCourseList"
-		resultType="OpenCourseInfo">
+	<select id="getOpenCourseList" resultType="OpenCourseInfo">
 		SELECT
 		`Id` as "id",
 		`CourseName` as "courseName",
-		`Speaker`
-		as "speaker",
+		`Speaker` as "speaker",
 		`Preview` as "preview",
 		`video` as "video"
 		FROM `tb_opencourse`
 	</select>
+	
+	<select id="getEmoticonList" resultType="tech.zxuuu.entity.EmoticonInfo">
+	    SELECT
+	    `name` as `name`,
+	    `addr` as `addr`
+	    FROM `tb_emoticon`
+	</select>
 
-	<select id="getEmoticon" parameterType="String"
-		resultType="String">
-		SELECT `URL` FROM tb_emoticon WHERE `Name`=#{emoName}
+	<select id="getEmoticon" parameterType="String" resultType="String">
+		SELECT `addr` FROM tb_emoticon WHERE `Name`=#{emoName}
 	</select>
 
 	<select id="getMaxId" resultType="Integer">
