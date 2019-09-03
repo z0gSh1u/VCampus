@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,10 +18,14 @@ import javax.swing.table.DefaultTableModel;
 
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
+
+import tech.zxuuu.entity.Book;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class QueryBook extends JDialog {
 
@@ -29,7 +34,8 @@ public class QueryBook extends JDialog {
 	private JTextField txtAuthor;
 	private JTable tblSearch;
 	private DefaultTableModel model;
-	private JTextField txtISBN; 
+	private JTextField txtISBN;
+	private List<Book> list = null;
 
 	/**
 	 * Launch the application.
@@ -77,33 +83,77 @@ public class QueryBook extends JDialog {
 		lblAuthor.setBounds(0, 71, 45, 18);
 		contentPanel.add(lblAuthor);
 		
+		String[] tableHeader= {"isbn","title","author"};
+		model=new DefaultTableModel(null, tableHeader);
+		tblSearch = new JTable();
+		tblSearch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(e.getClickCount()==2) {
+					int row=((JTable)e.getSource()).rowAtPoint(e.getPoint());
+		            BookDetails details=
+		            		new BookDetails(
+		            				list.get(row).getTitle(),
+		            				list.get(row).getISBN(),
+		            				list.get(row).getCategory(),
+		            				list.get(row).getDetails());
+
+		            details.setModal(true);
+		            details.setVisible(true);
+			}
+		}});
+        JScrollPane jsp = new JScrollPane(tblSearch);
+		
 		JButton btnSearch = new JButton("检索");
 		btnSearch.setBounds(29, 156, 63, 27);
+		
 		btnSearch.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.Book.searchAuthorByTitle", 
-					new Object[] {txtTitle.getText()});
+				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.fuzzySearchByTitleAndAuthor", 
+					new Object[] {txtTitle.getText(),txtAuthor.getText()});
 				String hash = req.send();
 				ResponseUtils.blockAndWaitResponse(hash);
 				Response response = ResponseQueue.getInstance().consume(hash);
-				String ret = response.getReturn(String.class);
-				SwingUtils.showMessage(null, ret, "test");
+
+				list = response.getListReturn(Book.class);
+				String[][] listData=new String[list.size()][3];
+				model.setRowCount(0);
+				if(list == null) {
+					SwingUtils.showMessage(null, "No finding","test");
+				}
+				else {
+					for(int i=0;i<list.size();i++) {
+						listData[i][0]=list.get(i).getISBN();
+						listData[i][1]=list.get(i).getTitle();
+						listData[i][2]=list.get(i).getAuthor();
+					}
+					model= new DefaultTableModel(listData, tableHeader) {
+						@Override
+						public boolean isCellEditable(int a,int b) {
+							   return false;
+						}
+					};
+				    tblSearch.setModel(model);
+					SwingUtils.showMessage(null,"Success", "test");
+
+				}
 			}
+			
 		});
+
 		contentPanel.add(btnSearch);
-		
 		JButton btnReset = new JButton("重置");
 		btnReset.setBounds(125, 156, 63, 27);
 		btnReset.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
+				txtTitle.setText("");
+				txtAuthor.setText("");
 			}
 		});
 		contentPanel.add(btnReset);
-		
-		String[] book= {"isbn","title","author"};
-		model=new DefaultTableModel(null,book);
-		tblSearch = new JTable();
-		JScrollPane jsp = new JScrollPane(tblSearch);
+
 		jsp.setBounds(255, 142, 278, 135);
 		contentPanel.add(jsp);
 		tblSearch.setModel(model);
@@ -119,19 +169,25 @@ public class QueryBook extends JDialog {
 		contentPanel.add(lblISBN);
 		
 		JButton btnComfirm = new JButton("确认");
-		btnComfirm.setBounds(125, 270, 63, 27);
+		btnComfirm.setBounds(125, 271, 63, 27);
 		btnComfirm.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Request request=new Request(App.connectionToServer,App.session,"tech.zxuuu.server.library.BookServer.borrowBook",
 						new Object[] {txtISBN.getText()});
 				String hash=request.send();
 				ResponseUtils.blockAndWaitResponse(hash);
 				Response response=ResponseQueue.getInstance().consume(hash);
-				Boolean result=response.getReturn(Boolean.class);
-				
-				SwingUtils.showMessage(null, "Success", "test");
-				
-				
+
+				int result=response.getReturn(Integer.class);
+				System.out.println(result);
+				if(result==2)
+				  SwingUtils.showMessage(null, "Succeed borrowing", "test");
+				if(result==1)
+					SwingUtils.showError(null, "The book has been borrowed", "test");
+				if(result==0)
+					SwingUtils.showError(null, "The ISBN is invalid", "test");
+
 			}
 		});
 		contentPanel.add(btnComfirm);

@@ -18,25 +18,28 @@ import tech.zxuuu.net.RequestListener;
 import tech.zxuuu.server.messageQueue.RequestHandler;
 import tech.zxuuu.server.messageQueue.RequestQueue;
 import tech.zxuuu.util.ServerUtils;
-import tech.zxuuu.util.SwingUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 
+/**
+ * 服务器端全局App对象
+ * 
+ * @author z0gSh1u
+ */
 public class App extends JFrame {
 
 	private JPanel contentPane;
-	
+
 	// 添加属性
 	private RequestListener requestListener;
 	// 服务器端全局请求消息队列
-	public static RequestQueue requestQueue;	
+	public static RequestQueue requestQueue;
 	public static RequestHandler requestHandler;
 	public static SqlSessionFactory sqlSessionFactory;
-	
+
 	public static JTextPane paneLog;
 
 	/**
@@ -54,12 +57,14 @@ public class App extends JFrame {
 				}
 			}
 		});
+		
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public App() {
+		setResizable(false);
 		setTitle("服务器端 - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 718, 493);
@@ -67,11 +72,11 @@ public class App extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
-		
+
 		JLabel label = new JLabel("服务器日志");
 		label.setBounds(302, 13, 75, 18);
 		panel_1.add(label);
@@ -81,7 +86,7 @@ public class App extends JFrame {
 		App.paneLog = new JTextPane();
 		App.paneLog.setEditable(false);
 		scrollPane.setViewportView(paneLog);
-		
+
 		/**
 		 * 新增部分
 		 */
@@ -95,7 +100,7 @@ public class App extends JFrame {
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			App.paneLog.setText("数据库配置读取成功！");
 		} catch (IOException e) {
-			App.paneLog.setText("严重错误！数据库配置读取失败！"+e.toString());
+			App.paneLog.setText("严重错误！数据库配置读取失败！" + e.toString());
 			e.printStackTrace();
 		}
 		// 尝试连接数据库
@@ -115,14 +120,15 @@ public class App extends JFrame {
 		// 启动请求处理器
 		App.requestHandler = new RequestHandler();
 		App.requestHandler.start();
-		App.paneLog.setText(paneLog.getText() + (paneLog.getText().equals("") ? "" : "\n") + 
-				"开始服务器端侦听...端口=" + ServerUtils.getMainPort());;
+		App.paneLog.setText(
+				paneLog.getText() + (paneLog.getText().equals("") ? "" : "\n") + "开始服务器端侦听...端口=" + ServerUtils.getMainPort());
+		;
 		/*****************************************/
 
 	}
-	
+
 	public static void appendLog(String msg) {
 		App.paneLog.setText(App.paneLog.getText() + "\n" + msg);
 	}
-	
+
 }

@@ -15,5 +15,8 @@
 	
 	<!-- Used By Auth Module -->
 	
+	<select id="getTeacherNameById" parameterType="Map" resultType="String">
+		SELECT `name` FROM `tb_teacher` WHERE `academy` = #{academy} AND `id_in_academy` = #{idInAcademy} LIMIT 1
+ 	</select>
 
 </mapper>
