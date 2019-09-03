@@ -2,9 +2,7 @@ package tech.zxuuu.entity;
 
 /**
  * 教师类
- * @author z0gSh1u
  */
-
 public class Teacher {
 
 	private String cardNumber; // 用户名

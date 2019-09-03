@@ -17,41 +17,40 @@ import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 
+/**
+ * 学生课表
+ * 
+ * @author 王志华
+ */
 public class ScheduleTablePane extends JPanel {
 
 	private JLabel[] labels;
 
 	public List<ClassInfo> getClassOfOneTeacher(String name) {
-		Request req = new Request(App.connectionToServer, null,
-				"tech.zxuuu.server.teaching.ClassSelectGUI.getClassOfOneTeacher", new Object[] { name });
-		String hash = req.send();
-		ResponseUtils.blockAndWaitResponse(hash);
-		Response resp = ResponseQueue.getInstance().consume(hash);
-		return resp.getListReturn(ClassInfo.class);
+		return ResponseUtils
+				.getResponseByHash(new Request(App.connectionToServer, null,
+						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassOfOneTeacher", new Object[] { name }).send())
+				.getListReturn(ClassInfo.class);
 	}
 
 	public String getClassSeletion(Student student) {
-		Request req = new Request(App.connectionToServer, null,
-				"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { student });
-		String hash = req.send();
-		ResponseUtils.blockAndWaitResponse(hash);
-		Response resp = ResponseQueue.getInstance().consume(hash);
-		return resp.getReturn(String.class);
+		return ResponseUtils
+				.getResponseByHash(new Request(App.connectionToServer, null,
+						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { student }).send())
+				.getReturn(String.class);
 	}
 
 	public ClassInfo getOneClass(String ID) {
-		Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass",
-				new Object[] { ID });
-		String hash = req.send();
-		ResponseUtils.blockAndWaitResponse(hash);
-		Response resp = ResponseQueue.getInstance().consume(hash);
-		return resp.getReturn(ClassInfo.class);
+		return ResponseUtils
+				.getResponseByHash(new Request(App.connectionToServer, null,
+						"tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass", new Object[] { ID }).send())
+				.getReturn(ClassInfo.class);
 	}
 
 	public void studentSchedule() {
-		Student stu=App.session.getStudent();
+		Student stu = App.session.getStudent();
 		String temp = getClassSeletion(stu);
-		if (temp==null||temp.equals("")) {
+		if (temp == null || temp.equals("")) {
 			return;
 		}
 		String[] course = temp.split(",");
@@ -111,7 +110,6 @@ public class ScheduleTablePane extends JPanel {
 			}
 		}
 
-		// BLOCK ALERT: Should never be modified unless regulations changed
 		labels[0].setText("<html><body><h1>课程表</h1></body></html>");
 		ScheduleUtilities.setWeekLabels(labels);
 		labels[6].setText("<html><body><h2>第1-2节<br /></h2>上午</body></html>");

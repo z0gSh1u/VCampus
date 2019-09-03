@@ -12,16 +12,12 @@ import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
-import org.apache.ibatis.jdbc.Null;
-
-import com.sun.javafx.collections.SortableList;
-
 import tech.zxuuu.client.library.LibraryStudentGUI;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.client.shop.ShopFirstPage;
 import tech.zxuuu.client.teaching.studentSide.TeachingStudentMain;
 import tech.zxuuu.entity.ClassInfo;
-import tech.zxuuu.entity.OpenCourseInfo;
+import tech.zxuuu.entity.NoticeInfo;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.util.OtherUtils;
 import tech.zxuuu.util.ResponseUtils;
@@ -33,40 +29,21 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
 
 public class AppStudent extends JFrame {
 
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					AppStudent frame = new AppStudent();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	
-	
-	
-	/**
 	 * Create the frame.
 	 */
 	public AppStudent() {
-		
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AppStudent.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("学生主页 - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 800);
+		setBounds(100, 100, 1151, 800);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 255, 240));
 		contentPane.setLocation(-871, -176);
@@ -93,7 +70,7 @@ public class AppStudent extends JFrame {
 		});
 		btnTeaching.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		btnTeaching.setIcon(new ImageIcon(AppStudent.class.getResource("/resources/assets/icon/teaching.png")));
-		btnTeaching.setBounds(347, 281, 220, 80);
+		btnTeaching.setBounds(374, 600, 220, 80);
 		contentPane.add(btnTeaching);
 
 		JButton btnLibrary = new JButton(" 李文歪图书馆");
@@ -108,7 +85,7 @@ public class AppStudent extends JFrame {
 		btnLibrary.setBackground(new Color(255, 255, 240));
 		btnLibrary.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		btnLibrary.setIcon(new ImageIcon(AppStudent.class.getResource("/resources/assets/icon/library.png")));
-		btnLibrary.setBounds(103, 184, 220, 80);
+		btnLibrary.setBounds(120, 491, 220, 80);
 		contentPane.add(btnLibrary);
 
 		JButton btnShop = new JButton("天不平超市");
@@ -122,23 +99,21 @@ public class AppStudent extends JFrame {
 		});
 		btnShop.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		btnShop.setIcon(new ImageIcon(AppStudent.class.getResource("/resources/assets/icon/shop.png")));
-		btnShop.setBounds(103, 281, 220, 80);
+		btnShop.setBounds(120, 600, 220, 80);
 		contentPane.add(btnShop);
 
 		JButton btnOpencourse = new JButton("在线课堂");
 		btnOpencourse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				StuMenuGUI stuMenuGUI = new StuMenuGUI();
 				stuMenuGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				stuMenuGUI.setVisible(true);
-
 			}
 		});
 		btnOpencourse.setIcon(new ImageIcon(AppStudent.class.getResource("/resources/assets/icon/opencourse.png")));
 		btnOpencourse.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		btnOpencourse.setBounds(347, 184, 220, 80);
+		btnOpencourse.setBounds(374, 491, 220, 80);
 		contentPane.add(btnOpencourse);
 
 		JLabel lblNewLabel = new JLabel("");
@@ -151,12 +126,12 @@ public class AppStudent extends JFrame {
 		lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setIcon(new ImageIcon(AppStudent.class.getResource("/resources/assets/icon/aboutme.png")));
-		lblNewLabel_1.setBounds(871, 97, 122, 64);
+		lblNewLabel_1.setBounds(806, 143, 122, 64);
 		contentPane.add(lblNewLabel_1);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(135, 206, 250), 1, true));
-		panel.setBounds(871, 175, 280, 216);
+		panel.setBounds(806, 221, 280, 216);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -211,12 +186,12 @@ public class AppStudent extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel_2.setIcon(new ImageIcon(AppStudent.class.getResource("/resources/assets/icon/test.png")));
-		lblNewLabel_2.setBounds(871, 404, 64, 64);
+		lblNewLabel_2.setBounds(806, 450, 64, 64);
 		contentPane.add(lblNewLabel_2);
 
 		JLabel lblToday = new JLabel("今天是星期");
 		lblToday.setFont(new Font("微软雅黑", Font.PLAIN, 17));
-		lblToday.setBounds(949, 414, 198, 18);
+		lblToday.setBounds(884, 460, 198, 18);
 		contentPane.add(lblToday);
 
 		/**
@@ -227,9 +202,10 @@ public class AppStudent extends JFrame {
 				+ OtherUtils.getAcademyByNumber(App.session.getStudent().getAcademy()));
 		lblBalance.setText(String.format("%.2f", App.session.getStudent().getBalance()));
 		lblStudentNumber.setText(App.session.getStudent().getStudentNumber());
+		lblCardNumber.setText(App.session.getStudent().getCardNumber());
 
-		JButton btnNewButton = new JButton("充值");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnRecharge = new JButton("充值");
+		btnRecharge.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -247,66 +223,152 @@ public class AppStudent extends JFrame {
 
 				if (result) {
 					SwingUtils.showMessage(null, "充值成功！", "提示");
+					lblBalance
+							.setText(String.format("%.2f", Double.parseDouble(lblBalance.getText()) + Double.parseDouble(money)));
 				} else {
 					SwingUtils.showError(null, "充值失败！", "错误");
 				}
 
 			}
 		});
-		btnNewButton.setBounds(203, 147, 63, 27);
-		panel.add(btnNewButton);
+		btnRecharge.setBounds(203, 147, 63, 27);
+		panel.add(btnRecharge);
 
-		// TODO Uncomment this when release.
-//		Integer today = OtherUtils.getDay(ResponseUtils.getResponseByHash(
-//				new Request(App.connectionToServer, null, "tech.zxuuu.server.main.UtilsApi.getTrustedUnixTimeStamp", null)
-//						.send())
-//				.getReturn(Long.class));
-		Integer today = 3;
+		Integer today = OtherUtils.getDay(ResponseUtils.getResponseByHash(
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.main.UtilsApi.getTrustedUnixTimeStamp", null)
+						.send())
+				.getReturn(Long.class));
 		lblToday.setText("今天是星期" + (today == 1 ? "一"
 				: today == 2 ? "二"
 						: today == 3 ? "三" : today == 4 ? "四" : today == 5 ? "五" : today == 6 ? "六" : today == 7 ? "日" : "..."));
 
+		/* 计算今日课程 */
 		JLabel lblTodayCourses = new JLabel("今日课程：");
-		String selectedClass=ResponseUtils.getResponseByHash(
+		String selectedClass = ResponseUtils.getResponseByHash(
 				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection",
-						new Object[] {App.session.getStudent()}).send())
+						new Object[] { App.session.getStudent() }).send())
 				.getReturn(String.class);
-		
-		String[] course=selectedClass.split(",");
-		
-		ClassInfo [] todayClass=new ClassInfo [5];
-		for (int i=0;i<5;i++) {
-			todayClass[i]=null;
+
+		String[] course = selectedClass.split(",");
+
+		ClassInfo[] todayClass = new ClassInfo[5];
+		for (int i = 0; i < 5; i++) {
+			todayClass[i] = null;
 		}
-		
-		for (int i=0;i<course.length;i++) {
-			if (Integer.valueOf(course[i].charAt(6)-48)==today) {
-				ClassInfo cla=ResponseUtils.getResponseByHash(
-						new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass",
-								new Object[] {course[i]}).send())
+
+		for (int i = 0; i < course.length; i++) {
+			if (Integer.valueOf(course[i].charAt(6) - 48) == today) {
+				ClassInfo cla = ResponseUtils
+						.getResponseByHash(new Request(App.connectionToServer, null,
+								"tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass", new Object[] { course[i] }).send())
 						.getReturn(ClassInfo.class);
-				todayClass[(Integer.valueOf(course[i].charAt(8))-48)/2-1]=cla;
+				todayClass[(Integer.valueOf(course[i].charAt(8)) - 48) / 2 - 1] = cla;
 			}
-			if (Integer.valueOf(course[i].charAt(9)-48)==today) {
-				ClassInfo cla=ResponseUtils.getResponseByHash(
-						new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass",
-								new Object[] {course[i]}).send())
+			if (Integer.valueOf(course[i].charAt(9) - 48) == today) {
+				ClassInfo cla = ResponseUtils
+						.getResponseByHash(new Request(App.connectionToServer, null,
+								"tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass", new Object[] { course[i] }).send())
 						.getReturn(ClassInfo.class);
-				todayClass[(Integer.valueOf(course[i].charAt(11))-48)/2-1]=cla;
+				todayClass[(Integer.valueOf(course[i].charAt(11)) - 48) / 2 - 1] = cla;
 			}
 		}
-		
-		for (int i=0;i<5;i++) {
-			if (todayClass[i]!=null)
-			{
-			   System.out.println(i);
-			   System.out.println(todayClass[i].getClassName()+"  "+todayClass[i].getTime());
+
+		JLabel lblCI1 = new JLabel("无课程");
+		lblCI1.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		JLabel lblCI2 = new JLabel("无课程");
+		lblCI2.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		JLabel lblCI3 = new JLabel("无课程");
+		lblCI3.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		JLabel lblCI4 = new JLabel("无课程");
+		lblCI4.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		JLabel lblCI5 = new JLabel("无课程");
+		lblCI5.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		JLabel[] lblCourses = new JLabel[] { lblCI1, lblCI2, lblCI3, lblCI4, lblCI5 };
+
+		for (int i = 0; i < 5; i++) {
+			if (todayClass[i] != null) {
+				lblCourses[i].setText(todayClass[i].getClassName() + " @ " + todayClass[i].getClassroom());
 			}
 		}
-		
+
 		lblTodayCourses.setFont(new Font("微软雅黑", Font.PLAIN, 17));
-		lblTodayCourses.setBounds(949, 445, 115, 18);
+		lblTodayCourses.setBounds(884, 491, 115, 18);
 		contentPane.add(lblTodayCourses);
 
+		JLabel lblNewLabel_3 = new JLabel("1~2节");
+		lblNewLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		lblNewLabel_3.setBounds(806, 541, 64, 24);
+		contentPane.add(lblNewLabel_3);
+
+		JLabel label_6 = new JLabel("3~4节");
+		label_6.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		label_6.setBounds(806, 578, 64, 24);
+		contentPane.add(label_6);
+
+		JLabel label_7 = new JLabel("5~6节");
+		label_7.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		label_7.setBounds(806, 615, 64, 24);
+		contentPane.add(label_7);
+
+		JLabel label_8 = new JLabel("7~8节");
+		label_8.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		label_8.setBounds(806, 652, 64, 24);
+		contentPane.add(label_8);
+
+		JLabel label_9 = new JLabel("9~10节");
+		label_9.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		label_9.setBounds(806, 689, 64, 24);
+		contentPane.add(label_9);
+
+		lblCI1.setBounds(884, 546, 222, 18);
+		contentPane.add(lblCI1);
+
+		lblCI2.setBounds(884, 583, 222, 18);
+		contentPane.add(lblCI2);
+
+		lblCI3.setBounds(884, 620, 222, 18);
+		contentPane.add(lblCI3);
+
+		lblCI4.setBounds(884, 657, 222, 18);
+		contentPane.add(lblCI4);
+
+		lblCI5.setBounds(884, 694, 222, 18);
+		contentPane.add(lblCI5);
+
+		JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4.setIcon(new ImageIcon(AppStudent.class.getResource("/resources/assets/picture/mainbanner.png")));
+		lblNewLabel_4.setBounds(418, 0, 730, 130);
+		contentPane.add(lblNewLabel_4);
+
+		List<NoticeInfo> noticeInfos = ResponseUtils
+				.getResponseByHash(
+						new Request(App.connectionToServer, null, "tech.zxuuu.server.main.UtilsApi.getTop4Notice", null).send())
+				.getListReturn(NoticeInfo.class);
+
+		NoticeBlock noticeBlock1 = new NoticeBlock(noticeInfos.get(0).getTitle(),
+				quickFormatDate(noticeInfos.get(0).getDate()));
+		noticeBlock1.setBounds(57, 170, 630, 50);
+		contentPane.add(noticeBlock1);
+
+		NoticeBlock noticeBlock2 = new NoticeBlock(noticeInfos.get(1).getTitle(),
+				quickFormatDate(noticeInfos.get(1).getDate()));
+		noticeBlock2.setBounds(57, 233, 630, 50);
+		contentPane.add(noticeBlock2);
+
+		NoticeBlock noticeBlock3 = new NoticeBlock(noticeInfos.get(2).getTitle(),
+				quickFormatDate(noticeInfos.get(2).getDate()));
+		noticeBlock3.setBounds(57, 296, 630, 50);
+		contentPane.add(noticeBlock3);
+
+		NoticeBlock noticeBlock4 = new NoticeBlock(noticeInfos.get(3).getTitle(),
+				quickFormatDate(noticeInfos.get(3).getDate()));
+		noticeBlock4.setBounds(57, 359, 630, 50);
+		contentPane.add(noticeBlock4);
+
 	}
+
+	protected String quickFormatDate(String date) {
+		return date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8);
+	}
+
 }

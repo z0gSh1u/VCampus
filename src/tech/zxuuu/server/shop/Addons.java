@@ -24,5 +24,21 @@ public class Addons {
 		return result;
 
 	}
+	
+	public static Boolean deleteProduct(Product product) {
+		Boolean result = null;
 
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+			IProductMapper productMapper = sqlSession.getMapper(IProductMapper.class);
+			result = productMapper.deleteProduct(product);
+			sqlSession.commit();
+		} catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return result;
+
+	}
 }

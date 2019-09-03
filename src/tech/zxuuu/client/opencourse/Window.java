@@ -17,6 +17,11 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * 视频播放窗口
+ * 
+ * @author 第三方库Demo
+ */
 public class Window extends JFrame {
 
 	private JPanel contentPane; // 顶层容器，整个播放页面的容器
@@ -29,9 +34,11 @@ public class Window extends JFrame {
 	EmbeddedMediaPlayerComponent playerComponent; // 媒体播放器组件
 
 	public Window(JFrame wolf) {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
+				StuCourseGUI.exit();
 				wolf.dispose();
 			}
 		});
@@ -105,10 +112,12 @@ public class Window extends JFrame {
 		});
 		controlPanel.add(slider);
 	}
+
 	// 获取播放媒体实例
 	public EmbeddedMediaPlayer getMediaPlayer() {
 		return playerComponent.getMediaPlayer();
 	}
+
 	// 获取进度条实例
 	public JProgressBar getProgressBar() {
 		return progress;

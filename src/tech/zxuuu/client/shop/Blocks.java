@@ -12,6 +12,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import tech.zxuuu.client.main.App;
+import tech.zxuuu.entity.Product;
+import tech.zxuuu.net.Request;
+import tech.zxuuu.util.ResponseUtils;
+import tech.zxuuu.util.SwingUtils;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 
@@ -30,6 +38,24 @@ public class Blocks extends JPanel {
 		btn_AddProduct.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Product product = new Product();
+
+				product.setPicture(picture);
+				product.setType(type);
+				product.setPrice(price);
+				product.setInformation(information);
+				product.setBuyer(App.session.getStudent().getCardNumber());
+				
+				Boolean result = ResponseUtils
+						.getResponseByHash((new Request(App.connectionToServer, null,
+								"tech.zxuuu.server.shop.ProductServer.addBuyer", new Object[] {product}).send()))
+						.getReturn(Boolean.class);
+
+				if (result) {
+					SwingUtils.showMessage(null, "添加成功！", "提示");
+				} else {
+					SwingUtils.showError(null, "添加失败！", "错误");
+				}
 				
 			}
 		});

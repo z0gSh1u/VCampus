@@ -9,19 +9,22 @@
 		`Id` as "id",
 		`CourseName` as "courseName",
 		`Speaker` as "speaker",
-		`Preview` as "preview",
+		`Preview` as
+		"preview",
 		`video` as "video"
 		FROM `tb_opencourse`
 	</select>
-	
-	<select id="getEmoticonList" resultType="tech.zxuuu.entity.EmoticonInfo">
-	    SELECT
-	    `name` as `name`,
-	    `addr` as `addr`
-	    FROM `tb_emoticon`
+
+	<select id="getEmoticonList"
+		resultType="tech.zxuuu.entity.EmoticonInfo">
+		SELECT
+		`name` as `name`,
+		`addr` as `addr`
+		FROM `tb_emoticon`
 	</select>
 
-	<select id="getEmoticon" parameterType="String" resultType="String">
+	<select id="getEmoticon" parameterType="String"
+		resultType="String">
 		SELECT `addr` FROM tb_emoticon WHERE `Name`=#{emoName}
 	</select>
 
@@ -32,11 +35,13 @@
 
 	<insert id="insertNewOpencourse" parameterType="OpenCourseInfo">
 		INSERT INTO
-		`tb_opencourse` VALUES (#{id}, #{courseName}, #{speaker}, #{preview}, #{video})
+		`tb_opencourse` VALUES (#{id}, #{courseName}, #{speaker}, #{preview},
+		#{video})
 	</insert>
-	
+
 	<delete id="deleteOpencourse" parameterType="Integer">
-		DELETE FROM `tb_opencourse` WHERE `id` = #{id} LIMIT 1
+		DELETE FROM
+		`tb_opencourse` WHERE `id` = #{id} LIMIT 1
 	</delete>
 
 </mapper>

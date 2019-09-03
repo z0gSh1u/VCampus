@@ -6,17 +6,43 @@
 
 	<select id="searchProduct" parameterType="String"
 		resultType="Product">
-		SELECT * FROM tb_product WHERE p_name LIKE "%"#{p_name}"%"
+		SELECT * FROM tb_product WHERE name LIKE "%"#{name}"%"
 	</select>
+
 	<select id="listProductByType" parameterType="String"
 		resultType="Product">
 		SELECT * FROM tb_product WHERE type = #{type}
 	</select>
 
 	<insert id="insertNewProcut" parameterType="Product">
-		INSERT INTO `tb_product` VALUES (#{p_name}, #{type},
-		#{price}, #{picture}, #{number}, #{p_name})
+		INSERT INTO
+		`tb_product` VALUES (#{name}, #{type},
+		#{price}, #{picture}, #{number},
+		#{information})
 	</insert>
 
+	<select id="manageListProduct" parameterType="Product"
+		resultType="Product">
+		SELECT * FROM tb_product WHERE name LIKE "%"#{name}"%" OR
+		type LIKE "%"#{type}"%"
+	</select>
+
+	<delete id="deleteProduct" parameterType="Product">
+		DELETE FROM
+		`tb_product` WHERE name = #{name} AND type = #{type} AND price =
+		#{price} AND number = #{number}
+	</delete>
+
+	<update id="addBuyer" parameterType="Product">
+		UPDATE tb_product SET buyer
+		= #{buyer} WHERE picture = #{picture} AND price
+		= #{price} AND
+		information = #{information} AND type = #{type}
+	</update>
+
+	<select id="searchBuyer" parameterType="String"
+		resultType="Product">
+		SELECT * FROM tb_product WHERE buyer LIKE "%"#{buyer}"%"
+	</select>
 
 </mapper>

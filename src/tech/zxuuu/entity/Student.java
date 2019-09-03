@@ -2,8 +2,6 @@ package tech.zxuuu.entity;
 
 /**
  * 学生类
- * 
- * @author z0gSh1u
  */
 
 public class Student {

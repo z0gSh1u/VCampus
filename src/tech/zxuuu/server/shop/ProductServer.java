@@ -44,5 +44,59 @@ public class ProductServer {
 		}
 		return result;
 	}
+	
+	public static List<Product> manageListProduct(Product product) {
+		List<Product> result = new ArrayList<>();
+
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+			IProductMapper productMapper = sqlSession.getMapper(IProductMapper.class);
+			result = productMapper.manageListProduct(product);
+			sqlSession.commit();
+		} catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+	
+	public static Boolean addBuyer(Product product) {
+		Boolean result = null;
+
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+			IProductMapper productMapper = sqlSession.getMapper(IProductMapper.class);
+			result = productMapper.addBuyer(product);
+			sqlSession.commit();
+		} catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+	public static List<Product> searchBuyer(String buyer) {
+		List<Product> result = null;
+
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+			IProductMapper productMapper = sqlSession.getMapper(IProductMapper.class);
+			result = productMapper.searchBuyer(buyer);
+
+			sqlSession.commit();// 提交查询
+
+		} catch (Exception e) {
+			// sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+	
+	
 
 }

@@ -2,9 +2,7 @@ package tech.zxuuu.entity;
 
 /**
  * 各类管理员实体类
- * @author z0gSh1u
  */
-
 public class Manager {
 
 	private String cardNumber; // 用户名
@@ -13,7 +11,7 @@ public class Manager {
 	 * @see ManagerType
 	 */
 	private ManagerType managerType; // 管理员类型
-	
+
 	public String getCardNumber() {
 		return cardNumber;
 	}

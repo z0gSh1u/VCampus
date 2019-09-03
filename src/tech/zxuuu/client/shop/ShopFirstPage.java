@@ -9,6 +9,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.entity.Product;
@@ -32,16 +33,18 @@ import javax.swing.JScrollPane;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
+import javax.swing.JTable;
 
 public class ShopFirstPage extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txt_Search;
-	
+	private DefaultTableModel model;
 	public List<Product> cart;
 
 	JPanel pnl_list;
 	JScrollPane jsp_List;
+	private JTable tab_Cart;
 
 	public void handleTypeButtonClick(JButton btn) {
 		pnl_list.removeAll();
@@ -83,10 +86,11 @@ public class ShopFirstPage extends JFrame {
 	 * Create the frame.
 	 */
 	public ShopFirstPage() {
+		setResizable(false);
 		setTitle("商店 - VCampus");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ShopFirstPage.class.getResource("/resources/assets/icon/fav.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 811, 796);
+		setBounds(100, 100, 1138, 796);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -101,7 +105,7 @@ public class ShopFirstPage extends JFrame {
 		pnl_list.setLayout(new GridLayout(0, 1));
 
 		jsp_List = new JScrollPane(pnl_list);
-		jsp_List.setBounds(156, 171, 510, 421);
+		jsp_List.setBounds(156, 171, 510, 531);
 
 		panel.add(jsp_List);
 
@@ -111,13 +115,13 @@ public class ShopFirstPage extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		txt_Search = new JTextField();
-		txt_Search.setBounds(40, 101, 510, 42);
+		txt_Search.setBounds(40, 101, 526, 42);
 		txt_Search.setText("可乐");
 		txt_Search.setColumns(10);
 		panel.add(txt_Search);
 
 		JButton btn_Search = new JButton("搜索");
-		btn_Search.setBounds(574, 101, 113, 42);
+		btn_Search.setBounds(692, 101, 113, 42);
 
 		btn_Search.addActionListener(new ActionListener() {
 			@Override
@@ -202,7 +206,11 @@ public class ShopFirstPage extends JFrame {
 		panel.add(scrollPane);
 		
 		JButton btnNewButton = new JButton("购物车结算");
-		btnNewButton.setBounds(630, 699, 113, 27);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setBounds(885, 643, 107, 59);
 		panel.add(btnNewButton);
 		
 		JLabel label = new JLabel("");
@@ -215,9 +223,56 @@ public class ShopFirstPage extends JFrame {
 		lblVcampus.setBounds(102, 32, 239, 34);
 		panel.add(lblVcampus);
 		
-		JList list = new JList();
-		list.setBounds(442, 628, 168, 98);
-		panel.add(list);
+		
+		
+		String[] tableHeader= {"商品名称","类型","价格","数量"};
+		model=new DefaultTableModel(null, tableHeader);
+		
+		tab_Cart = new JTable();
+		
+		tab_Cart.setBounds(2, 2, 300, 300);
+		tab_Cart.setModel(model);
 
+		JScrollPane jsp_Cart = new JScrollPane(tab_Cart);
+		jsp_Cart.setBounds(710, 171, 282, 426);
+		panel.add(jsp_Cart);
+		
+		JButton btn_Refresh = new JButton("同步购物车");
+		btn_Refresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				
+				 List<Product> list = ResponseUtils
+						.getResponseByHash(new Request(App.connectionToServer, null,
+								"tech.zxuuu.server.shop.ProductServer.searchBuyer", new Object[] {App.session.getStudent().getCardNumber()}).send())
+						.getListReturn(Product.class);
+				String[][] listData=new String[list.size()][4];
+				model.setRowCount(0);
+				if (list== null)
+					SwingUtils.showMessage(null, "抱歉，你还未添加商品到购物车，请添加", "test");
+				
+				else {
+					for(int i = 0; i < list.size();i++)
+					{
+						listData[i][0]=list.get(i).getName();
+						listData[i][1]=list.get(i).getType();
+						listData[i][2]=String.valueOf(list.get(i).getPrice());
+						listData[i][3]=String.valueOf(list.get(i).getNumber());
+					}
+					model= new DefaultTableModel(listData, tableHeader) {
+						@Override
+						public boolean isCellEditable(int a,int b) {
+							return false;
+						}
+					};
+				    tab_Cart.setModel(model);
+					SwingUtils.showMessage(null,"Success", "test");
+						
+					}
+			}
+			
+		});
+		btn_Refresh.setBounds(707, 643, 107, 59);
+		panel.add(btn_Refresh);
 	}
 }

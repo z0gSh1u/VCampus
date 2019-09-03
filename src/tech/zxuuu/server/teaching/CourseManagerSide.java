@@ -5,11 +5,17 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.sun.xml.internal.bind.v2.model.core.ClassInfo;
-
+import tech.zxuuu.dao.IClassMapper;
 import tech.zxuuu.dao.ITeacherMapper;
 import tech.zxuuu.server.main.App;
+import tech.zxuuu.entity.*;
 
+/**
+ * 教务老师相关后端
+ * 
+ * @author z0gSh1u
+ * @author 王志华
+ */
 public class CourseManagerSide {
 
 	public static String getTeacherNameById(String academy, String idInAcademy) {
@@ -21,28 +27,25 @@ public class CourseManagerSide {
 			Map<String, String> map = new HashMap<>();
 			map.put("academy", academy);
 			map.put("idInAcademy", idInAcademy);
-			result = teacherMapper.getTeacherNameById(map);			
+			result = teacherMapper.getTeacherNameById(map);
 			sqlSession.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
-	// TODO finish this
-	public static Boolean insertNewCourse(ClassInfo classInfo){
-		String result = null;
+
+	public static Boolean insertNewCourse(ClassInfo classInfo) {
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
-			ITeacherMapper teacherMapper = sqlSession.getMapper(ITeacherMapper.class);
-			Map<String, String> map = new HashMap<>();
-			result = teacherMapper.getTeacherNameById(map);			
+			IClassMapper classMapper = sqlSession.getMapper(IClassMapper.class);
+			classMapper.insertNewCourse(classInfo);
 			sqlSession.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 }

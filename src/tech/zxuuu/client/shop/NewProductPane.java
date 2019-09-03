@@ -23,6 +23,7 @@ public class NewProductPane extends JPanel {
 	private JTextField txtPrice;
 	private JTextField txtImage;
 	private JTextField txtCount;
+	private JTextField txtInformation;
 
 	/**
 	 * Create the panel.
@@ -108,30 +109,47 @@ public class NewProductPane extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 
 					Product product = new Product();
-					product.setP_name(txtName.getText());
-					product.setInformation(txtName.getText());
+					product.setName(txtName.getText());
 					product.setNumber(Integer.parseInt(txtCount.getText()));
 					product.setPicture("<img src=\"" + txtImage.getText() + "\" />");
 					product.setType(txtType.getText());
 					product.setPrice(Float.parseFloat(txtPrice.getText()));
+					product.setInformation(txtInformation.getText());
 
 					Boolean result = ResponseUtils
 							.getResponseByHash((new Request(App.connectionToServer, null,
 									"tech.zxuuu.server.shop.Addons.insertNewProduct", new Object[] { product }).send()))
 							.getReturn(Boolean.class);
 
+
 					if (result) {
 						SwingUtils.showMessage(null, "入库成功！", "提示");
 					} else {
 						SwingUtils.showError(null, "入库失败！", "错误");
 					}
+					txtName.removeAll();
+					txtType.removeAll();
+					txtPrice.removeAll();
+					txtCount.removeAll();
+					txtImage.removeAll();
+					txtInformation.removeAll();
 
 				}
 			});
 			btn_Confirm.setFont(new Font("幼圆", Font.BOLD, 20));
-			btn_Confirm.setBounds(428, 390, 167, 55);
+			btn_Confirm.setBounds(428, 425, 167, 55);
 			this.add(btn_Confirm);
 		}
+		
+		JLabel lbl_ProductInformation = new JLabel("详细信息");
+		lbl_ProductInformation.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_ProductInformation.setFont(new Font("幼圆", Font.BOLD, 20));
+		lbl_ProductInformation.setBounds(38, 378, 115, 33);
+		add(lbl_ProductInformation);
+		
+		txtInformation = new JTextField();
+		txtInformation.setColumns(10);
+		txtInformation.setBounds(208, 371, 388, 41);
+		add(txtInformation);
 	}
-
 }

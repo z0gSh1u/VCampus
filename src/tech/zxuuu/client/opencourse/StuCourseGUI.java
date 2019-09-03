@@ -21,6 +21,7 @@ import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.server.opencourse.ChatSocket;
 import tech.zxuuu.util.ResponseUtils;
+import tech.zxuuu.util.SwingUtils;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
@@ -29,15 +30,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 
+import sun.nio.cs.ext.TIS_620;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import java.awt.event.MouseAdapter;
@@ -48,6 +52,12 @@ import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+/**
+ * 学生课程播放界面
+ * 
+ * @author LongChen
+ * @modify z0gSh1u
+ */
 public class StuCourseGUI extends JFrame {
 
 	private JPanel contentPane;
@@ -67,21 +77,19 @@ public class StuCourseGUI extends JFrame {
 	private JPanel pnlEmoticonList;
 
 	private void updateMessage(String str, ChatSocket listener) {
-		System.out.println("[StuCourseGUI]收到新信息:" + str);
 		String text = epnChatBox.getText();
 		int s = text.indexOf("<body>");
 		int f = text.lastIndexOf("</body>");
 		text = text.substring(s + 11, f - 3);
 		epnChatBox.setText(text + str);
-		try{
+		try {
 			epnChatBox.validate();
 			epnChatBox.repaint();
-		epnChatBox.updateUI();
-		epnChatBox.revalidate();
-		}catch(Exception e) {
-			System.out.println("无事发生");
+			epnChatBox.updateUI();
+			epnChatBox.revalidate();
+		} catch (Exception e) {
+			// Don't care.
 		}
-		
 	}
 
 	private String toEmoticon(String str) {
@@ -96,11 +104,11 @@ public class StuCourseGUI extends JFrame {
 				str = str.substring(0, curPos) + emo + str.substring(endPos + 1);
 				System.out.println(str);
 			}
-			curPos = str.indexOf("\\", curPos+1);
+			curPos = str.indexOf("\\", curPos + 1);
 		}
 		return str;
 	}
-	
+
 	private Boolean sendMessage(String str) {
 		if (str.isEmpty())
 			return false;
@@ -138,18 +146,17 @@ public class StuCourseGUI extends JFrame {
 		}
 		return true;
 	}
-	
+
 	private Boolean listEmoticon() {
 		this.emoticonMap = new HashMap<String, String>();
-		System.out.println("正在获取表情");
 		List<EmoticonInfo> emoticonList = ResponseUtils.getResponseByHash(
-				new Request(App.connectionToServer, null, "tech.zxuuu.server.opencourse.StuCourse.getEmoticonList", null).send())
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.opencourse.StuCourse.getEmoticonList", null)
+						.send())
 				.getListReturn(EmoticonInfo.class);
-		System.out.println("表情获取完成");
-		if(emoticonList.isEmpty())
+		if (emoticonList.isEmpty()) {
 			return false;
-		System.out.println("即将列出表情");
-		for(EmoticonInfo emoInfo : emoticonList) {
+		}
+		for (EmoticonInfo emoInfo : emoticonList) {
 			emoticonMap.put(emoInfo.getName(), emoInfo.getAddr());
 			JEditorPane newEmo = new JEditorPane();
 			newEmo.setContentType("text/html");
@@ -175,39 +182,43 @@ public class StuCourseGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public StuCourseGUI(int courseId, String videoUrl) {
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
+				videoFrame.getMediaPlayer().release();
 				videoFrame.dispose();
 			}
 		});
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(StuCourseGUI.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("实时聊天 - VCampus");
-
-		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "P:\\VLC"); // 导入的路径是vlc的安装路径
+		Properties prop = new Properties();
+		try {
+			prop.load(StuCourseGUI.class.getResourceAsStream("/resources/vlc.properties"));
+		} catch (IOException e1) {
+			SwingUtils.showError(null, "VLC配置读取失败！", "错误");
+		}
+		
+		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), prop.getProperty("vlcSDKPath")); // 导入的路径是vlc的安装路径
 		Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
 
 		JFrame that = this;
-		
-		EventQueue.invokeLater(new Runnable() {
 
+		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				try {
 					videoFrame = new Window(that);
-					videoFrame.setBounds((screenWidth - videoFrame.getWidth() - frameWidth) / 2, (screenHeight - videoFrame.getHeight()) / 2, videoFrame.getWidth(), videoFrame.getHeight());
-					that.setBounds((screenWidth - videoFrame.getWidth() - frameWidth) / 2 + videoFrame.getWidth(), (screenHeight - videoFrame.getHeight()) / 2, frameWidth, frameHeight);
-					
+					videoFrame.setBounds((screenWidth - videoFrame.getWidth() - frameWidth) / 2,
+							(screenHeight - videoFrame.getHeight()) / 2, videoFrame.getWidth(), videoFrame.getHeight());
+					that.setBounds((screenWidth - videoFrame.getWidth() - frameWidth) / 2 + videoFrame.getWidth(),
+							(screenHeight - videoFrame.getHeight()) / 2, frameWidth, frameHeight);
 					videoFrame.setVisible(true);
 					videoFrame.getMediaPlayer().playMedia(videoUrl);
-
 					new SwingWorker<String, Integer>() {
-
 						@Override
 						protected String doInBackground() throws Exception {
-
 							while (true) { // 获取视频播放进度并且按百分比显示
 								long total = videoFrame.getMediaPlayer().getLength();
 								long curr = videoFrame.getMediaPlayer().getTime();
@@ -215,7 +226,6 @@ public class StuCourseGUI extends JFrame {
 								publish((int) (percent * 100));
 								Thread.sleep(100);
 							}
-
 						}
 
 						@Override
@@ -243,22 +253,23 @@ public class StuCourseGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		scpEmoticonList = new JScrollPane();
 		scpEmoticonList.setBounds(33, 84, 322, 293);
 		contentPane.add(scpEmoticonList);
 		scpEmoticonList.setVisible(false);
-		
+		scpEmoticonList.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
 		pnlEmoticonList = new JPanel();
 		scpEmoticonList.setViewportView(pnlEmoticonList);
 		pnlEmoticonList.setBackground(Color.LIGHT_GRAY);
 		pnlEmoticonList.setLayout(new GridLayout(0, 4, 0, 0));
 
 		epnInputBox = new JEditorPane();
-		epnInputBox.setBounds(33, 398, 322, 62);
+		epnInputBox.setBounds(33, 414, 322, 62);
 		contentPane.add(epnInputBox);
 
-		JButton btnSendMess = new JButton("发送");
+		JButton btnSendMess = new JButton("发送 (Ctrl + Enter)");
 		btnSendMess.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -275,29 +286,30 @@ public class StuCourseGUI extends JFrame {
 				}
 			}
 		});
-		btnSendMess.setBounds(33, 473, 322, 37);
+		btnSendMess.setBounds(33, 489, 322, 37);
 		contentPane.add(btnSendMess);
-				
+
 		JScrollPane scpChatBox = new JScrollPane();
 		scpChatBox.setBounds(33, 13, 322, 365);
 		contentPane.add(scpChatBox);
-		
+
 		epnChatBox = new JEditorPane();
 		scpChatBox.setViewportView(epnChatBox);
 		epnChatBox.setEditable(false);
 		epnChatBox.setContentType("text/html");
-		
+
 		JEditorPane epnShowEmoticon = new JEditorPane();
 		epnShowEmoticon.setEditable(false);
 		epnShowEmoticon.setContentType("text/html");
-		epnShowEmoticon.setBounds(33, 376, 22, 22);
+		epnShowEmoticon.setBounds(43, 382, 28, 28);
+		epnShowEmoticon.setText("<img src=\"https://s2.ax1x.com/2019/09/04/nEpEF0.png\"/>");
 		epnShowEmoticon.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				scpEmoticonList.setVisible(!scpEmoticonList.isVisible());
 			}
 		});
 		contentPane.add(epnShowEmoticon);
-		
+
 		epnChatBox.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				scpEmoticonList.setVisible(false);
@@ -325,7 +337,7 @@ public class StuCourseGUI extends JFrame {
 	// 退出播放
 	public static void exit() {
 		videoFrame.getMediaPlayer().release();
-		System.exit(0);
+		// System.exit(0);
 	}
 
 	// 实现播放按钮的方法
