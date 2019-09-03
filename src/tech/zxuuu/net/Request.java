@@ -1,7 +1,5 @@
 package tech.zxuuu.net;
 
-import java.io.Serializable;
-
 import com.alibaba.fastjson.*;
 
 /**

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="tech.zxuuu.dao.IProductMapper">
+
+	<select id="searchProduct" parameterType="String"
+		resultType="Product">
+		SELECT * FROM tb_product WHERE p_name LIKE "%"#{p_name}"%"
+	</select>
+	<select id="listProductByType" parameterType="String"
+		resultType="Product">
+		SELECT * FROM tb_product WHERE type = #{type}
+	</select>
+
+	<insert id="insertNewProcut" parameterType="Product">
+		INSERT INTO `tb_product` VALUES (#{p_name}, #{type},
+		#{price}, #{picture}, #{number}, #{p_name})
+	</insert>
+
+
+</mapper>

@@ -5,19 +5,41 @@ public class Book {
 	private String author;
 	private int numofborrowed;
 	private String ISBN;
-	private Boolean chargable;
+	private int chargable;
 	private String borrower;
+	private String category;
+	private String details;
+	private String pictureURL;
+	public String getPictureURL() {
+		return pictureURL;
+	}
+	public void setPictureURL(String pictureURL) {
+		this.pictureURL = pictureURL;
+	}
+	
 	
 	public String getBorrower() {
 		return borrower;
 	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getDetails() {
+		return details;
+	}
+	public void setDetails(String details) {
+		this.details = details;
+	}
 	public void setBorrower(String borrower) {
 		this.borrower = borrower;
 	}
-	public Boolean getChargable() {
+	public int getChargable() {
 		return chargable;
 	}
-	public void setChargable(Boolean chargable) {
+	public void setChargable(int chargable) {
 		this.chargable = chargable;
 	}
 	@Override
@@ -50,7 +72,7 @@ public class Book {
 		this.numofborrowed = numofborrowed;
 	}
 	
-	public Book(String title, String author, int numofborrowed, Boolean chargable) {
+	public Book(String title, String author, int numofborrowed, int chargable) {
 		super();
 		this.title = title;
 		this.author = author;

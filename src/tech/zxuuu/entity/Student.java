@@ -2,6 +2,7 @@ package tech.zxuuu.entity;
 
 /**
  * 学生类
+ * 
  * @author z0gSh1u
  */
 
@@ -13,6 +14,7 @@ public class Student {
 	private String name; // 姓名
 	private String academy; // 学院代码
 	private Double balance; // 一卡通余额
+	private String classNumber; // 选课列表
 
 	@Override
 	public String toString() {
@@ -26,6 +28,14 @@ public class Student {
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
+	}
+
+	public String getClassNumber() {
+		return classNumber;
+	}
+
+	public void setClassNumber(String classNumber) {
+		this.classNumber = classNumber;
 	}
 
 	public String getCardNumber() {
@@ -68,8 +78,9 @@ public class Student {
 		this.academy = academy;
 	}
 
-	public Student() {}
-	
+	public Student() {
+	}
+
 	public Student(String cardNumber, String studentNumber, String password, String name) {
 		this.cardNumber = cardNumber;
 		this.studentNumber = studentNumber;
@@ -77,5 +88,5 @@ public class Student {
 		this.name = name;
 		this.academy = studentNumber == null ? null : studentNumber.substring(0, 2);
 	}
-	
+
 }

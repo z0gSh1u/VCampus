@@ -3,8 +3,6 @@ package tech.zxuuu.dao;
 import java.util.List;
 import java.util.Map;
 
-import javax.sound.sampled.LineListener;
-
 import tech.zxuuu.entity.Student;
 
 public interface IStudentMapper {
@@ -29,4 +27,7 @@ public interface IStudentMapper {
 	public int switchStudent(Student student);
 	
 	public List<Student> tableDisplay(Map map);
+	
+	public Boolean chargeCard(Map map);
+	
 }
