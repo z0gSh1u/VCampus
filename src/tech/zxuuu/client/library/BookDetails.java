@@ -23,9 +23,6 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JEditorPane;
 import javax.swing.JTextArea;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
 
 public class BookDetails extends JDialog {
 
@@ -57,7 +54,7 @@ public class BookDetails extends JDialog {
 	 */
 	public BookDetails(String title, String ISBN, String category, String details) {
 
-		setBounds(100, 100, 700, 550);
+		setBounds(100, 100, 1029, 886);
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 432, 1);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -65,9 +62,7 @@ public class BookDetails extends JDialog {
 		contentPanel.setLayout(null);
 
 		JLabel lblDetails = new JLabel("图书简介");
-		lblDetails.setIcon(new ImageIcon(BookDetails.class.getResource("/resources/assets/icon/jianjie.png")));
-		lblDetails.setFont(new Font("微软雅黑", Font.PLAIN, 17));
-		lblDetails.setBounds(14, 78, 104, 32);
+		lblDetails.setBounds(14, 85, 72, 18);
 		getContentPane().add(lblDetails);
 
 		String[] head = { "isbn", "title", "author", "number" };
@@ -77,14 +72,11 @@ public class BookDetails extends JDialog {
 		tblRecommand.setModel(model);
 		tblRecommand.setBounds(2, 2, 225, 105);
 		JScrollPane jsp = new JScrollPane(tblRecommand);
-		jsp.setBounds(14, 336, 624, 122);
+		jsp.setBounds(14, 207, 418, 93);
 		getContentPane().add(jsp);
 
 		JButton btnRecommend = new JButton("相似图书推荐");
-		btnRecommend.setIcon(new ImageIcon(BookDetails.class.getResource("/resources/assets/icon/zhishiku.png")));
-		btnRecommend.setHorizontalAlignment(SwingConstants.LEFT);
-		btnRecommend.setFont(new Font("微软雅黑", Font.PLAIN, 17));
-		btnRecommend.setBounds(14, 286, 171, 41);
+		btnRecommend.setBounds(14, 171, 130, 27);
 		btnRecommend.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -122,21 +114,16 @@ public class BookDetails extends JDialog {
 		getContentPane().add(btnRecommend);
 
 		txtCategory = new JTextField();
-		txtCategory.setEditable(false);
-		txtCategory.setFont(new Font("微软雅黑", Font.PLAIN, 17));
-		txtCategory.setBounds(140, 15, 119, 40);
+		txtCategory.setBounds(130, 22, 86, 24);
 		getContentPane().add(txtCategory);
 		txtCategory.setColumns(10);
 
-		JLabel lblCategory = new JLabel("分类");
-		lblCategory.setIcon(new ImageIcon(BookDetails.class.getResource("/resources/assets/icon/fenlei.png")));
-		lblCategory.setFont(new Font("微软雅黑", Font.PLAIN, 17));
-		lblCategory.setBounds(14, 25, 70, 32);
+		JLabel lblCategory = new JLabel("类别");
+		lblCategory.setBounds(14, 25, 72, 18);
 		getContentPane().add(lblCategory);
 
 		JEditorPane editPicture = new JEditorPane();
-		editPicture.setEditable(false);
-		editPicture.setBounds(453, 21, 185, 260);
+		editPicture.setBounds(436, 18, 575, 821);
 		editPicture.setContentType("text/html");
 		getContentPane().add(editPicture);
 		Request request = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.searchPicture",
@@ -147,13 +134,15 @@ public class BookDetails extends JDialog {
 		String result = response.getReturn(String.class);
 
 		txtDetails = new JTextArea();
-		txtDetails.setFont(new Font("微软雅黑", Font.PLAIN, 17));
-		txtDetails.setEditable(false);
-		txtDetails.setBounds(140, 85, 264, 190);
+		txtDetails.setBounds(120, 83, 217, 75);
 		getContentPane().add(txtDetails);
 		txtDetails.setLineWrap(true);
 		txtDetails.setWrapStyleWord(true);
 		this.txtDetails.setText(details);
+
+		JLabel lblPicture = new JLabel("图书封面");
+		lblPicture.setBounds(265, 28, 72, 18);
+		getContentPane().add(lblPicture);
 
 		editPicture.setText("<html><body><img src=\"" + result + "\"></body></html>");
 
