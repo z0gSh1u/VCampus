@@ -2,6 +2,7 @@ package tech.zxuuu.server.main;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -33,12 +34,10 @@ public class App extends JFrame {
 
 	private JPanel contentPane;
 
-	// 添加属性
-	private RequestListener requestListener;
-	// 服务器端全局请求消息队列
-	public static RequestQueue requestQueue;
-	public static RequestHandler requestHandler;
-	public static SqlSessionFactory sqlSessionFactory;
+	private RequestListener requestListener; // 请求监听器
+	public static RequestQueue requestQueue; // 服务器端全局请求消息队列
+	public static RequestHandler requestHandler; // 请求处理器
+	public static SqlSessionFactory sqlSessionFactory; // MyBatis连接工厂
 
 	public static JTextPane paneLog;
 
@@ -57,7 +56,7 @@ public class App extends JFrame {
 				}
 			}
 		});
-		
+
 	}
 
 	/**
@@ -86,7 +85,7 @@ public class App extends JFrame {
 		App.paneLog = new JTextPane();
 		App.paneLog.setEditable(false);
 		scrollPane.setViewportView(paneLog);
-
+		App.paneLog.setFont(new Font("宋体", Font.PLAIN, 14));
 		/**
 		 * 新增部分
 		 */
@@ -123,7 +122,6 @@ public class App extends JFrame {
 		App.paneLog.setText(
 				paneLog.getText() + (paneLog.getText().equals("") ? "" : "\n") + "开始服务器端侦听...端口=" + ServerUtils.getMainPort());
 		;
-		/*****************************************/
 
 	}
 

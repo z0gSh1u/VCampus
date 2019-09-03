@@ -27,7 +27,6 @@ import java.awt.Toolkit;
 public class AppLibraryManager extends JFrame {
 
 	private JPanel contentPane;
-
 	private JPanel currentDisplay;
 	private JPanel newBookPane;
 	private JPanel deleteBookPane;
@@ -55,7 +54,8 @@ public class AppLibraryManager extends JFrame {
 	 */
 	public AppLibraryManager() {
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AppLibraryManager.class.getResource("/resources/assets/icon/fav.png")));
+		setIconImage(
+				Toolkit.getDefaultToolkit().getImage(AppLibraryManager.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("图书管理员 - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 903, 660);
@@ -114,8 +114,8 @@ public class AppLibraryManager extends JFrame {
 		defaultPane.setBounds(24, 102, 835, 498);
 		contentPane.add(defaultPane);
 
-		JLabel label_1 = new JLabel("选择一项以开始...");
-		defaultPane.add(label_1);
+		JLabel lblHint = new JLabel("选择一项功能以开始...");
+		defaultPane.add(lblHint);
 		currentDisplay = defaultPane;
 
 		newBookPane = new NewBookPane();

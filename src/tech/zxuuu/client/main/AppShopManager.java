@@ -46,6 +46,7 @@ public class AppShopManager extends JFrame {
 	 * Create the frame.
 	 */
 	public AppShopManager() {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AppShopManager.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("商店管理 - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,11 +79,9 @@ public class AppShopManager extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				currentPane.setVisible(false);
 				newProductPane.setVisible(true);
-				currentPane = deleteProductPane;
-
+				currentPane = newProductPane;
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(AppShopManager.class.getResource("/resources/assets/icon/jinru.png")));
@@ -93,11 +92,9 @@ public class AppShopManager extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				currentPane.setVisible(false);
 				deleteProductPane.setVisible(true);
-				currentPane = newProductPane;
-				
+				currentPane = deleteProductPane;
 			}
 		});
 		btnNewButton_1.setIcon(new ImageIcon(AppShopManager.class.getResource("/resources/assets/icon/tuichu.png")));
@@ -109,7 +106,7 @@ public class AppShopManager extends JFrame {
 		defaultPane.setBounds(24, 90, 848, 453);
 		contentPane.add(defaultPane);
 
-		JLabel label_1 = new JLabel("选择一个选项来开始...");
+		JLabel label_1 = new JLabel("选择一个选项以开始...");
 		defaultPane.add(label_1);
 
 		currentPane = defaultPane;

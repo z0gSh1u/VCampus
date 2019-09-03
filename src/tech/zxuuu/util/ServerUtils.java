@@ -7,6 +7,7 @@ import java.util.Properties;
  * 服务器相关实用工具类
  * 
  * @author z0gSh1u
+ * @author LongChen
  */
 public final class ServerUtils {
 
@@ -41,4 +42,5 @@ public final class ServerUtils {
 		}
 		return prop.getProperty("chatport");
 	}
+	
 }

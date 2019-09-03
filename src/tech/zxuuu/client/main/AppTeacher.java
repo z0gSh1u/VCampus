@@ -71,8 +71,9 @@ public class AppTeacher extends JFrame {
 		panel.setBounds(14, 103, 837, 636);
 		contentPane.add(panel);
 		
-		JLabel lblNewLabel = new JLabel("排课表：");
-		lblNewLabel.setBounds(14, 79, 72, 18);
+		JLabel lblNewLabel = new JLabel("排课表");
+		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		lblNewLabel.setBounds(400, 77, 54, 24);
 		contentPane.add(lblNewLabel);
 	}
 

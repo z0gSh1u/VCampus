@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.net.Request;
@@ -17,6 +19,12 @@ import tech.zxuuu.util.SwingUtils;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 
+/**
+ * 书籍删除面板
+ * 
+ * @author 曾铖
+ * @modify z0gSh1u
+ */
 public class DeleteBookPane extends JPanel {
 
 	private JTextField txtISBN;
@@ -41,23 +49,21 @@ public class DeleteBookPane extends JPanel {
 		btnComfirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.Book.deleteBook",
-						new Object[] { txtISBN.getText() });
-				String hash = req.send();
-				ResponseUtils.blockAndWaitResponse(hash);
-				Response response = ResponseQueue.getInstance().consume(hash);
-				Boolean ret = response.getReturn(Boolean.class);
+				Boolean ret = ResponseUtils
+						.getResponseByHash(new Request(App.connectionToServer, null,
+								"tech.zxuuu.server.library.BookServer.deleteBook", new Object[] { txtISBN.getText() }).send())
+						.getReturn(Boolean.class);
 
-				if (ret)
-					SwingUtils.showMessage(null, "Succeed deleting", "test");
-				else
-					SwingUtils.showError(null, "The ISBN is invalid", "test");
-
+				if (ret) {
+					SwingUtils.showMessage(null, "删除成功！", "提示");
+				} else {
+					SwingUtils.showError(null, "删除失败！", "错误");
+				}
 			}
 		});
 		btnComfirm.setBounds(365, 306, 113, 27);
 		this.add(btnComfirm);
-		
+
 		JLabel label = new JLabel(" 删除书籍");
 		label.setIcon(new ImageIcon(DeleteBookPane.class.getResource("/resources/assets/icon/delete.png")));
 		label.setFont(new Font("微软雅黑", Font.PLAIN, 24));

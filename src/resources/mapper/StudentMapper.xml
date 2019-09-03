@@ -38,7 +38,8 @@
 	</insert>
 
 	<delete id="deleteStudent" parameterType="String">
-		DELETE FROM `tb_student` WHERE card_number = #{cardnumber}
+		DELETE FROM
+		`tb_student` WHERE card_number = #{cardnumber}
 	</delete>
 
 	<select id="searchStudentByCardNumber" parameterType="String"
@@ -58,16 +59,27 @@
 		`academy` = #{academy}, `student_number` = #{studentNumber} WHERE
 		`card_number` = #{cardNumber}
 	</update>
+
 	<select id="tableDisplay" parameterType="Map"
 		resultType="Student">
-		SELECT `card_number`, `student_number`, `academy`,`name` FROM `tb_student`
-		WHERE `student_number` LIKE CONCAT(#{academy},'_',#{grade},'%')
+		SELECT `card_number`, `student_number`, `academy`,`name`
+		FROM `tb_student`
+		WHERE `student_number` LIKE
+		CONCAT(#{academy},'_',#{grade},'%')
+	</select>
+
+	<select id="getBalance" parameterType="String"
+		resultType="String">
+		SELECT `balance` FROM `tb_student` WHERE `card_number` =
+		#{cardNumber} LIMIT 1
 	</select>
 
 
 	<update id="chargeCard" parameterType="Map">
-		UPDATE `tb_student` SET `balance` = `balance` + #{money} WHERE `card_number`
-		= #{cardNumber} LIMIT 1
+		UPDATE `tb_student` SET
+		`balance` = `balance` + #{money} WHERE `card_number`
+		= #{cardNumber}
+		LIMIT 1
 	</update>
 
 </mapper>

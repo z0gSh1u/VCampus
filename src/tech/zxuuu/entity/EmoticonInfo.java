@@ -1,5 +1,8 @@
 package tech.zxuuu.entity;
 
+/**
+ * 标签类（聊天室用）
+ */
 public class EmoticonInfo {
 	private String name;
 	private String addr;
