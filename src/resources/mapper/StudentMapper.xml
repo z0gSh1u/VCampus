@@ -59,12 +59,19 @@
 		`academy` = #{academy}, `student_number` = #{studentNumber} WHERE
 		`card_number` = #{cardNumber}
 	</update>
+
 	<select id="tableDisplay" parameterType="Map"
 		resultType="Student">
 		SELECT `card_number`, `student_number`, `academy`,`name`
 		FROM `tb_student`
 		WHERE `student_number` LIKE
 		CONCAT(#{academy},'_',#{grade},'%')
+	</select>
+
+	<select id="getBalance" parameterType="String"
+		resultType="String">
+		SELECT `balance` FROM `tb_student` WHERE `card_number` =
+		#{cardNumber} LIMIT 1
 	</select>
 
 

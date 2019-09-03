@@ -38,7 +38,7 @@ public final class ResponseUtils {
 			}
 			if (new Date().getTime() >= shouldEnd) {
 				// TODO: uncomment this when release
-				// SwingUtils.showError(null, "请求超时！Hash=" + hash, "错误");
+				SwingUtils.showError(null, "请求超时！Hash=" + hash, "错误");
 				return null;
 			}
 		}

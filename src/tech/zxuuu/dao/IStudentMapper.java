@@ -28,5 +28,7 @@ public interface IStudentMapper {
 	public List<Student> tableDisplay(Map map);
 
 	public Boolean chargeCard(Map map);
+	
+	public String getBalance(String cardNumber);
 
 }

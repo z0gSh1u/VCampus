@@ -13,9 +13,11 @@ import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
 import tech.zxuuu.client.library.LibraryStudentGUI;
+import tech.zxuuu.client.library.MyBorrowGUI;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.client.shop.ShopFirstPage;
 import tech.zxuuu.client.teaching.studentSide.TeachingStudentMain;
+import tech.zxuuu.entity.Book;
 import tech.zxuuu.entity.ClassInfo;
 import tech.zxuuu.entity.NoticeInfo;
 import tech.zxuuu.net.Request;
@@ -203,7 +205,15 @@ public class AppStudent extends JFrame {
 		lblBalance.setText(String.format("%.2f", App.session.getStudent().getBalance()));
 		lblStudentNumber.setText(App.session.getStudent().getStudentNumber());
 		lblCardNumber.setText(App.session.getStudent().getCardNumber());
-
+		List<Book> tempList = ResponseUtils.getResponseByHash(
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.library.Addons.getBorrowedBookList",
+						new Object[] { App.session.getStudent().getCardNumber() }).send())
+				.getListReturn(Book.class);
+		if (tempList == null || tempList.size() == 0) {
+			lblBookLend.setText("0 本");
+		} else {
+			lblBookLend.setText(tempList.size() + " 本");
+		}
 		JButton btnRecharge = new JButton("充值");
 		btnRecharge.addActionListener(new ActionListener() {
 			@Override
@@ -233,11 +243,23 @@ public class AppStudent extends JFrame {
 		});
 		btnRecharge.setBounds(203, 147, 63, 27);
 		panel.add(btnRecharge);
+		
+		JButton btnMyBorrow = new JButton("查看");
+		btnMyBorrow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MyBorrowGUI myBorrowGUI = new MyBorrowGUI();
+				myBorrowGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				myBorrowGUI.setVisible(true);
+			}
+		});
+		btnMyBorrow.setBounds(203, 174, 63, 27);
+		panel.add(btnMyBorrow);
 
 		Integer today = OtherUtils.getDay(ResponseUtils.getResponseByHash(
 				new Request(App.connectionToServer, null, "tech.zxuuu.server.main.UtilsApi.getTrustedUnixTimeStamp", null)
 						.send())
 				.getReturn(Long.class));
+		// Integer today = 2; // Test
 		lblToday.setText("今天是星期" + (today == 1 ? "一"
 				: today == 2 ? "二"
 						: today == 3 ? "三" : today == 4 ? "四" : today == 5 ? "五" : today == 6 ? "六" : today == 7 ? "日" : "..."));
@@ -370,5 +392,4 @@ public class AppStudent extends JFrame {
 	protected String quickFormatDate(String date) {
 		return date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8);
 	}
-
 }

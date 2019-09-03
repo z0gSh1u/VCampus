@@ -79,11 +79,9 @@ public class AppShopManager extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				currentPane.setVisible(false);
 				newProductPane.setVisible(true);
-				currentPane = deleteProductPane;
-
+				currentPane = newProductPane;
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(AppShopManager.class.getResource("/resources/assets/icon/jinru.png")));
@@ -94,11 +92,9 @@ public class AppShopManager extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				currentPane.setVisible(false);
 				deleteProductPane.setVisible(true);
-				currentPane = newProductPane;
-				
+				currentPane = deleteProductPane;
 			}
 		});
 		btnNewButton_1.setIcon(new ImageIcon(AppShopManager.class.getResource("/resources/assets/icon/tuichu.png")));

@@ -45,7 +45,7 @@ public class MyBorrowGUI extends JDialog {
 	 * Create the dialog.
 	 */
 	public MyBorrowGUI() {
-		
+
 		setTitle("我的借阅 - VCampus");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MyBorrowGUI.class.getResource("/resources/assets/icon/fav.png")));
 		setResizable(false);
@@ -55,7 +55,12 @@ public class MyBorrowGUI extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		String[] tblhead = { "图书编号", "标题", "作者" };
-		model = new DefaultTableModel(null, tblhead);
+		model = new DefaultTableModel(null, tblhead) {
+			@Override
+			public boolean isCellEditable(int a, int b) {
+				return false;
+			}
+		};
 		tblBeborrowed = new JTable();
 		tblBeborrowed.setModel(model);
 		tblBeborrowed.setBounds(2, 2, 300, 300);
@@ -63,15 +68,29 @@ public class MyBorrowGUI extends JDialog {
 		jsp.setLocation(14, 47);
 		jsp.setSize(589, 362);
 		contentPanel.add(jsp);
-		
+
 		JLabel lblNewLabel = new JLabel("我的借阅");
 		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		lblNewLabel.setBounds(260, 16, 72, 18);
 		contentPanel.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("还没做！");
-		lblNewLabel_1.setBounds(40, 18, 72, 18);
-		contentPanel.add(lblNewLabel_1);
+
+		list = ResponseUtils.getResponseByHash(
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.library.Addons.getBorrowedBookList",
+						new Object[] { App.session.getStudent().getCardNumber() }).send())
+				.getListReturn(Book.class);
+
+		if (list == null || list.size() == 0) {
+			SwingUtils.showMessage(null, "暂无借阅书籍！", "提示");
+			return;
+		} else {
+			model.setRowCount(0);
+			int len = list.size();
+			for (int i = 0; i < len; i++) {
+				Object[] toAdd = { list.get(i).getISBN(), list.get(i).getTitle(), list.get(i).getAuthor() };
+				model.addRow(toAdd);
+			}
+		}
+
 	}
 
 }

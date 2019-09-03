@@ -11,12 +11,11 @@ public class Product {
 	private String picture;
 	private int number;
 	private String information;
-	private String buyer;
 
 	public Product() {
 	}
 
-	public Product(String name, String type, float price, String picture, int number, String information, String buyer) {
+	public Product(String name, String type, float price, String picture, int number, String information) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -24,8 +23,6 @@ public class Product {
 		this.picture = picture;
 		this.number = number;
 		this.information = information;
-		this.buyer = buyer;
-
 	}
 
 	public String getName() {
@@ -76,18 +73,10 @@ public class Product {
 		this.information = information;
 	}
 
-	public String getBuyer() {
-		return buyer;
-	}
-
-	public void setBuyer(String buyer) {
-		this.buyer = buyer;
-	}
-
 	@Override
 	public String toString() {
 		return "Product [name=" + name + ", type=" + type + ", price=" + price + ", picture=" + picture + ", number="
-				+ number + ", information=" + information + ", buyer=" + buyer + "]";
+				+ number + ", information=" + information + "]";
 	}
 
 }

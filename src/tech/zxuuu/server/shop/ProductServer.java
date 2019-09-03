@@ -44,7 +44,7 @@ public class ProductServer {
 		}
 		return result;
 	}
-	
+
 	public static List<Product> manageListProduct(Product product) {
 		List<Product> result = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class ProductServer {
 		return result;
 
 	}
-	
+
 	public static Boolean addBuyer(Product product) {
 		Boolean result = null;
 
@@ -78,6 +78,7 @@ public class ProductServer {
 		return result;
 
 	}
+
 	public static List<Product> searchBuyer(String buyer) {
 		List<Product> result = null;
 
@@ -96,7 +97,5 @@ public class ProductServer {
 		return result;
 
 	}
-	
-	
 
 }

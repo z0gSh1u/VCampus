@@ -44,5 +44,7 @@ public interface IBookMapper {
 	public int changeBorrowerByISBN(Map<String, String> map);
 
 	public String getBorrowerByISBN(String ISBN);
+	
+	public List<Book> getBorrowedBook(String cardNumber);
 
 }

@@ -32,17 +32,14 @@
 		`tb_product` WHERE name = #{name} AND type = #{type} AND price =
 		#{price} AND number = #{number}
 	</delete>
-
-	<update id="addBuyer" parameterType="Product">
-		UPDATE tb_product SET buyer
-		= #{buyer} WHERE picture = #{picture} AND price
-		= #{price} AND
-		information = #{information} AND type = #{type}
-	</update>
-
-	<select id="searchBuyer" parameterType="String"
-		resultType="Product">
-		SELECT * FROM tb_product WHERE buyer LIKE "%"#{buyer}"%"
+	
+	<select id="getProductStorage" parameterType="String"
+	resultType="String">
+		SELECT `number` FROM `tb_product` WHERE `name` = #{name} LIMIT 1
 	</select>
+	
+	<update id="buySomething" parameterType="Map">
+		UPDATE `tb_product` SET `number` = `number` - #{howmany} WHERE `name` = #{name} LIMIT 1
+	</update>
 
 </mapper>

@@ -103,5 +103,9 @@
 	<select id="getBorrowerByISBN" parameterType="String" resultType="String">
 		SELECT `borrower` FROM `tb_book` WHERE `isbn` = #{ISBN} LIMIT 1
 	</select>
+	
+	<select id="getBorrowedBook" parameterType="String" resultType="Book">
+		SELECT * FROM `tb_book` WHERE `borrower` = #{cardNumber}
+	</select>
 
 </mapper>

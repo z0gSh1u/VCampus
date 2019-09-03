@@ -72,6 +72,15 @@ public class BookDetails extends JDialog {
 		JScrollPane jsp = new JScrollPane(tblRecommand);
 		jsp.setBounds(14, 336, 624, 154);
 		getContentPane().add(jsp);
+
+
+		txtCategory = new JTextField();
+		txtCategory.setEditable(false);
+		txtCategory.setFont(new Font("微软雅黑", Font.PLAIN, 17));
+		txtCategory.setBounds(140, 22, 119, 40);
+		getContentPane().add(txtCategory);
+		txtCategory.setColumns(10);
+		
 		list = ResponseUtils.getResponseByHash(new Request(App.connectionToServer, null,
 				"tech.zxuuu.server.library.BookServer.searchSimilarBook", new Object[] { title, txtCategory.getText() }).send())
 				.getListReturn(Book.class);
@@ -97,13 +106,6 @@ public class BookDetails extends JDialog {
 			}
 		};
 		tblRecommand.setModel(model);
-
-		txtCategory = new JTextField();
-		txtCategory.setEditable(false);
-		txtCategory.setFont(new Font("微软雅黑", Font.PLAIN, 17));
-		txtCategory.setBounds(140, 22, 119, 40);
-		getContentPane().add(txtCategory);
-		txtCategory.setColumns(10);
 
 		JLabel lblCategory = new JLabel("分类");
 		lblCategory.setIcon(new ImageIcon(BookDetails.class.getResource("/resources/assets/icon/fenlei.png")));
