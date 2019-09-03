@@ -34,6 +34,7 @@ public class RenewBook extends JDialog {
 	private JTable tblBeborrowed;
 	private DefaultTableModel model;
 	private JButton btnCheck;
+	private JTextField txtName;
 	private List<Book> list=null;
 	/**
 	 * Launch the application.
@@ -90,7 +91,7 @@ public class RenewBook extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.searchBeBorrowed", 
-						new Object[] {App.session.getStudent().getCardNumber()});
+						new Object[] {txtName.getText()});
 					String hash = req.send();
 					ResponseUtils.blockAndWaitResponse(hash);
 					Response response = ResponseQueue.getInstance().consume(hash); 
@@ -118,7 +119,7 @@ public class RenewBook extends JDialog {
 					}
 				}
 			});
-		btnCheck.setBounds(34, 17, 107, 27);
+		btnCheck.setBounds(78, 101, 107, 27);
 		contentPanel.add(btnCheck);
 	
 		
@@ -136,9 +137,20 @@ public class RenewBook extends JDialog {
 		            txtISBN.setText(list.get(row).getISBN());
 		            }
 		}});
-		jsp.setLocation(180, 13);
-		jsp.setSize(340, 199);
+		jsp.setLocation(234, 13);
+		jsp.setSize(320, 199);
 		contentPanel.add(jsp);
+		
+
+		
+		txtName = new JTextField();
+		txtName.setBounds(80, 32, 86, 24);
+		contentPanel.add(txtName);
+		txtName.setColumns(10);
+		
+		JLabel lblName = new JLabel("姓名");
+		lblName.setBounds(34, 38, 30, 18);
+		contentPanel.add(lblName);
 	}
 
 }
