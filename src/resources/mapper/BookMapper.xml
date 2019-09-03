@@ -27,18 +27,18 @@
      </select>
      
      <update id="returnBookByISBN" parameterType="String" >
-        UPDATE tb_book SET chargable=1 WHERE isbn=#{ISBN}
+        UPDATE tb_book SET chargable=1 , borrower="" WHERE isbn=#{ISBN}
      </update>
      
      <insert id="addBook" parameterType="Book">
 
-	     INSERT INTO tb_book (isbn,title,author,number,chargable,borrower,category,details,pictureURL)
+	     INSERT INTO tb_book (isbn,title,author,number ,chargable,borrower,category,details,pictureURL)
 	     VALUES(#{ISBN},#{title},#{author},0,1,"",#{category},#{details},#{pictureURL})
 
      </insert>
      
-     <delete id="deleteBook" parameterType="Book">
-     	DELETE from tb_book WHERE isbn=#{ISBN}
+     <delete id="deleteBook" parameterType="String" >
+     	DELETE FROM tb_book WHERE isbn=#{ISBN}
      </delete>
      
      <select id="searchHowManyByISBN" parameterType="String" resultType="int">

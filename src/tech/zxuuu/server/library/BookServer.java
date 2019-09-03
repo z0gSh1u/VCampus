@@ -131,7 +131,7 @@ public class BookServer {
 
 	public static Boolean addBook(String ISBN, String title, String author, String category, String details,
 			String pictureURL) {
-
+        Boolean result=false;
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
@@ -141,9 +141,8 @@ public class BookServer {
 			System.out.println("num=" + number);
 
 			if (number == 1) {
-				return false;
-
-			} else {
+				result=false;
+            } else {
 				Book book2 = new Book();
 				book2.setISBN(ISBN);
 				book2.setTitle(title);
@@ -153,13 +152,13 @@ public class BookServer {
 				book2.setPictureURL(pictureURL);
 				bookMapper.addBook(book2);
 				sqlSession.commit();
-				return true;
+				result=true;
 			}
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
 		}
-		return false;
+		return result;
 	}
 
 	public static int searchHowManyByISBN(String ISBN) {
@@ -240,16 +239,23 @@ public class BookServer {
 	}
 
 	public static Boolean deleteBook(String ISBN) {
-		Boolean result = null;
+		Boolean result = false;
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
-
+   
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
-			Book book = new Book();
-			book.setISBN(ISBN);
-			result = bookMapper.deleteBook(book);
-			sqlSession.commit();
+			int number=bookMapper.searchHowManyByISBN(ISBN);
+			if(number==1) {
+			   result=bookMapper.deleteBook(ISBN);
+			   System.out.println(number);
+			   result=true;
+			   sqlSession.commit();
+			}
+			else {
+				result=false;
+				System.out.println(number);
+			}
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
