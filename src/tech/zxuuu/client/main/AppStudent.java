@@ -12,10 +12,16 @@ import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
+import org.apache.ibatis.jdbc.Null;
+
+import com.sun.javafx.collections.SortableList;
+
 import tech.zxuuu.client.library.LibraryStudentGUI;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
 import tech.zxuuu.client.shop.ShopFirstPage;
 import tech.zxuuu.client.teaching.studentSide.TeachingStudentMain;
+import tech.zxuuu.entity.ClassInfo;
+import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.util.OtherUtils;
 import tech.zxuuu.util.ResponseUtils;
@@ -24,6 +30,8 @@ import tech.zxuuu.util.SwingUtils;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class AppStudent extends JFrame {
@@ -46,12 +54,15 @@ public class AppStudent extends JFrame {
 			}
 		});
 	}
-
+	
+	
+	
+	
 	/**
 	 * Create the frame.
 	 */
 	public AppStudent() {
-
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AppStudent.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("学生主页 - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -236,7 +247,6 @@ public class AppStudent extends JFrame {
 
 				if (result) {
 					SwingUtils.showMessage(null, "充值成功！", "提示");
-					lblBalance.setText(String.format("%.2f", (App.session.getStudent().getBalance() + Double.valueOf(money))));
 				} else {
 					SwingUtils.showError(null, "充值失败！", "错误");
 				}
@@ -247,17 +257,53 @@ public class AppStudent extends JFrame {
 		panel.add(btnNewButton);
 
 		// TODO Uncomment this when release.
-		// Integer today = OtherUtils.getDay(ResponseUtils.getResponseByHash(
-		// new Request(App.connectionToServer, null,
-		// "tech.zxuuu.server.main.UtilsApi.getTrustedUnixTimeStamp", null)
-		// .send())
-		// .getReturn(Long.class));
-		Integer today = 5;
+//		Integer today = OtherUtils.getDay(ResponseUtils.getResponseByHash(
+//				new Request(App.connectionToServer, null, "tech.zxuuu.server.main.UtilsApi.getTrustedUnixTimeStamp", null)
+//						.send())
+//				.getReturn(Long.class));
+		Integer today = 3;
 		lblToday.setText("今天是星期" + (today == 1 ? "一"
 				: today == 2 ? "二"
 						: today == 3 ? "三" : today == 4 ? "四" : today == 5 ? "五" : today == 6 ? "六" : today == 7 ? "日" : "..."));
 
 		JLabel lblTodayCourses = new JLabel("今日课程：");
+		String selectedClass=ResponseUtils.getResponseByHash(
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection",
+						new Object[] {App.session.getStudent()}).send())
+				.getReturn(String.class);
+		
+		String[] course=selectedClass.split(",");
+		
+		ClassInfo [] todayClass=new ClassInfo [5];
+		for (int i=0;i<5;i++) {
+			todayClass[i]=null;
+		}
+		
+		for (int i=0;i<course.length;i++) {
+			if (Integer.valueOf(course[i].charAt(6)-48)==today) {
+				ClassInfo cla=ResponseUtils.getResponseByHash(
+						new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass",
+								new Object[] {course[i]}).send())
+						.getReturn(ClassInfo.class);
+				todayClass[(Integer.valueOf(course[i].charAt(8))-48)/2-1]=cla;
+			}
+			if (Integer.valueOf(course[i].charAt(9)-48)==today) {
+				ClassInfo cla=ResponseUtils.getResponseByHash(
+						new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass",
+								new Object[] {course[i]}).send())
+						.getReturn(ClassInfo.class);
+				todayClass[(Integer.valueOf(course[i].charAt(11))-48)/2-1]=cla;
+			}
+		}
+		
+		for (int i=0;i<5;i++) {
+			if (todayClass[i]!=null)
+			{
+			   System.out.println(i);
+			   System.out.println(todayClass[i].getClassName()+"  "+todayClass[i].getTime());
+			}
+		}
+		
 		lblTodayCourses.setFont(new Font("微软雅黑", Font.PLAIN, 17));
 		lblTodayCourses.setBounds(949, 445, 115, 18);
 		contentPane.add(lblTodayCourses);
