@@ -51,7 +51,7 @@ public class ScheduleTablePane extends JPanel {
 	public void studentSchedule() {
 		Student stu=App.session.getStudent();
 		String temp = getClassSeletion(stu);
-		if (temp.equals("")) {
+		if (temp==null||temp.equals("")) {
 			return;
 		}
 		String[] course = temp.split(",");

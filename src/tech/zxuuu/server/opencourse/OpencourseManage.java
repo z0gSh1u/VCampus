@@ -1,5 +1,7 @@
 package tech.zxuuu.server.opencourse;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import tech.zxuuu.dao.IOpenCourseMapper;
@@ -38,5 +40,21 @@ public class OpencourseManage {
 		}
 		return result;
 	}
-
+	
+	public static List<OpenCourseInfo> getOpencourseInfos() {
+		List<OpenCourseInfo> result = null;
+		SqlSession sqlSession = null;
+		try {
+			
+			sqlSession = App.sqlSessionFactory.openSession();
+			IOpenCourseMapper openCourseMapper = sqlSession.getMapper(IOpenCourseMapper.class);
+			result = openCourseMapper.getOpencourseInfos();
+			sqlSession.commit();
+		} catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		System.out.println(result.get(1).getPreview());
+		return result;
+	}
 }
