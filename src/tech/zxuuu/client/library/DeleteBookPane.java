@@ -14,11 +14,13 @@ import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
+import java.awt.Font;
+import javax.swing.ImageIcon;
 
 public class DeleteBookPane extends JPanel {
 
 	private JTextField txtISBN;
-    private JButton btnComfirm;
+
 	/**
 	 * Create the panel.
 	 */
@@ -26,19 +28,20 @@ public class DeleteBookPane extends JPanel {
 		this.setLayout(null);
 
 		txtISBN = new JTextField();
-		txtISBN.setBounds(89, 72, 86, 24);
+		txtISBN.setBounds(337, 223, 272, 27);
 		this.add(txtISBN);
 		txtISBN.setColumns(10);
 
-		JLabel lblISBN = new JLabel("ISBN");
-		lblISBN.setBounds(3, 60, 72, 18);
+		JLabel lblISBN = new JLabel("图书编号");
+		lblISBN.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		lblISBN.setBounds(164, 219, 140, 33);
 		this.add(lblISBN);
 
-	    btnComfirm = new JButton("确定");
+		JButton btnComfirm = new JButton("确定");
 		btnComfirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.deleteBook",
+				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.Book.deleteBook",
 						new Object[] { txtISBN.getText() });
 				String hash = req.send();
 				ResponseUtils.blockAndWaitResponse(hash);
@@ -52,8 +55,14 @@ public class DeleteBookPane extends JPanel {
 
 			}
 		});
-		btnComfirm.setBounds(89, 161, 113, 27);
+		btnComfirm.setBounds(365, 306, 113, 27);
 		this.add(btnComfirm);
+		
+		JLabel label = new JLabel(" 删除书籍");
+		label.setIcon(new ImageIcon(DeleteBookPane.class.getResource("/resources/assets/icon/delete.png")));
+		label.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		label.setBounds(45, 40, 245, 64);
+		add(label);
 	}
 
 }

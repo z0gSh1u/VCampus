@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -27,7 +26,6 @@ import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.InputEvent;
 
 public class QueryBook extends JDialog {
 
@@ -56,8 +54,7 @@ public class QueryBook extends JDialog {
 	 * Create the dialog.
 	 */
 	public QueryBook() {
-		getContentPane().setLayout(null);
-		setBounds(100, 100, 591, 396);
+		setBounds(100, 100, 808, 501);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -68,22 +65,22 @@ public class QueryBook extends JDialog {
 		}
 		contentPanel.setLayout(null);
 		txtTitle = new JTextField();
-		txtTitle.setBounds(59, 11, 86, 24);
+		txtTitle.setBounds(103, 15, 157, 30);
 		contentPanel.add(txtTitle);
 		txtTitle.setColumns(10);
 		
-		JLabel lblTitle = new JLabel("题名");
-		lblTitle.setBounds(15, 14, 30, 18);
+		JLabel lblTitle = new JLabel("标题");
+		lblTitle.setBounds(15, 14, 89, 33);
 		contentPanel.add(lblTitle);
 		
 		txtAuthor = new JTextField();
-		txtAuthor.setBounds(59, 68, 86, 24);
+		txtAuthor.setBounds(367, 15, 157, 30);
 		txtAuthor.setText("");
 		contentPanel.add(txtAuthor);
 		txtAuthor.setColumns(10);
 		
-		JLabel lblAuthor = new JLabel("责任者");
-		lblAuthor.setBounds(0, 71, 45, 18);
+		JLabel lblAuthor = new JLabel("作者");
+		lblAuthor.setBounds(281, 20, 81, 21);
 		contentPanel.add(lblAuthor);
 		
 		String[] tableHeader= {"isbn","title","author"};
@@ -103,23 +100,12 @@ public class QueryBook extends JDialog {
 
 		            details.setModal(true);
 		            details.setVisible(true);
-		       }
-				
+			}
 		}});
         JScrollPane jsp = new JScrollPane(tblSearch);
-        jsp.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		if(e.isMetaDown())
-        		{
-        			int row=((JTable)e.getSource()).rowAtPoint(e.getPoint());
-        			txtISBN.setText(list.get(row).getISBN());
-        		}
-        	}
-        });
 		
 		JButton btnSearch = new JButton("检索");
-		btnSearch.setBounds(0, 146, 63, 27);
+		btnSearch.setBounds(556, 15, 100, 30);
 		
 		btnSearch.addActionListener(new ActionListener() {
 			@Override
@@ -158,7 +144,7 @@ public class QueryBook extends JDialog {
 
 		contentPanel.add(btnSearch);
 		JButton btnReset = new JButton("重置");
-		btnReset.setBounds(82, 146, 63, 27);
+		btnReset.setBounds(671, 15, 100, 30);
 		btnReset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -168,22 +154,22 @@ public class QueryBook extends JDialog {
 		});
 		contentPanel.add(btnReset);
 
-		jsp.setBounds(159, 14, 359, 207);
+		jsp.setBounds(21, 66, 740, 233);
 		contentPanel.add(jsp);
 		tblSearch.setModel(model);
 		tblSearch.setBounds(2, 2, 300, 300);
 		
 		txtISBN = new JTextField();
-		txtISBN.setBounds(243, 300, 86, 24);
+		txtISBN.setBounds(173, 332, 555, 24);
 		contentPanel.add(txtISBN);
 		txtISBN.setColumns(10);
 		
-		JLabel lblISBN = new JLabel("所借书的条码");
-		lblISBN.setBounds(112, 303, 90, 18);
+		JLabel lblISBN = new JLabel("图书编号");
+		lblISBN.setBounds(22, 320, 130, 48);
 		contentPanel.add(lblISBN);
 		
 		JButton btnComfirm = new JButton("确认");
-		btnComfirm.setBounds(472, 299, 63, 27);
+		btnComfirm.setBounds(318, 379, 100, 30);
 		btnComfirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
