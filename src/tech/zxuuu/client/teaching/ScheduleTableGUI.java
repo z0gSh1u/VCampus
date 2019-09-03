@@ -72,8 +72,7 @@ public class ScheduleTableGUI extends JFrame {
 	
 	
 	public void studentSchedule(){
-	    //TODO Student stu=App.session.getStudent();
-	    Student stu=new Student("213171077","123456");
+	    Student stu=App.session.getStudent();
 	    String[] course=getClassSeletion(stu).split(",");  
 	    for(int i=0;i<course.length;i++) {
 	    	ClassInfo cla=getOneClass(course[i]);
@@ -141,7 +140,7 @@ public class ScheduleTableGUI extends JFrame {
         labels[18].setText("<html><body><h2>第5-6节<br /></h2>下午</body></html>");
         labels[24].setText("<html><body><h2>第7-8节<br /></h2>下午</body></html>");
         labels[30].setText("<html><body><h2>第9-10节<br /></h2>晚上</body></html>");
-       teacherSchedule();
+        
 	}
 
 	static class ScheduleUtilities

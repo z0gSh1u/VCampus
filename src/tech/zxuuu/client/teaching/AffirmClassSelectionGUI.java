@@ -150,9 +150,8 @@ import java.awt.event.ActionEvent;
 		btnConfirm = new JButton("确认选择");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Student stu=new Student("213171077","123456");
-				stu.setClassNumber("0900021122560014203");
-				// TODO Student stu=App.session.getStudent();
+
+				Student stu=App.session.getStudent();
 				stu.setClassNumber(txtClassID.getText()+","+stu.getClassNumber());
 				takeClass(stu);
 				csg.selectClass(row);

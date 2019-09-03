@@ -1,11 +1,8 @@
 package tech.zxuuu.util;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 public class OtherUtils {
 
@@ -49,6 +46,12 @@ public class OtherUtils {
 	public static Date getLocalTime() {
 		Date now = new Date();
 		return now;
+	}
+	
+	public static Integer getDay(long unixTimeStamp) {
+		// 1 ~ 7
+		Date date = new Date(unixTimeStamp);
+		return date.getDay() == 0 ? 7 : date.getDay();
 	}
 	
 }

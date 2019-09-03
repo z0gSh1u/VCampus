@@ -2,12 +2,13 @@ package tech.zxuuu.entity;
 
 public class ClassInfo {
 	private String id;
-	private String className;  
+	private String className;
 	private String time;
-    private String teacher;  
-    private String classroom;  
-    
-    public ClassInfo() {}
+	private String teacher;
+	private String classroom;
+
+	public ClassInfo() {
+	}
 
 	public String getID() {
 		return id;
@@ -47,9 +48,18 @@ public class ClassInfo {
 
 	public void setClassroom(String classroom) {
 		this.classroom = classroom;
-	}    
-	
+	}
+
 	public ClassInfo(String id) {
-		this.id=id;
+		this.id = id;
+	}
+
+	public ClassInfo(String id, String className, String time, String teacher, String classroom) {
+		super();
+		this.id = id;
+		this.className = className;
+		this.time = time;
+		this.teacher = teacher;
+		this.classroom = classroom;
 	}
 }

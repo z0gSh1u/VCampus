@@ -121,9 +121,7 @@ public class DropCourseGUI extends JDialog {
 				JButton btnDrop = new JButton("退选课程");
 				btnDrop.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						Student stu=new Student("213171077","123456");
-						stu.setClassNumber("0900011122340014203,0900021122560014203");
-						//TODO Student stu=App.session.getStudent();
+						Student stu=App.session.getStudent();
 						stu.setClassNumber(stu.getClassNumber().replace(txtClassID.getText()+",", ""));
 						takeClass(stu);
 						csg.dropCourse(row);
