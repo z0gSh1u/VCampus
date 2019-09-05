@@ -53,6 +53,7 @@ public class StuCourseGUI extends JFrame {
 	private JPanel contentPane;
 	private JEditorPane epnInputBox;
 	private JEditorPane epnChatBox;
+	private JScrollPane scpChatBox;
 
 	private int screenWidth;
 	private int screenHeight;
@@ -76,12 +77,14 @@ public class StuCourseGUI extends JFrame {
 		try{
 			epnChatBox.validate();
 			epnChatBox.repaint();
-		epnChatBox.updateUI();
-		epnChatBox.revalidate();
+			epnChatBox.updateUI();
+			epnChatBox.revalidate();
 		}catch(Exception e) {
 			System.out.println("无事发生");
 		}
-		
+		//epnChatBox.setVisible(false);
+		//epnChatBox.setVisible(true);
+		scpChatBox.getVerticalScrollBar().setValue(scpChatBox.getVerticalScrollBar().getMaximum());
 	}
 
 	private String toEmoticon(String str) {
@@ -278,7 +281,8 @@ public class StuCourseGUI extends JFrame {
 		btnSendMess.setBounds(33, 473, 322, 37);
 		contentPane.add(btnSendMess);
 				
-		JScrollPane scpChatBox = new JScrollPane();
+		scpChatBox = new JScrollPane();
+		scpChatBox.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scpChatBox.setBounds(33, 13, 322, 365);
 		contentPane.add(scpChatBox);
 		

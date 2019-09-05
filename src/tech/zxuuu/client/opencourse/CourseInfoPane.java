@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CourseInfoPane extends JPanel {
+public class CourseInfoPane extends JPanel implements Runnable{
 
 	private int id;// 课程ID
 	private String preview;// 预览图链接
@@ -60,6 +60,7 @@ public class CourseInfoPane extends JPanel {
 		setLayout(null);
 
 		this.edpPreview = new JEditorPane();
+		edpPreview.setEditable(false);
 		edpPreview.setContentType("text/html");
 		edpPreview.setBounds(0, 0, 121, 121);
 		add(edpPreview);
@@ -98,5 +99,17 @@ public class CourseInfoPane extends JPanel {
 		this.edpPreview.setText(this.preview);
 		this.lblCourseName.setText(this.courseName);
 		this.lblSpeaker.setText(this.speaker);
+		new Thread(this).start();
+		
+	}
+	
+	public void run() {
+		try{
+			wait(1000);
+		}catch(Exception e) {
+			
+		}
+		this.edpPreview.setVisible(false);
+		this.edpPreview.setVisible(true);
 	}
 }
