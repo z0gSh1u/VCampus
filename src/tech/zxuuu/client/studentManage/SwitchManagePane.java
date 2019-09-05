@@ -27,7 +27,8 @@ import javax.swing.ImageIcon;
 /**
  * 转系功能面板
  * 
- * @version 已review完成
+ * @author 沈汉唐
+ * @author z0gSh1u
  */
 public class SwitchManagePane extends JPanel {
 
@@ -108,9 +109,8 @@ public class SwitchManagePane extends JPanel {
 		buttonYes.setBounds(372, 294, 115, 57);
 		this.add(buttonYes);
 
-		List<String> academies = new ArrayList<>(
-				Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16",
-						"17", "19", "21", "22", "24", "25", "41", "42", "43", "57", "61", "71"));
+		List<String> academies = new ArrayList<>(Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+				"11", "12", "13", "14", "15", "16", "17", "19", "21", "22", "24", "25", "41", "42", "43", "57", "61", "71"));
 		for (String academy : academies) {
 			comboSubjectNumber.addItem(academy + " - " + OtherUtils.getAcademyByNumber(academy));
 		}

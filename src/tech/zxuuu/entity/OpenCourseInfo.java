@@ -1,5 +1,8 @@
 package tech.zxuuu.entity;
 
+/**
+ * 公开课类（在线课堂用）
+ */
 public class OpenCourseInfo {
 
 	private int id;

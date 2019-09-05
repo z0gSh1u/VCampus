@@ -16,7 +16,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 
 import tech.zxuuu.client.main.App;
@@ -49,7 +48,7 @@ public class AuthGUI extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -70,12 +69,8 @@ public class AuthGUI extends JFrame {
 			return;
 		}
 		UserType type = null;
-		
-		// TODO 异步化
-		
 		if (rdoStudent.isSelected()) {
 			type = UserType.STUDENT;
-			
 			Student res = AuthHelper.verifyStudent(txtUsername.getText(), txtPassword.getText());
 			if (res != null) {
 				SwingUtils.showMessage(null, "学生登陆成功！", "信息");
@@ -90,13 +85,13 @@ public class AuthGUI extends JFrame {
 				txtPassword.setText("");
 				btnLogin.setText("登陆");
 			}
-		// -------------
+			// -------------
 		} else if (rdoTeacher.isSelected()) {
 			type = UserType.TEACHER;
 
 			Teacher res = AuthHelper.verifyTeacher(txtUsername.getText(), txtPassword.getText());
 			if (res != null) {
-				SwingUtils.showMessage(null, "欢迎您，"+res.getName()+" 教师！", "信息");
+				SwingUtils.showMessage(null, "欢迎您，" + res.getName() + " 教师！", "信息");
 				App.hasLogon = true;
 				App.session = new Session(res);
 				setVisible(false);
@@ -105,13 +100,12 @@ public class AuthGUI extends JFrame {
 				SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
 				btnLogin.setText("登陆");
 			}
-		// -------------
+			// -------------
 		} else if (rdoManager.isSelected()) {
 			type = UserType.MANAGER;
-
 			Manager res = AuthHelper.verifyManager(txtUsername.getText(), txtPassword.getText());
 			if (res != null) {
-				SwingUtils.showMessage(null, res.getManagerType().toString()+" 管理员登陆成功！", "信息");
+				SwingUtils.showMessage(null, res.getManagerType().toString() + " 管理员登陆成功！", "信息");
 				App.hasLogon = true;
 				App.session = new Session(res);
 				setVisible(false);
@@ -122,52 +116,43 @@ public class AuthGUI extends JFrame {
 			}
 		}
 	}
-	
+
 	/**
 	 * Create the frame.
 	 */
 	public AuthGUI() {
-		
 		setResizable(false);
-		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AuthGUI.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("统一登录认证 - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 866, 568);
+		setBounds(100, 100, 866, 549);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		JPanel pBody = new JPanel();
 		contentPane.add(pBody, BorderLayout.CENTER);
 		pBody.setLayout(null);
-		
+
 		JLabel lblUsername = new JLabel("用户名：");
-		lblUsername.setBounds(531, 195, 60, 18);
+		lblUsername.setBounds(531, 219, 60, 18);
 		pBody.add(lblUsername);
-		
+
 		txtUsername = new JTextField();
 		txtUsername.setFont(new Font("宋体", Font.PLAIN, 20));
-		txtUsername.setBounds(605, 190, 190, 24);
+		txtUsername.setBounds(605, 214, 190, 24);
 		pBody.add(txtUsername);
 		txtUsername.setColumns(10);
-		KeyAdapter loginKeyAdapter = new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER)
-					login();
-			}
-		};
-		txtUsername.addKeyListener(loginKeyAdapter);
-		
+
 		JLabel lblPassword = new JLabel("密码：");
-		lblPassword.setBounds(531, 257, 45, 18);
+		lblPassword.setBounds(531, 271, 45, 18);
 		pBody.add(lblPassword);
-		
+
 		JLabel lblType = new JLabel("用户类型：");
 		lblType.setBounds(531, 324, 75, 18);
 		pBody.add(lblType);
-		
+
 		rdoStudent = new JRadioButton("学生");
 		rdoTeacher = new JRadioButton("教师");
 		rdoManager = new JRadioButton("管理员");
@@ -211,44 +196,53 @@ public class AuthGUI extends JFrame {
 		rdoManager.setBounds(735, 320, 73, 27);
 		pBody.add(rdoManager);
 		rdoStudent.setSelected(true);
-		rdoStudent.addKeyListener(loginKeyAdapter);
-		rdoTeacher.addKeyListener(loginKeyAdapter);
-		rdoManager.addKeyListener(loginKeyAdapter);
-		
-		btnLogin = new JButton("登陆");
+
+		JButton btnLogin = new JButton("登陆");
 		btnLogin.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		btnLogin.setIcon(new ImageIcon(AuthGUI.class.getResource("/resources/assets/icon/right-circle.png")));
-		btnLogin.addActionListener(new ActionListener(){
+		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				login();
 			}
 		});
 
-		btnLogin.setBounds(587, 371, 167, 85);
+		KeyAdapter loginKeyAdapter = new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+					login();
+			}
+		};
+
+		btnLogin.setBounds(591, 372, 167, 85);
 		pBody.add(btnLogin);
-		
+
 		txtPassword = new JPasswordField();
 		txtPassword.setFont(new Font("宋体", Font.PLAIN, 18));
-		txtPassword.setBounds(605, 265, 190, 24);
+		txtPassword.setBounds(605, 266, 190, 24);
 		pBody.add(txtPassword);
+
+		txtUsername.addKeyListener(loginKeyAdapter);
+		rdoStudent.addKeyListener(loginKeyAdapter);
+		rdoTeacher.addKeyListener(loginKeyAdapter);
+		rdoManager.addKeyListener(loginKeyAdapter);
 		txtPassword.addKeyListener(loginKeyAdapter);
-		
+
 		JLabel leftPicture = new JLabel("");
 		leftPicture.setHorizontalAlignment(SwingConstants.CENTER);
 		leftPicture.setBounds(0, 0, 516, 511);
 		leftPicture.setIcon(new ImageIcon(AuthGUI.class.getResource("/resources/assets/picture/seu-1.jpg")));
 		pBody.add(leftPicture);
-		
+
 		JLabel label = new JLabel("统一登录认证");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("微软雅黑", Font.PLAIN, 35));
-		label.setBounds(557, 82, 233, 82);
+		label.setBounds(557, 105, 233, 82);
 		pBody.add(label);
-		
+
 		JLabel iconFavicon = new JLabel("");
 		iconFavicon.setIcon(new ImageIcon(AuthGUI.class.getResource("/resources/assets/icon/fav.png")));
-		iconFavicon.setBounds(642, 25, 64, 64);
+		iconFavicon.setBounds(642, 48, 64, 64);
 		pBody.add(iconFavicon);
 
 	}

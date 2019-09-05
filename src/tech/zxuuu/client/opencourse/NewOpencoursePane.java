@@ -13,7 +13,14 @@ import tech.zxuuu.util.SwingUtils;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.ImageIcon;
 
+/**
+ * 公开课新增面板
+ * 
+ * @author z0gSh1u
+ */
 public class NewOpencoursePane extends JPanel {
 	private JTextField txtCourseName;
 	private JTextField txtSpeaker;
@@ -27,7 +34,8 @@ public class NewOpencoursePane extends JPanel {
 		setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("新增公开课");
-		lblNewLabel.setBounds(245, 29, 75, 18);
+		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		lblNewLabel.setBounds(245, 29, 90, 24);
 		add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("课程名");
@@ -39,24 +47,24 @@ public class NewOpencoursePane extends JPanel {
 		add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("预览图");
-		lblNewLabel_3.setBounds(106, 189, 72, 18);
+		lblNewLabel_3.setBounds(106, 180, 72, 18);
 		add(lblNewLabel_3);
 
 		JLabel lblNewLabel_4 = new JLabel("视频地址");
-		lblNewLabel_4.setBounds(106, 240, 72, 18);
+		lblNewLabel_4.setBounds(106, 231, 72, 18);
 		add(lblNewLabel_4);
 
 		JButton btnNewButton = new JButton("新增");
+		btnNewButton.setIcon(new ImageIcon(NewOpencoursePane.class.getResource("/resources/assets/icon/tick.png")));
+		btnNewButton.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				OpenCourseInfo openCourseInfo = new OpenCourseInfo();
 				openCourseInfo.setCourseName(txtCourseName.getText());
 				openCourseInfo.setPreview("<img src=\"" + txtPreview.getText() + "\"/>");
 				openCourseInfo.setVideo(txtVideo.getText());
 				openCourseInfo.setSpeaker(txtSpeaker.getText());
-
 				Boolean result = ResponseUtils.getResponseByHash(new Request(App.connectionToServer, null,
 						"tech.zxuuu.server.opencourse.OpencourseManage.insertNewOpencourse", new Object[] { openCourseInfo })
 								.send())
@@ -66,31 +74,34 @@ public class NewOpencoursePane extends JPanel {
 				} else {
 					SwingUtils.showError(null, "新增失败", "错误");
 				}
-
 			}
 		});
-		btnNewButton.setBounds(253, 295, 113, 27);
+		btnNewButton.setBounds(228, 287, 121, 57);
 		add(btnNewButton);
 
 		txtCourseName = new JTextField();
-		txtCourseName.setBounds(201, 76, 86, 24);
+		txtCourseName.setBounds(201, 76, 201, 24);
 		add(txtCourseName);
 		txtCourseName.setColumns(10);
 
 		txtSpeaker = new JTextField();
-		txtSpeaker.setBounds(201, 126, 86, 24);
+		txtSpeaker.setBounds(201, 126, 201, 24);
 		add(txtSpeaker);
 		txtSpeaker.setColumns(10);
 
 		txtPreview = new JTextField();
-		txtPreview.setBounds(201, 186, 201, 24);
+		txtPreview.setBounds(201, 177, 201, 24);
 		add(txtPreview);
 		txtPreview.setColumns(10);
 
 		txtVideo = new JTextField();
-		txtVideo.setBounds(201, 237, 201, 24);
+		txtVideo.setBounds(201, 228, 201, 24);
 		add(txtVideo);
 		txtVideo.setColumns(10);
+
+		JLabel lblNewLabel_5 = new JLabel("(120*130)");
+		lblNewLabel_5.setBounds(414, 180, 72, 18);
+		add(lblNewLabel_5);
 
 	}
 }

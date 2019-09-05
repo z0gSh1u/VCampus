@@ -17,7 +17,14 @@ import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
+import javax.swing.JLabel;
+import java.awt.Font;
 
+/**
+ * 选课面板
+ * 
+ * @author 王志华
+ */
 public class ClassSelectPane extends JPanel {
 
 	private JTable tblClassList;
@@ -26,6 +33,7 @@ public class ClassSelectPane extends JPanel {
 	private Panel pBody;
 	public String[][] rowData;
 	String[] head = { "ID", "课程", "时间", "教师", "教室", "选择状况" };
+	private JLabel lblNewLabel;
 
 	public void selectClass(int row) {
 		rowData[row][5] = "√";
@@ -50,12 +58,10 @@ public class ClassSelectPane extends JPanel {
 	}
 
 	public List<ClassInfo> getClassInfo() {
-		Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassInfo",
-				new Object[] {App.session.getStudent().getAcademy()});
-		String hash = req.send();
-		ResponseUtils.blockAndWaitResponse(hash);
-		Response resp = ResponseQueue.getInstance().consume(hash);
-		return resp.getListReturn(ClassInfo.class);
+		return ResponseUtils.getResponseByHash(
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassInfo",
+						new Object[] { App.session.getStudent().getAcademy() }).send())
+				.getListReturn(ClassInfo.class);
 	}
 
 	/**
@@ -65,6 +71,12 @@ public class ClassSelectPane extends JPanel {
 
 		this.setLayout(null);
 
+		String selectClass=ResponseUtils
+				.getResponseByHash(new Request(App.connectionToServer, null,
+						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { App.session.getStudent() }).send())
+				.getReturn(String.class);
+		String[] course=selectClass.split(",");
+
 		List<ClassInfo> CI = this.getClassInfo();
 		rowData = new String[CI.size()][6];
 		for (int i = 0; i < CI.size(); i++) {
@@ -73,7 +85,14 @@ public class ClassSelectPane extends JPanel {
 			rowData[i][2] = CI.get(i).getTime();
 			rowData[i][3] = CI.get(i).getTeacher();
 			rowData[i][4] = CI.get(i).getClassroom();
-			rowData[i][5] = "";
+
+			for (int j=0;j<course.length;j++) {
+				if (rowData[i][0].contentEquals(course[j])) {
+					rowData[i][5]="√";
+					break;
+				}
+				rowData[i][5]="";
+			}
 		}
 		model = new DefaultTableModel(rowData, head) {
 			@Override
@@ -83,12 +102,12 @@ public class ClassSelectPane extends JPanel {
 		};
 
 		pBody = new Panel();
-		pBody.setBounds(10, 0, 534, 458);
+		pBody.setBounds(21, 50, 660, 458);
 		this.add(pBody);
 		pBody.setLayout(null);
 		tblClassList = new JTable();
 		JScrollPane jsp = new JScrollPane(tblClassList);
-		jsp.setBounds(14, 13, 518, 425);
+		jsp.setBounds(14, 13, 625, 425);
 		pBody.add(jsp);
 
 		tblClassList.setModel(model);
@@ -100,6 +119,11 @@ public class ClassSelectPane extends JPanel {
 		tblClassList.setBounds(5, 5, 512, 390);
 
 		ClassSelectPane csg = this;
+		
+		lblNewLabel = new JLabel("课程选择");
+		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		lblNewLabel.setBounds(310, 13, 72, 18);
+		add(lblNewLabel);
 
 		tblClassList.addMouseListener(new MouseAdapter() {
 			@Override
@@ -111,11 +135,11 @@ public class ClassSelectPane extends JPanel {
 
 						acsg.txtClassID.setText((String) tblClassList.getValueAt(row, 0));
 						acsg.btnConfirm.setEnabled(acsg.judgeConflict());
-						
+
 						if (!acsg.judgeConflict()) {
 							acsg.btnConfirm.setText("课程冲突");
 						}
-						
+
 						acsg.txtClassName.setText((String) tblClassList.getValueAt(row, 1));
 						acsg.txtTime.setText((String) tblClassList.getValueAt(row, 2));
 						acsg.txtTeacher.setText((String) tblClassList.getValueAt(row, 3));

@@ -15,6 +15,11 @@ import tech.zxuuu.dao.IOpenCourseMapper;
 import tech.zxuuu.entity.UserType;
 import tech.zxuuu.server.main.App;
 
+/**
+ * 聊天连接管理中心
+ * 
+ * @author LongChen
+ */
 public class ChatManager extends Thread {
 	private static ChatManager instance = null;
 
@@ -28,7 +33,7 @@ public class ChatManager extends Thread {
 		try {
 			serverSocket = new ServerSocket(Utils.getChatPort());
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			App.appendLog("[ChatManager]" + e.getMessage());
 			return;
 		}
 		userLists = new HashMap<Integer, Vector<ChatSocket>>();
@@ -39,39 +44,8 @@ public class ChatManager extends Thread {
 	private ServerSocket serverSocket;
 	private Map<Integer, Vector<ChatSocket>> userLists;
 
-	/*
-	private String toEmoticon(String str) {
-		int curPos = str.indexOf("\\");
-		while (curPos > -1) {
-			int endPos = str.indexOf("/", curPos);
-			if (endPos == -1)
-				break;
-			String name = str.substring(curPos + 1, endPos);
-			String emo = null;
-			try {
-				SqlSession sqlSession = App.sqlSessionFactory.openSession();
-				IOpenCourseMapper openCourseMapper = sqlSession.getMapper(IOpenCourseMapper.class);
-				emo = openCourseMapper.getEmoticon(name);
-				sqlSession.commit();
-			} catch (Exception e) {
-				App.appendLog("[ChatManager]在表情转换时发生错误：" + e.getMessage());
-				System.out.println(e.getMessage());
-				emo = "";
-			}
-
-			if (emo != null) {
-				str = str.substring(0, curPos) + emo + str.substring(endPos + 1);
-				System.out.println(str);
-			}
-			curPos = str.indexOf("\\", curPos+1);
-		}
-		return str;
-	}
-	*/
-
 	private void broadcast(String str, ChatSocket speaker) {
 		String text = "";
-		//str = toEmoticon(str);
 		switch (speaker.getUserType()) {
 		case STUDENT:
 			text = "[学生]";
@@ -86,9 +60,7 @@ public class ChatManager extends Thread {
 		text += "【" + speaker.getName() + "】<br/>" + str + "<br/>";
 		int key = speaker.getCourseId();
 		for (ChatSocket user : userLists.get(key)) {
-			// if(!user.equals(speaker)) {
 			user.write(text);
-			// }
 		}
 	}
 
@@ -126,7 +98,7 @@ public class ChatManager extends Thread {
 				App.appendLog("[ChatManager]一个新的连接加入了");
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			App.appendLog("[ChatManager]" + e.getMessage());
 		}
 	}
 }
