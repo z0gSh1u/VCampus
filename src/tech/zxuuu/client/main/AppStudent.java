@@ -270,13 +270,14 @@ public class AppStudent extends JFrame {
 				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection",
 						new Object[] { App.session.getStudent() }).send())
 				.getReturn(String.class);
-		System.out.println(selectedClass);
 
 		String[] course = selectedClass.split(",");
+
 		ClassInfo[] todayClass = new ClassInfo[5];
 		for (int i = 0; i < 5; i++) {
 			todayClass[i] = null;
 		}
+
 		if (selectedClass!=""&&!selectedClass.equals(""))
 		{
 			for (int i = 0; i < course.length; i++) {

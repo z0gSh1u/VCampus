@@ -134,12 +134,12 @@ public class AffirmClassSelectionGUI extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Student stu = App.session.getStudent();
-				System.out.println(stu.getClassNumber());
+
 				stu.setClassNumber(ResponseUtils
 				.getResponseByHash(new Request(App.connectionToServer, null,
 						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { App.session.getStudent() }).send())
 				.getReturn(String.class));
-				System.out.println(stu.getClassNumber());
+
 				stu.setClassNumber(txtClassID.getText() + (stu.getClassNumber() == null ? ""
 						: stu.getClassNumber().equals("") ? "" : ("," + stu.getClassNumber())));
 				takeClass(stu);

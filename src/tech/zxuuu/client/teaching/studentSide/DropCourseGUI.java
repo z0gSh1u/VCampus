@@ -116,9 +116,7 @@ public class DropCourseGUI extends JDialog {
 				.getResponseByHash(new Request(App.connectionToServer, null,
 						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { App.session.getStudent() }).send())
 				.getReturn(String.class));
-						System.out.println(stu.getClassNumber());
 						stu.setClassNumber(stu.getClassNumber().replace(txtClassID.getText() + ",", ""));
-						System.out.println(stu.getClassNumber());
 						takeClass(stu);
 						csg.dropCourse(row);
 						dcg.dispose();
