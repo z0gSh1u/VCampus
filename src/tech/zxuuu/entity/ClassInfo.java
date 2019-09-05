@@ -1,5 +1,8 @@
 package tech.zxuuu.entity;
 
+/**
+ * 课程信息类（教务系统用）
+ */
 public class ClassInfo {
 	private String id;
 	private String className;

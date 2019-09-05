@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="tech.zxuuu.dao.INoticeMapper">
+
+	<select id="getTop4Notice" resultType="NoticeInfo">
+		SELECT `title`, `date`,
+		`url` FROM `tb_notice` ORDER BY `date` DESC LIMIT 4
+	</select>
+
+</mapper>

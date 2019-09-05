@@ -1,7 +1,9 @@
 package tech.zxuuu.server.library;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -9,6 +11,12 @@ import tech.zxuuu.dao.IBookMapper;
 import tech.zxuuu.entity.Book;
 import tech.zxuuu.server.main.App;
 
+/**
+ * 图书馆后端
+ * 
+ * @author 曾铖
+ * @modify z0gSh1u
+ */
 public class BookServer {
 
 	public static String searchAuthorByTitle(String title) {
@@ -16,43 +24,43 @@ public class BookServer {
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
-
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
-
 			result = bookMapper.searchAuthorByTitle(title);
 			sqlSession.commit();
-
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
 		}
 		return result;
-
 	}
 
-	public static int borrowBook(String ISBN) {
+	public static int borrowBook(String borrower, String ISBN) {
 		int result = 0;
 		SqlSession sqlSession = null;
 		try {
-			sqlSession = App.sqlSessionFactory.openSession();// 连接数据库
-			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);// 取了Mapper，知道要执行哪个查询
+			sqlSession = App.sqlSessionFactory.openSession();
+			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			String TITLE = bookMapper.searchTitleByISBN(ISBN);
-			System.out.println(TITLE);
 			if (TITLE != null) {
 				int chargable = bookMapper.searchChargableByISBN(ISBN);
 				result = 1;
-				System.out.println(chargable);
 				if (chargable == 1) {
+					String nowborrower = bookMapper.getBorrowerByISBN(ISBN);
+					if (nowborrower == null || !nowborrower.equals(borrower)) {
+						return 1;
+					}
 					bookMapper.changeChargableByISBN(ISBN);
 					String title = bookMapper.searchTitleByISBN(ISBN);
-					bookMapper.changeNumberByTitle(title);// 一次操作可以有多次数据库操作；
+					bookMapper.changeNumberByTitle(title);
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("borrower", borrower);
+					map.put("ISBN", ISBN);
+					bookMapper.changeBorrowerByISBN(map);
 					result = 2;
 				}
 			}
-			sqlSession.commit();// 提交查询
-		}
-
-		catch (Exception e) {
+			sqlSession.commit();
+		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
 		}
@@ -63,11 +71,10 @@ public class BookServer {
 		List<Book> list = new ArrayList<>();
 		SqlSession sqlSession = null;
 		try {
-			sqlSession = App.sqlSessionFactory.openSession();// 连接数据库
-			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);// 取了Mapper，知道要执行哪个查询
-
+			sqlSession = App.sqlSessionFactory.openSession();
+			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			list = bookMapper.searchBeBorrowed(borrower);
-			sqlSession.commit();// 提交查询
+			sqlSession.commit();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -131,18 +138,13 @@ public class BookServer {
 
 	public static Boolean addBook(String ISBN, String title, String author, String category, String details,
 			String pictureURL) {
-
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			int number = bookMapper.searchHowManyByISBN(ISBN);
-
-			System.out.println("num=" + number);
-
 			if (number == 1) {
 				return false;
-
 			} else {
 				Book book2 = new Book();
 				book2.setISBN(ISBN);
@@ -167,7 +169,6 @@ public class BookServer {
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
-
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			Book book = new Book();
 			book.setISBN(ISBN);
@@ -185,7 +186,6 @@ public class BookServer {
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
-
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			Book book = new Book();
 			book.setTitle(title);
@@ -205,14 +205,9 @@ public class BookServer {
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
-
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			result = bookMapper.searchPicture(ISBN);
-
-			System.out.println("isbn=" + ISBN);
-
 			sqlSession.commit();
-			System.out.println(result);
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -225,12 +220,9 @@ public class BookServer {
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
-
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			list = bookMapper.searchHotBook();
-
 			sqlSession.commit();
-			System.out.println(list);
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -244,7 +236,6 @@ public class BookServer {
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
-
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			Book book = new Book();
 			book.setISBN(ISBN);

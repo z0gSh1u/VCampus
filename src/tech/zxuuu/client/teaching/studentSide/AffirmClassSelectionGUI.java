@@ -16,9 +16,12 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 /**
- * Launch the application.
+ * 确认选课窗口
+ * 
+ * @author 王志华
  */
 public class AffirmClassSelectionGUI extends JDialog {
 
@@ -31,35 +34,18 @@ public class AffirmClassSelectionGUI extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	JButton btnConfirm;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			AffirmClassSelectionGUI dialog = new AffirmClassSelectionGUI(new ClassSelectPane(), 0);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public Boolean takeClass(Student student) {
-		Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.takeClass",
-				new Object[] { student });
-		String hash = req.send();
-		ResponseUtils.blockAndWaitResponse(hash);
-		Response resp = ResponseQueue.getInstance().consume(hash);
-		return resp.getReturn(Boolean.class);
+		return ResponseUtils
+				.getResponseByHash(new Request(App.connectionToServer, null,
+						"tech.zxuuu.server.teaching.ClassSelectGUI.takeClass", new Object[] { student }).send())
+				.getReturn(Boolean.class);
 	}
 
 	public Boolean judgeConflict() {
 		String cn = App.session.getStudent().getClassNumber();
-
 		if (cn == null || cn.equals("")) {
 			return true;
 		}
-
 		int num = cn.length() / 20;
 		String[] course = new String[num * 2];
 		for (int i = 0; i < num; i++) {
@@ -67,8 +53,6 @@ public class AffirmClassSelectionGUI extends JDialog {
 			course[i * 2 + 1] = cn.substring(i * 20 + 9, i * 20 + 12);
 		}
 		for (int i = 0; i < num * 2; i++) {
-			System.out.println(course[i]);
-			System.out.println(txtClassID.getText().substring(6, 9));
 			if (txtClassID.getText().substring(6, 9).equals(course[i])
 					|| txtClassID.getText().substring(9, 12).contentEquals(course[i]))
 				return false;
@@ -77,6 +61,11 @@ public class AffirmClassSelectionGUI extends JDialog {
 	}
 
 	public AffirmClassSelectionGUI(ClassSelectPane csg, int row) {
+
+		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(AffirmClassSelectionGUI.class.getResource("/resources/assets/icon/fav.png")));
+		setTitle("确认课程选择 - VCampus");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 436, 292);
 		contentPane = new JPanel();
@@ -145,6 +134,12 @@ public class AffirmClassSelectionGUI extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Student stu = App.session.getStudent();
+				System.out.println(stu.getClassNumber());
+				stu.setClassNumber(ResponseUtils
+				.getResponseByHash(new Request(App.connectionToServer, null,
+						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { App.session.getStudent() }).send())
+				.getReturn(String.class));
+				System.out.println(stu.getClassNumber());
 				stu.setClassNumber(txtClassID.getText() + (stu.getClassNumber() == null ? ""
 						: stu.getClassNumber().equals("") ? "" : ("," + stu.getClassNumber())));
 				takeClass(stu);

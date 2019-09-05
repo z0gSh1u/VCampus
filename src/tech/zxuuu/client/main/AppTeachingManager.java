@@ -12,6 +12,8 @@ import tech.zxuuu.client.studentManage.InManagePane;
 import tech.zxuuu.client.studentManage.OutManagePane;
 import tech.zxuuu.client.studentManage.StudentTablePane;
 import tech.zxuuu.client.studentManage.SwitchManagePane;
+import tech.zxuuu.client.teaching.managerSide.CourseListPane;
+import tech.zxuuu.client.teaching.managerSide.DeleteCoursePane;
 import tech.zxuuu.client.teaching.managerSide.NewCoursePane;
 
 import javax.swing.JLabel;
@@ -42,6 +44,8 @@ public class AppTeachingManager extends JFrame {
 	private JPanel switchManagePane;
 	/* 课程管理相关Panel */
 	private JPanel newCoursePane;
+	private JPanel courseListPane;
+	private JPanel deleteCoursePane;
 
 	/**
 	 * Launch the application.
@@ -192,6 +196,16 @@ public class AppTeachingManager extends JFrame {
 		newCoursePane.setBounds(300, 86, 668, 654);
 		contentPane.add(newCoursePane);
 		newCoursePane.setVisible(false);
+		
+		courseListPane = new CourseListPane();
+		courseListPane.setBounds(300, 86, 668, 654);
+		contentPane.add(courseListPane);
+		courseListPane.setVisible(false);
+
+		deleteCoursePane = new DeleteCoursePane();
+		deleteCoursePane.setBounds(300, 86, 668, 654);
+		contentPane.add(deleteCoursePane);
+		deleteCoursePane.setVisible(false);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(
@@ -204,7 +218,7 @@ public class AppTeachingManager extends JFrame {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				
 			}
 		});
 		button.setIcon(new ImageIcon(AppTeachingManager.class.getResource("/resources/assets/icon/liebiao.png")));

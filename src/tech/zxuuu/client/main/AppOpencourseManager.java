@@ -25,33 +25,16 @@ import java.awt.Color;
 public class AppOpencourseManager extends JFrame {
 
 	private JPanel contentPane;
-
 	private JPanel currentDisplay;
 	private JPanel listOpencoursePane;
 	private JPanel newOpencoursePane;
 	private JPanel defaultPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					AppOpencourseManager frame = new AppOpencourseManager();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public AppOpencourseManager() {
+		setResizable(false);
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(AppOpencourseManager.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("公开课管理员 - VCampus");

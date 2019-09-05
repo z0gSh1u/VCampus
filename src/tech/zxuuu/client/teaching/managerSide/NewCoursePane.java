@@ -16,7 +16,15 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.ImageIcon;
 
+
+/**
+ * 教务老师新增课程
+ * 
+ * @author z0gSh1u
+ */
 public class NewCoursePane extends JPanel {
 	private JTextField txtAca;
 	private JTextField txtCourseId;
@@ -37,7 +45,8 @@ public class NewCoursePane extends JPanel {
 		setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("新增课程");
-		lblNewLabel.setBounds(293, 33, 72, 18);
+		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		lblNewLabel.setBounds(292, 32, 72, 18);
 		add(lblNewLabel);
 
 		JLabel label = new JLabel("课程编号");
@@ -138,24 +147,31 @@ public class NewCoursePane extends JPanel {
 		add(dispTeacher);
 		dispTeacher.setColumns(10);
 
+		JButton btnAutoLoad;
 		JButton btnNewButton = new JButton("添加");
+		btnNewButton.setIcon(new ImageIcon(NewCoursePane.class.getResource("/resources/assets/icon/tick.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClassInfo cla=new ClassInfo();
-				cla.setID(txtAca.getText()+txtCourseId.getText()+txtTime.getText()+txtTeacherId.getText()+txtClassroom.getText());
+				if (dispTeacher.getText().equals("")) {
+					SwingUtils.showError(null, "请先通过自动装填！", "错误");
+					return;
+				}
+				ClassInfo cla = new ClassInfo();
+				cla.setID(txtAca.getText() + txtCourseId.getText() + txtTime.getText() + txtTeacherId.getText()
+						+ txtClassroom.getText());
 				cla.setClassName(txtName.getText());
-				String [] time=dispTime.getText().split("；");
-				cla.setTime(time[0]+" "+time[1]);
+				String[] time = dispTime.getText().split("；");
+				cla.setTime(time[0] + " " + time[1]);
 				cla.setTeacher(dispTeacher.getText());
 				cla.setClassroom(dispClassroom.getText());
-				Boolean oci= ResponseUtils.getResponseByHash(
-						new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.CourseManagerSide.insertNewCourse",
-								new Object[] {cla}).send())
+				Boolean oci = ResponseUtils
+						.getResponseByHash(new Request(App.connectionToServer, null,
+								"tech.zxuuu.server.teaching.CourseManagerSide.insertNewCourse", new Object[] { cla }).send())
 						.getReturn(Boolean.class);
 			}
 		});
-		btnNewButton.setBounds(342, 434, 113, 27);
+		btnNewButton.setBounds(342, 423, 115, 57);
 		add(btnNewButton);
 
 		JLabel lblNewLabel_5 = new JLabel("开课院系");
@@ -168,7 +184,7 @@ public class NewCoursePane extends JPanel {
 		dispAca.setBounds(147, 163, 286, 24);
 		add(dispAca);
 
-		JButton btnAutoLoad = new JButton("自动装填");
+		btnAutoLoad = new JButton("自动装填");
 		btnAutoLoad.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

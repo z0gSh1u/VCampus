@@ -5,10 +5,12 @@
 <mapper namespace="tech.zxuuu.dao.IClassMapper">
 	<select id="getClassInfo" parameterType="String"
 		resultType="ClassInfo">
-		SELECT * FROM `tb_class` WHERE `id` LIKE CONCAT(#{academy}, "%")
+		SELECT * FROM `tb_class` WHERE `id` LIKE CONCAT(#{academy},
+		"%")
 	</select>
 	<update id="takeClass" parameterType="Student">
-		UPDATE tb_student SET selected_course=#{classNumber} WHERE
+		UPDATE tb_student SET
+		selected_course=#{classNumber} WHERE
 		card_number=#{cardNumber}
 	</update>
 	<select id="getClassSelection" parameterType="Student"
@@ -26,8 +28,9 @@
 	</select>
 	<insert id="insertNewCourse" parameterType="ClassInfo">
 		INSERT INTO
-		`tb_class` VALUES (#{id}, #{className}, #{time}, #{teacher}, #{classroom})
+		`tb_class` VALUES (#{id}, #{className}, #{time}, #{teacher},
+		#{classroom})
 	</insert>
-	
-	
+
+
 </mapper>
