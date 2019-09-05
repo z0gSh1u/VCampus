@@ -278,20 +278,23 @@ public class AppStudent extends JFrame {
 			todayClass[i] = null;
 		}
 
-		for (int i = 0; i < course.length; i++) {
-			if (Integer.valueOf(course[i].charAt(6) - 48) == today) {
-				ClassInfo cla = ResponseUtils
-						.getResponseByHash(new Request(App.connectionToServer, null,
-								"tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass", new Object[] { course[i] }).send())
-						.getReturn(ClassInfo.class);
-				todayClass[(Integer.valueOf(course[i].charAt(8)) - 48) / 2 - 1] = cla;
-			}
-			if (Integer.valueOf(course[i].charAt(9) - 48) == today) {
-				ClassInfo cla = ResponseUtils
-						.getResponseByHash(new Request(App.connectionToServer, null,
-								"tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass", new Object[] { course[i] }).send())
-						.getReturn(ClassInfo.class);
-				todayClass[(Integer.valueOf(course[i].charAt(11)) - 48) / 2 - 1] = cla;
+		if (selectedClass!=""&&!selectedClass.equals(""))
+		{
+			for (int i = 0; i < course.length; i++) {
+				if (Integer.valueOf(course[i].charAt(6) - 48) == today) {
+					ClassInfo cla = ResponseUtils
+							.getResponseByHash(new Request(App.connectionToServer, null,
+									"tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass", new Object[] { course[i] }).send())
+							.getReturn(ClassInfo.class);
+					todayClass[(Integer.valueOf(course[i].charAt(8)) - 48) / 2 - 1] = cla;
+				}
+				if (Integer.valueOf(course[i].charAt(9) - 48) == today) {
+					ClassInfo cla = ResponseUtils
+							.getResponseByHash(new Request(App.connectionToServer, null,
+									"tech.zxuuu.server.teaching.ClassSelectGUI.getOneClass", new Object[] { course[i] }).send())
+							.getReturn(ClassInfo.class);
+					todayClass[(Integer.valueOf(course[i].charAt(11)) - 48) / 2 - 1] = cla;
+				}
 			}
 		}
 
