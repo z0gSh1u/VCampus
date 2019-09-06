@@ -38,7 +38,9 @@ public class App extends JFrame {
 	public static RequestQueue requestQueue; // 服务器端全局请求消息队列
 	public static RequestHandler requestHandler; // 请求处理器
 	public static SqlSessionFactory sqlSessionFactory; // MyBatis连接工厂
-
+	public static SqlSession foreverSqlSession; // 永久公有MyBatis连接会话，该会话仅一份，可能出现资源争抢，严禁关闭
+	// 如非大量连续请求场景，请使用工厂自行创建SqlSession
+	
 	public static JTextPane paneLog;
 
 	/**
@@ -121,7 +123,7 @@ public class App extends JFrame {
 		App.requestHandler.start();
 		App.paneLog.setText(
 				paneLog.getText() + (paneLog.getText().equals("") ? "" : "\n") + "开始服务器端侦听...端口=" + ServerUtils.getMainPort());
-		;
+		foreverSqlSession = sqlSessionFactory.openSession();
 
 	}
 

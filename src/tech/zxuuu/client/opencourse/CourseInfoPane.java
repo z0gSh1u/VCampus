@@ -12,6 +12,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 /**
  * 公开课课程信息Block
@@ -74,6 +75,7 @@ public class CourseInfoPane extends JPanel {
 		setLayout(null);
 
 		this.edpPreview = new JEditorPane();
+		edpPreview.setEditable(false);
 		edpPreview.setContentType("text/html");
 		edpPreview.setBounds(0, 0, 120, 130);
 		add(edpPreview);
@@ -90,6 +92,8 @@ public class CourseInfoPane extends JPanel {
 		add(lblSpeaker);
 
 		JButton btnNewButton = new JButton("进入");
+		btnNewButton.setIcon(new ImageIcon(CourseInfoPane.class.getResource("/resources/assets/icon/right-circle.png")));
+		btnNewButton.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -102,7 +106,7 @@ public class CourseInfoPane extends JPanel {
 				}
 			}
 		});
-		btnNewButton.setBounds(584, 80, 99, 41);
+		btnNewButton.setBounds(561, 59, 119, 59);
 		add(btnNewButton);
 		
 		setLayout(null);

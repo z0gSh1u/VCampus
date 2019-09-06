@@ -3,13 +3,9 @@ package tech.zxuuu.client.opencourse;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import java.lang.reflect.*;
-
 import tech.zxuuu.client.main.App;
-import tech.zxuuu.client.main.AppOpencourseManager;
 import tech.zxuuu.client.main.AppTeacher;
 import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.net.Request;

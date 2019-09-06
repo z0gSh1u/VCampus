@@ -2,6 +2,7 @@ package tech.zxuuu.client.shop;
 
 import java.awt.Font;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,9 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import tech.zxuuu.client.library.BookDetails;
 import tech.zxuuu.client.main.App;
-import tech.zxuuu.entity.Book;
 import tech.zxuuu.entity.Product;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.util.ResponseUtils;
@@ -24,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.JComboBox;
 
 /**
  * 商品删除面板
@@ -33,10 +33,10 @@ import java.util.List;
  */
 public class DeleteProductPane extends JPanel {
 	private JTextField txtName;
-	private JTextField txtType;
 	private JTable tblSearchList;
 	private DefaultTableModel model;
 	private List<Product> list = null;
+	JComboBox cbType;
 
 	/**
 	 * Create the panel.
@@ -70,12 +70,6 @@ public class DeleteProductPane extends JPanel {
 			this.add(txtName);
 			txtName.setColumns(10);
 		}
-		{
-			txtType = new JTextField();
-			txtType.setColumns(10);
-			txtType.setBounds(100, 252, 193, 41);
-			this.add(txtType);
-		}
 
 		String[] tableHeader = { "商品名称", "类型", "价格", "库存量" };
 		model = new DefaultTableModel(null, tableHeader);
@@ -96,13 +90,12 @@ public class DeleteProductPane extends JPanel {
 							.getReturn(Boolean.class);
 					if (result) {
 						SwingUtils.showMessage(null, "删除成功！", "提示");
+						model.removeRow(row);
 					} else {
 						SwingUtils.showError(null, "删除失败！", "错误");
 					}
 					model.fireTableStructureChanged();
 
-
-					
 				}
 			}
 		});
@@ -111,13 +104,13 @@ public class DeleteProductPane extends JPanel {
 		tblSearchList.setModel(model);
 		JScrollPane jsp = new JScrollPane(tblSearchList);
 
-		jsp.setBounds(307, 150, 394, 188);
+		jsp.setBounds(307, 150, 394, 274);
 		this.add(jsp);
 
 		JLabel lbl_ProductList = new JLabel("商品列表·双击删除商品");
 		lbl_ProductList.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		lbl_ProductList.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_ProductList.setBounds(307, 112, 397, 41);
+		lbl_ProductList.setBounds(304, 101, 397, 41);
 		this.add(lbl_ProductList);
 
 		JButton btn_Search = new JButton("搜索");
@@ -126,7 +119,7 @@ public class DeleteProductPane extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Product product = new Product();
 				product.setName(txtName.getText());
-				product.setType(txtType.getText());
+				product.setType((String) cbType.getSelectedItem());
 
 				list = ResponseUtils
 						.getResponseByHash(new Request(App.connectionToServer, null,
@@ -161,7 +154,13 @@ public class DeleteProductPane extends JPanel {
 		JLabel lbl_SearchProduct = new JLabel("搜索商品");
 		lbl_SearchProduct.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_SearchProduct.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		lbl_SearchProduct.setBounds(11, 112, 256, 43);
+		lbl_SearchProduct.setBounds(14, 100, 256, 43);
 		add(lbl_SearchProduct);
+
+		cbType = new JComboBox();
+		cbType.setFont(new Font("宋体", Font.PLAIN, 16));
+		cbType.setModel(new DefaultComboBoxModel(new String[] { "食物", "饮料", "水果", "文具", "用品" }));
+		cbType.setBounds(100, 260, 193, 30);
+		add(cbType);
 	}
 }

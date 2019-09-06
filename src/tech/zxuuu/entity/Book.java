@@ -4,7 +4,7 @@ package tech.zxuuu.entity;
  * 书本类（图书馆用）
  */
 public class Book {
-	
+
 	private String title;
 	private String author;
 	private int numofborrowed;
@@ -14,6 +14,16 @@ public class Book {
 	private String category;
 	private String details;
 	private String pictureURL;
+	private String borrowTime;
+	private String renewornot;
+
+	public String getBorrowTime() {
+		return borrowTime;
+	}
+
+	public void setBorrowTime(String borrowTime) {
+		this.borrowTime = borrowTime;
+	}
 
 	public String getPictureURL() {
 		return pictureURL;
@@ -55,11 +65,6 @@ public class Book {
 		this.chargable = chargable;
 	}
 
-	@Override
-	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", numofborrowed=" + numofborrowed + ", ISBN=" + ISBN + "]";
-	}
-
 	public String getISBN() {
 		return ISBN;
 	}
@@ -92,12 +97,35 @@ public class Book {
 		this.numofborrowed = numofborrowed;
 	}
 
-	public Book(String title, String author, int numofborrowed, int chargable) {
+	public Book(String title, String author, int numofborrowed, String iSBN, int chargable, String borrower,
+			String category, String details, String pictureURL, String borrowTime, String renewornot) {
 		super();
 		this.title = title;
 		this.author = author;
 		this.numofborrowed = numofborrowed;
+		ISBN = iSBN;
 		this.chargable = chargable;
+		this.borrower = borrower;
+		this.category = category;
+		this.details = details;
+		this.pictureURL = pictureURL;
+		this.borrowTime = borrowTime;
+		this.renewornot = renewornot;
+	}
+
+	public String getRenewornot() {
+		return renewornot;
+	}
+
+	public void setRenewornot(String renewornot) {
+		this.renewornot = renewornot;
+	}
+	
+	@Override
+	public String toString() {
+		return "Book [title=" + title + ", author=" + author + ", numofborrowed=" + numofborrowed + ", ISBN=" + ISBN
+				+ ", chargable=" + chargable + ", borrower=" + borrower + ", category=" + category + ", details=" + details
+				+ ", pictureURL=" + pictureURL + ", borrowTime=" + borrowTime + ", renewornot=" + renewornot + "]";
 	}
 
 	public Book() {

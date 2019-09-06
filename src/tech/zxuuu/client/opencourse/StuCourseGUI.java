@@ -9,15 +9,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.ibatis.session.SqlSession;
-
 import com.alibaba.fastjson.JSON;
 
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.main.Utils;
-import tech.zxuuu.dao.IOpenCourseMapper;
 import tech.zxuuu.entity.EmoticonInfo;
-import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.server.opencourse.ChatSocket;
 import tech.zxuuu.util.ResponseUtils;
@@ -41,7 +37,6 @@ import java.awt.GridLayout;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 
-import sun.nio.cs.ext.TIS_620;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import java.awt.event.MouseAdapter;
@@ -106,7 +101,6 @@ public class StuCourseGUI extends JFrame {
 			String emo = emoticonMap.get(name);
 			if (emo != null) {
 				str = str.substring(0, curPos) + emo + str.substring(endPos + 1);
-				System.out.println(str);
 			}
 			curPos = str.indexOf("\\", curPos + 1);
 		}
@@ -145,7 +139,6 @@ public class StuCourseGUI extends JFrame {
 			this.chatSocket.write(Integer.toString(this.courseId) + "\\" + JSON.toJSONString(this.chatSocket.getUserType())
 					+ "\\" + this.chatSocket.getName());
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			return false;
 		}
 		return true;
@@ -224,6 +217,7 @@ public class StuCourseGUI extends JFrame {
 							(screenHeight - videoFrame.getHeight()) / 2, frameWidth, frameHeight);
 					videoFrame.setVisible(true);
 					videoFrame.getMediaPlayer().playMedia(videoUrl);
+					videoFrame.videoUrl = videoUrl;
 					new SwingWorker<String, Integer>() {
 						@Override
 						protected String doInBackground() throws Exception {
@@ -244,7 +238,7 @@ public class StuCourseGUI extends JFrame {
 						}
 					}.execute();
 				} catch (Exception e) {
-					e.printStackTrace();
+					// dont care
 				}
 			}
 		});
@@ -267,13 +261,6 @@ public class StuCourseGUI extends JFrame {
 		contentPane.add(scpEmoticonList);
 		scpEmoticonList.setVisible(false);
 		scpEmoticonList.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-
-		
-
-		epnInputBox = new JEditorPane();
-		epnInputBox.setBounds(33, 414, 322, 62);
-		contentPane.add(epnInputBox);
 
 		pnlEmoticonList = new JPanel();
 		scpEmoticonList.setViewportView(pnlEmoticonList);
@@ -303,9 +290,10 @@ public class StuCourseGUI extends JFrame {
 		JEditorPane epnShowEmoticon = new JEditorPane();
 		epnShowEmoticon.setEditable(false);
 		epnShowEmoticon.setContentType("text/html");
-		epnShowEmoticon.setBounds(43, 382, 28, 28);
+		epnShowEmoticon.setBounds(33, 379, 28, 28);
 		epnShowEmoticon.setText("<img src=\"https://s2.ax1x.com/2019/09/04/nEpEF0.png\"/>");
 		epnShowEmoticon.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				scpEmoticonList.setVisible(!scpEmoticonList.isVisible());
 			}
@@ -331,11 +319,13 @@ public class StuCourseGUI extends JFrame {
 
 
 		epnChatBox.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				scpEmoticonList.setVisible(false);
 			}
 		});
 		this.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				scpEmoticonList.setVisible(false);
 			}

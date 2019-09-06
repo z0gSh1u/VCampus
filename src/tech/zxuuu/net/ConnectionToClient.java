@@ -24,14 +24,13 @@ public class ConnectionToClient extends Connection {
 
 	@Override
 	public synchronized String readLine() {
-		//synchronized (ConnectionToClient.class) {
-			try {
-				return this.bReader.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		//}
+		// readLine本身就是阻塞的，无需同步
+		try {
+			return this.bReader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

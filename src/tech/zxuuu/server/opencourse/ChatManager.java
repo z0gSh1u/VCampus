@@ -6,12 +6,9 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import org.apache.ibatis.session.SqlSession;
-
 import com.alibaba.fastjson.JSON;
 
 import tech.zxuuu.client.main.Utils;
-import tech.zxuuu.dao.IOpenCourseMapper;
 import tech.zxuuu.entity.UserType;
 import tech.zxuuu.server.main.App;
 

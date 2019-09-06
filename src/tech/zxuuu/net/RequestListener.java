@@ -42,13 +42,11 @@ public class RequestListener extends Thread {
 						public void run() {
 							String line;
 							while ((line = connectionToThisClient.readLine()) != null) {
-								// 一个line就是一段JSON
 								Request req = JSON.parseObject(line, Request.class);
 								// 设置响应回送位置
 								req.setConnectionToClient(connectionToThisClient);
 								// 将请求放入消息队列，等待消费
 								App.requestQueue.produce(req);
-								System.out.println("服务器端请求已收到，完成生产");
 							}
 						}
 					}.start();

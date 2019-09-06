@@ -34,12 +34,11 @@ public class NoticeInfo {
 	}
 
 	public NoticeInfo() {
-		super();
 	}
 
 	@Override
 	public String toString() {
-		return "NoticeInfo [title=" + title + ", date=" + date + "]";
+		return "NoticeInfo [title=" + title + ", date=" + date + ", url=" + url + "]";
 	}
 
 	public NoticeInfo(String title, String date, String url) {

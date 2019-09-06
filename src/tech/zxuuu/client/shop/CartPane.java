@@ -27,33 +27,32 @@ import javax.swing.border.LineBorder;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-
 /**
  * 购物车面板
  * 
  * @author z0gSh1u
+ * @author 杨鹏杰
  */
 public class CartPane extends JPanel {
 	private JTable table;
 	private DefaultTableModel model;
-	public JTextArea textArea;
-	String[] head = { "商品","价格", "数量" };
+	public JTextArea txtSumDisp;
+	String[] head = { "商品", "价格", "数量" };
 	float sum = 0;
+
 	/**
 	 * Create the panel.
 	 */
 	public void requireReRender() {
+		sum = 0;
 		model.setRowCount(0);
-		
 		for (Product product : ShopFirstPage.cart) {
-
-			Object[] toAdd = { product.getName(), product.getPrice(),product.getNumber() };
+			Object[] toAdd = { product.getName(), product.getPrice(), product.getNumber() };
 			model.addRow(toAdd);
-			sum += product.getPrice();
-			
+			sum += product.getPrice() * product.getNumber();
 		}
 		String str = String.valueOf(sum);
-		textArea.setText(str);
+		txtSumDisp.setText(str);
 	}
 
 	public CartPane() {
@@ -62,7 +61,6 @@ public class CartPane extends JPanel {
 		setOpaque(true);
 		setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 
-
 		model = new DefaultTableModel(null, head) {
 			@Override
 			public boolean isCellEditable(int a, int b) {
@@ -70,55 +68,59 @@ public class CartPane extends JPanel {
 			}
 		};
 
-
 		JPanel that = this;
 
-		JLabel lblNewLabel = new JLabel("购物车");
-		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		lblNewLabel.setIcon(new ImageIcon(CartPane.class.getResource("/resources/assets/icon/cart2.png")));
-		lblNewLabel.setBounds(14, 13, 106, 48);
-		add(lblNewLabel);
+		JLabel lblCartIcon = new JLabel("购物车");
+		lblCartIcon.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		lblCartIcon.setIcon(new ImageIcon(CartPane.class.getResource("/resources/assets/icon/cart2.png")));
+		lblCartIcon.setBounds(14, 13, 106, 48);
+		add(lblCartIcon);
 
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+		JLabel lblExit = new JLabel("");
+		lblExit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				that.setVisible(false);
 			}
 		});
-		lblNewLabel_1.setIcon(new ImageIcon(CartPane.class.getResource("/resources/assets/icon/crossSign.png")));
-		lblNewLabel_1.setBounds(324, 23, 32, 32);
-		add(lblNewLabel_1);
+		lblExit.setIcon(new ImageIcon(CartPane.class.getResource("/resources/assets/icon/crossSign.png")));
+		lblExit.setBounds(324, 23, 32, 32);
+		add(lblExit);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(14, 74, 342, 344);
 		add(scrollPane);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(90, 431, 91, 41);
-		
-		add(textArea);
-		
-		
+
+		txtSumDisp = new JTextArea();
+		txtSumDisp.setEditable(false);
+		txtSumDisp.setFont(new Font("微软雅黑", Font.PLAIN, 17));
+		txtSumDisp.setBounds(90, 431, 91, 41);
+
+		add(txtSumDisp);
+
 		JLabel lblSum = new JLabel("总金额");
+		lblSum.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		lblSum.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSum.setBounds(14, 431, 91, 41);
 		add(lblSum);
 
 		table = new JTable();
+		// 双击删除一行
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 2) {
+				if (e.getClickCount() == 2) {
 					int row = ((JTable) e.getSource()).rowAtPoint(e.getPoint());
-					
+					ShopFirstPage.cart.remove(row);
+					requireReRender();
 				}
 			}
 		});
 		scrollPane.setViewportView(table);
 
-		JButton btnNewButton = new JButton("校园卡结算");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnCheckout = new JButton("校园卡结算");
+		btnCheckout.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String checkoutHelper = "";
 				for (Product ele : ShopFirstPage.cart) {
@@ -129,13 +131,6 @@ public class CartPane extends JPanel {
 					checkoutHelper += ele.getPrice();
 					checkoutHelper += "$";
 				}
-				// TODO: Can we transfer List<Entity> in Request?
-				// Integer ret = ResponseUtils
-				// .getResponseByHash(new Request(App.connectionToServer, null,
-				// "tech.zxuuu.server.shop.checkout",
-				// new Object[] { App.session.getStudent().getCardNumber(), ShopFirstPage.cart
-				// }).send())
-				// .getReturn(Integer.class);
 				Integer ret = ResponseUtils
 						.getResponseByHash(new Request(App.connectionToServer, null, "tech.zxuuu.server.shop.Addons.checkout",
 								new Object[] { App.session.getStudent().getCardNumber(), checkoutHelper }).send())
@@ -157,29 +152,24 @@ public class CartPane extends JPanel {
 				}
 			}
 		});
-		btnNewButton.setIcon(new ImageIcon(CartPane.class.getResource("/resources/assets/icon/checkout.png")));
-		btnNewButton.setBounds(213, 431, 143, 41);
-		add(btnNewButton);
+		btnCheckout.setIcon(new ImageIcon(CartPane.class.getResource("/resources/assets/icon/checkout.png")));
+		btnCheckout.setBounds(213, 431, 143, 41);
+		add(btnCheckout);
 
 		table.setModel(model);
-		
 
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		setLayout(null);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(CartPane.class.getResource("/resources/assets/picture/white.png")));
 		lblNewLabel_2.setBounds(0, 0, 370, 486);
 		add(lblNewLabel_2);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(111,111,111));
+		panel.setBackground(new Color(111, 111, 111));
 		panel.setBounds(170, 13, 111, 48);
 		add(panel);
-		
-
-		
-
 
 	}
 }

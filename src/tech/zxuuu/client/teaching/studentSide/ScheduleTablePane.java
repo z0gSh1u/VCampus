@@ -1,6 +1,5 @@
 package tech.zxuuu.client.teaching.studentSide;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,19 +8,21 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.main.App;
-import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.entity.ClassInfo;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.Request;
-import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.border.BevelBorder;
 
 /**
  * 学生课表
@@ -31,10 +32,6 @@ import java.awt.event.MouseEvent;
 public class ScheduleTablePane extends JPanel {
 
 	private JLabel[] labels;
-
-	/**
-	 * @wbp.nonvisual location=434,524
-	 */
 
 	public List<ClassInfo> getClassOfOneTeacher(String name) {
 		return ResponseUtils
@@ -64,6 +61,12 @@ public class ScheduleTablePane extends JPanel {
 			return;
 		}
 		String[] course = temp.split(",");
+
+		System.out.println("temp=" + temp);
+		System.out.println("course.len" + course.length);
+
+		// FIX: course.length -> course.length - 1, since `temp` is ended with `,`
+		// WRONG FIX, INVERTED.
 		for (int i = 0; i < course.length; i++) {
 			ClassInfo cla = getOneClass(course[i]);
 			labels[Integer.valueOf(course[i].charAt(6)) - 48 + (Integer.valueOf(course[i].charAt(8)) - 48) / 2 * 6]
@@ -81,7 +84,6 @@ public class ScheduleTablePane extends JPanel {
 			course[i] = cla.get(i).getID();
 		}
 		for (int i = 0; i < cla.size(); i++) {
-			System.out.println(course[i]);
 			labels[Integer.valueOf(course[i].charAt(6)) - 48 + (Integer.valueOf(course[i].charAt(8)) - 48) / 2 * 6]
 					.setText("<html>" + cla.get(i).getClassName() + "<br>" + cla.get(i).getClassroom() + "<html>");
 			labels[Integer.valueOf(course[i].charAt(9)) - 48 + (Integer.valueOf(course[i].charAt(11)) - 48) / 2 * 6]
@@ -93,8 +95,24 @@ public class ScheduleTablePane extends JPanel {
 	 * Create the panel.
 	 */
 	public ScheduleTablePane() {
-		JButton btnRefresh = new JButton("New button");
-		btnRefresh.setBounds(800, 300, 800, 600);
+
+		this.setLayout(null);
+		JPanel northFlowPanel = new JPanel();
+
+		JPanel centerNullPanel = new JPanel(null);
+		centerNullPanel.setBounds(0, 0, 948, 627);
+		this.add(centerNullPanel);
+		JButton btnRefresh = new JButton("刷新");
+		btnRefresh.setBounds(757, 624, 104, 27);
+		add(btnRefresh);
+		
+		JLabel lblNewLabel = new JLabel("如果刷新按钮无效，请重新进入教务平台");
+		lblNewLabel.setBounds(477, 628, 270, 18);
+		add(lblNewLabel);
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 
 		btnRefresh.addMouseListener(new MouseAdapter() {
 			@Override
@@ -102,15 +120,6 @@ public class ScheduleTablePane extends JPanel {
 				studentSchedule();
 			}
 		});
-
-		this.setLayout(null);
-		JPanel northFlowPanel = new JPanel();
-
-		JPanel centerNullPanel = new JPanel(null);
-		centerNullPanel.setBounds(0, 0, 948, 644);
-		centerNullPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.add(centerNullPanel);
-		this.add(btnRefresh);
 
 		Color lightblue = new Color(208, 227, 234);
 		Color silvergray = new Color(233, 241, 244);
@@ -145,7 +154,20 @@ public class ScheduleTablePane extends JPanel {
 		labels[18].setText("<html><body><h2>第5-6节<br /></h2>下午</body></html>");
 		labels[24].setText("<html><body><h2>第7-8节<br /></h2>下午</body></html>");
 		labels[30].setText("<html><body><h2>第9-10节<br /></h2>晚上</body></html>");
-		// studentSchedule();
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				studentSchedule();
+				for (JLabel label : labels) {
+					label.repaint();
+					label.revalidate();
+					label.updateUI();
+				}
+			}
+		});
+		
 	}
 
 	static class ScheduleUtilities {

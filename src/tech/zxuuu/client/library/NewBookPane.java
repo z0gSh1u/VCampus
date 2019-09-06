@@ -125,6 +125,7 @@ public class NewBookPane extends JPanel {
 
 		txtAreaDetails = new JTextArea();
 		txtAreaDetails.setBounds(224, 230, 542, 123);
+		txtAreaDetails.setLineWrap(true);
 		this.add(txtAreaDetails);
 
 		JLabel lblurl = new JLabel("封面图片URL");

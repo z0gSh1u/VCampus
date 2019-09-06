@@ -3,7 +3,6 @@ package tech.zxuuu.client.main;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -54,9 +53,6 @@ public class App extends JFrame {
 		target.setVisible(true);
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public App() {
 
 		// 连接到服务器

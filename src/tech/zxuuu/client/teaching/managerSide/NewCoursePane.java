@@ -6,7 +6,6 @@ import javax.swing.JTextField;
 
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.entity.ClassInfo;
-import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.util.OtherUtils;
 import tech.zxuuu.util.ResponseUtils;
@@ -52,7 +51,6 @@ public class NewCoursePane extends JPanel {
 			courseTime[i * 2 + 1] = Tca.get(i).getID().substring(9, 12);
 		}
 		for (int i = 0; i < Tca.size() * 2; i++) {
-			System.out.println(courseTime[i]);
 			for (int j = 0; j < 2; j++) {
 				if (courseTime[i] == time[j] || courseTime[i].equals(time[j]))
 					return true;

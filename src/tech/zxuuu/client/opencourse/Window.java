@@ -12,10 +12,18 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import tech.zxuuu.util.SwingUtils;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Desktop;
 
 /**
  * 视频播放窗口
@@ -32,6 +40,8 @@ public class Window extends JFrame {
 	private JButton btnStop, btnPlay, btnPause; // 控制按钮，停止、播放、暂停
 	private JSlider slider; // 声音控制块
 	EmbeddedMediaPlayerComponent playerComponent; // 媒体播放器组件
+	private JLabel lblNewLabel;
+	public String videoUrl;
 
 	public Window(JFrame wolf) {
 		setResizable(false);
@@ -58,6 +68,21 @@ public class Window extends JFrame {
 		/* 视屏窗口中控制部分 */
 		panel = new JPanel(); // 实例化控制区域容器
 		videoPane.add(panel, BorderLayout.SOUTH);
+		
+		Window that = this;
+		lblNewLabel = new JLabel("点击下载视频...     ");
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI(that.videoUrl));
+				} catch (IOException | URISyntaxException e1) {
+					SwingUtils.showError(null, "默认下载器启动失败！", "错误");
+				}
+			}
+		});
+		lblNewLabel.setForeground(Color.BLUE);
+		panel.add(lblNewLabel);
 		progressPanel = new JPanel(); // 实例化进度条容器
 		panel.add(progressPanel, BorderLayout.NORTH);
 		// 添加进度条

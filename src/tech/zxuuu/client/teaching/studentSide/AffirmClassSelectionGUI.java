@@ -4,10 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.main.App;
-import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.Request;
-import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 
 import javax.swing.JTextField;
@@ -135,13 +133,13 @@ public class AffirmClassSelectionGUI extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				Student stu = App.session.getStudent();
 
-				stu.setClassNumber(ResponseUtils
-				.getResponseByHash(new Request(App.connectionToServer, null,
-						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { App.session.getStudent() }).send())
-				.getReturn(String.class));
+				stu.setClassNumber(ResponseUtils.getResponseByHash(
+						new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection",
+								new Object[] { App.session.getStudent() }).send())
+						.getReturn(String.class));
 
-				stu.setClassNumber(txtClassID.getText() + (stu.getClassNumber() == null ? ""
-						: stu.getClassNumber().equals("") ? "" : ("," + stu.getClassNumber())));
+				stu.setClassNumber(stu.getClassNumber() == null ? ("" + txtClassID.getText() + ",")
+						: (stu.getClassNumber() + txtClassID.getText() + ","));
 				takeClass(stu);
 				csg.selectClass(row);
 				acsg.dispose();

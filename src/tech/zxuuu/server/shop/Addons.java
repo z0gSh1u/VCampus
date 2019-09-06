@@ -54,8 +54,6 @@ public class Addons {
 		Float totalMoney = (float) 0;
 		Map<String, Integer> remainChecker = new HashMap<>();
 		
-		System.out.println("Se=" + se);
-		
 		String[] L1 = se.split("$");
 		for (String ele : L1) {
 			String[] L2 = ele.split("@");

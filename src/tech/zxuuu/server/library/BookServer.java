@@ -111,7 +111,7 @@ public class BookServer {
 		return list;
 	}
 
-	public static int returnBook(String ISBN) {
+	public static int returnBook(String borrower, String ISBN) {
 		int result = 0;
 		SqlSession sqlSession = null;
 		try {
@@ -119,12 +119,21 @@ public class BookServer {
 
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			String TITLE = bookMapper.searchTitleByISBN(ISBN);
+
 			if (TITLE != null) {
 				int chargable = bookMapper.searchChargableByISBN(ISBN);
-				result = 1;
-				if (chargable == 0) {
-					bookMapper.returnBookByISBN(ISBN);
-					result = 2;
+
+				if (chargable == 1)
+					result = 1;
+				else {
+					String nowborrower = bookMapper.getBorrowerByISBN(ISBN);
+
+					if (nowborrower == null || !nowborrower.equals(borrower)) {
+						result = 1;
+					} else {
+						bookMapper.returnBookByISBN(ISBN);
+						result = 2;
+					}
 				}
 			}
 			sqlSession.commit();
@@ -132,6 +141,7 @@ public class BookServer {
 			sqlSession.rollback();
 			e.printStackTrace();
 		}
+
 		return result;
 
 	}
@@ -192,9 +202,7 @@ public class BookServer {
 			book.setCategory(category);
 			list = bookMapper.searchSimilarBook(book);
 			sqlSession.commit();
-			System.out.println(list);
 		} catch (Exception e) {
-			sqlSession.rollback();
 			e.printStackTrace();
 		}
 		return list;
@@ -240,6 +248,32 @@ public class BookServer {
 			Book book = new Book();
 			book.setISBN(ISBN);
 			result = bookMapper.deleteBook(book);
+			sqlSession.commit();
+		} catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static int renewBook(String ISBN) {
+		int result = 0;
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
+			result = bookMapper.checkBorrowTime(ISBN);
+			if (result >= 30)
+				result = 0;
+			else {
+				int renewornot = bookMapper.checkRenewOrNot(ISBN);
+				if (renewornot == 1)
+					result = 1;
+				else {
+					bookMapper.renewBook(ISBN);
+					result = 2;
+				}
+			}
 			sqlSession.commit();
 		} catch (Exception e) {
 			sqlSession.rollback();

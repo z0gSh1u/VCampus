@@ -3,7 +3,6 @@ package tech.zxuuu.client.teaching.studentSide;
 import java.awt.Panel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -12,11 +11,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import tech.zxuuu.client.main.App;
-import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.entity.ClassInfo;
 import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.Request;
-import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 import javax.swing.JLabel;
 import java.awt.Font;

@@ -1,8 +1,6 @@
 package tech.zxuuu.client.auth;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -44,24 +42,6 @@ public class AuthGUI extends JFrame {
 	private JRadioButton rdoTeacher;
 	private JRadioButton rdoManager;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					AuthGUI frame = new AuthGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	private void login() {
 		// 输入合法检查
 		if (SwingUtils.isTxtEmpty(txtPassword) || SwingUtils.isTxtEmpty(txtUsername)) {
@@ -88,7 +68,6 @@ public class AuthGUI extends JFrame {
 			// -------------
 		} else if (rdoTeacher.isSelected()) {
 			type = UserType.TEACHER;
-
 			Teacher res = AuthHelper.verifyTeacher(txtUsername.getText(), txtPassword.getText());
 			if (res != null) {
 				SwingUtils.showMessage(null, "欢迎您，" + res.getName() + " 教师！", "信息");
@@ -207,7 +186,9 @@ public class AuthGUI extends JFrame {
 			}
 		});
 
+		// 支持回车登陆
 		KeyAdapter loginKeyAdapter = new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
 					login();
