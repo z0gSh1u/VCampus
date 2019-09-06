@@ -3,9 +3,11 @@ package tech.zxuuu.client.opencourse;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import tech.zxuuu.client.main.App;
+import tech.zxuuu.client.main.AppOpencourseManager;
 import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.util.ResponseUtils;
@@ -15,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 /**
  * 公开课新增面板
@@ -26,11 +29,13 @@ public class NewOpencoursePane extends JPanel {
 	private JTextField txtSpeaker;
 	private JTextField txtPreview;
 	private JTextField txtVideo;
+	private AppOpencourseManager mainFrame;
 
 	/**
 	 * Create the panel.
 	 */
-	public NewOpencoursePane() {
+	public NewOpencoursePane(AppOpencourseManager frame) {
+		this.mainFrame = frame;
 		setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("新增公开课");
@@ -53,6 +58,12 @@ public class NewOpencoursePane extends JPanel {
 		JLabel lblNewLabel_4 = new JLabel("视频地址");
 		lblNewLabel_4.setBounds(106, 231, 72, 18);
 		add(lblNewLabel_4);
+		
+		JLabel lblShowInfo = new JLabel("");
+		lblShowInfo.setForeground(Color.RED);
+		lblShowInfo.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+		lblShowInfo.setBounds(201, 259, 249, 32);
+		add(lblShowInfo);
 
 		JButton btnNewButton = new JButton("新增");
 		btnNewButton.setIcon(new ImageIcon(NewOpencoursePane.class.getResource("/resources/assets/icon/tick.png")));
@@ -65,18 +76,28 @@ public class NewOpencoursePane extends JPanel {
 				openCourseInfo.setPreview("<img src=\"" + txtPreview.getText() + "\"/>");
 				openCourseInfo.setVideo(txtVideo.getText());
 				openCourseInfo.setSpeaker(txtSpeaker.getText());
+				if(openCourseInfo.getCourseName().isEmpty() || openCourseInfo.getPreview().isEmpty() || openCourseInfo.getSpeaker().isEmpty() || openCourseInfo.getVideo().isEmpty()) {
+					lblShowInfo.setText("有字段为空");
+					return;
+				}
 				Boolean result = ResponseUtils.getResponseByHash(new Request(App.connectionToServer, null,
 						"tech.zxuuu.server.opencourse.OpencourseManage.insertNewOpencourse", new Object[] { openCourseInfo })
 								.send())
 						.getReturn(Boolean.class);
 				if (result) {
 					SwingUtils.showMessage(null, "新增成功", "提示");
+					txtCourseName.setText("");
+					txtPreview.setText("");
+					txtVideo.setText("");
+					txtSpeaker.setText("");
+					lblShowInfo.setText("");
+					mainFrame.showOpenCourseList();
 				} else {
-					SwingUtils.showError(null, "新增失败", "错误");
+					lblShowInfo.setText("新增失败，请确认信息后重试");
 				}
 			}
 		});
-		btnNewButton.setBounds(228, 287, 121, 57);
+		btnNewButton.setBounds(227, 309, 121, 57);
 		add(btnNewButton);
 
 		txtCourseName = new JTextField();
@@ -102,6 +123,8 @@ public class NewOpencoursePane extends JPanel {
 		JLabel lblNewLabel_5 = new JLabel("(120*130)");
 		lblNewLabel_5.setBounds(414, 180, 72, 18);
 		add(lblNewLabel_5);
+		
+		
 
 	}
 }

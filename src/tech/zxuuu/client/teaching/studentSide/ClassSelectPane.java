@@ -76,14 +76,12 @@ public class ClassSelectPane extends JPanel {
 	public ClassSelectPane() {
 
 		this.setLayout(null);
+
 		String selectClass=ResponseUtils
 				.getResponseByHash(new Request(App.connectionToServer, null,
 						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { App.session.getStudent() }).send())
 				.getReturn(String.class);
 		String[] course=selectClass.split(",");
-		for (int j=0;j<course.length;j++) {
-			System.out.println(course[j]);
-		}
 
 		List<ClassInfo> CI = this.getClassInfo();
 		rowData = new String[CI.size()][6];
@@ -93,6 +91,7 @@ public class ClassSelectPane extends JPanel {
 			rowData[i][2] = CI.get(i).getTime();
 			rowData[i][3] = CI.get(i).getTeacher();
 			rowData[i][4] = CI.get(i).getClassroom();
+
 			for (int j=0;j<course.length;j++) {
 				if (rowData[i][0].contentEquals(course[j])) {
 					rowData[i][5]="√";
@@ -100,7 +99,6 @@ public class ClassSelectPane extends JPanel {
 				}
 				rowData[i][5]="";
 			}
-			
 		}
 		model = new DefaultTableModel(rowData, head) {
 			@Override
