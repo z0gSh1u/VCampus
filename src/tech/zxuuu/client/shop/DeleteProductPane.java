@@ -99,10 +99,15 @@ public class DeleteProductPane extends JPanel {
 					} else {
 						SwingUtils.showError(null, "删除失败！", "错误");
 					}
+					model.fireTableStructureChanged();
+
+
+					
 				}
 			}
 		});
 		tblSearchList.setBounds(2, 2, 300, 300);
+		model.fireTableStructureChanged();
 		tblSearchList.setModel(model);
 		JScrollPane jsp = new JScrollPane(tblSearchList);
 
@@ -130,7 +135,7 @@ public class DeleteProductPane extends JPanel {
 				String[][] listData = new String[list.size()][4];
 				model.setRowCount(0);
 				if (list == null || list.size() == 0) {
-					SwingUtils.showMessage(null, "抱歉，没有搜到这个商品，管理员正在努力备货中", "test");
+					SwingUtils.showMessage(null, "抱歉，暂时没有库存", "test");
 				} else {
 					for (int i = 0; i < list.size(); i++) {
 						listData[i][0] = list.get(i).getName();

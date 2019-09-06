@@ -19,6 +19,8 @@ import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
 
 import javax.swing.JLabel;
+
+import java.awt.Color;
 import java.awt.Font;
 
 /**
@@ -46,6 +48,7 @@ public class Blocks extends JPanel {
 	 */
 	public Blocks(String picture, String information, String type, float price) {
 		setLayout(null);
+		setBackground(new Color(111,111,111));
 
 		JButton btn_AddProduct = new JButton("加入购物车");
 		btn_AddProduct.setFont(new Font("微软雅黑", Font.PLAIN, 18));

@@ -21,6 +21,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 import java.awt.Color;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 /**
  * 购物车面板
@@ -30,21 +32,29 @@ import java.awt.Color;
 public class CartPane extends JPanel {
 	private JTable table;
 	private DefaultTableModel model;
-	String[] head = { "商品", "数量" };
-
+	public JTextArea textArea;
+	String[] head = { "商品","价格", "数量" };
+	float sum = 0;
 	/**
 	 * Create the panel.
 	 */
 	public void requireReRender() {
 		model.setRowCount(0);
+		
 		for (Product product : ShopFirstPage.cart) {
-			Object[] toAdd = { product.getName(), product.getNumber() };
+
+			Object[] toAdd = { product.getName(), product.getPrice(),product.getNumber() };
 			model.addRow(toAdd);
+			sum += product.getPrice();
+			
 		}
+		String str = String.valueOf(sum);
+		textArea.setText(str);
 	}
 
 	public CartPane() {
 		setBackground(new Color(135, 206, 250));
+		setOpaque(true);
 		setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 
 		model = new DefaultTableModel(null, head) {
@@ -78,8 +88,28 @@ public class CartPane extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(14, 74, 342, 344);
 		add(scrollPane);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(90, 431, 91, 41);
+		
+		add(textArea);
+		
+		
+		JLabel lblSum = new JLabel("总金额");
+		lblSum.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSum.setBounds(14, 431, 91, 41);
+		add(lblSum);
 
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2) {
+					int row = ((JTable) e.getSource()).rowAtPoint(e.getPoint());
+					
+				}
+			}
+		});
 		scrollPane.setViewportView(table);
 
 		JButton btnNewButton = new JButton("校园卡结算");
@@ -127,6 +157,15 @@ public class CartPane extends JPanel {
 		add(btnNewButton);
 
 		table.setModel(model);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(111,111,111));
+		panel.setBounds(170, 13, 111, 48);
+		add(panel);
+		
+
+		
+
 
 	}
 }
