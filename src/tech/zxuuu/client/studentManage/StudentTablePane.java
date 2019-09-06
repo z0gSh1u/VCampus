@@ -22,11 +22,13 @@ import tech.zxuuu.util.OtherUtils;
 import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
 import javax.swing.border.BevelBorder;
+import java.awt.Font;
 
 /**
- * 学生列表功能面板
+ * 学生查询功能面板
  * 
- * @version 已review完成，已美化
+ * @author 沈汉唐
+ * @author z0gSh1u
  */
 public class StudentTablePane extends JPanel {
 
@@ -51,24 +53,24 @@ public class StudentTablePane extends JPanel {
 		infoTable.setBounds(0, 67, 774, 477);
 		String[] head = { "一卡通", "学号", "院系", "姓名" };
 		JScrollPane jsp = new JScrollPane(infoTable);
-		jsp.setBounds(44, 91, 572, 439);
+		jsp.setBounds(43, 108, 572, 439);
 		model.setDataVector(rowData, head);
 		infoTable.setModel(model);
 		this.add(jsp);
 		JComboBox comboAcademy = new JComboBox();
-		comboAcademy.setBounds(91, 43, 243, 35);
+		comboAcademy.setBounds(90, 60, 243, 35);
 		this.add(comboAcademy);
 
 		JLabel lblAcademy = new JLabel("院系");
-		lblAcademy.setBounds(47, 51, 30, 18);
+		lblAcademy.setBounds(46, 68, 30, 18);
 		this.add(lblAcademy);
 
 		JLabel lblGrade = new JLabel("年级");
-		lblGrade.setBounds(348, 51, 30, 18);
+		lblGrade.setBounds(347, 68, 30, 18);
 		this.add(lblGrade);
 
 		textGrade = new JTextField();
-		textGrade.setBounds(392, 43, 121, 35);
+		textGrade.setBounds(391, 60, 121, 35);
 		this.add(textGrade);
 		textGrade.setColumns(10);
 
@@ -78,7 +80,7 @@ public class StudentTablePane extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (textGrade.getText().length() != 2) {
-					SwingUtils.showMessage(null, "请输入正确的年级！", "错误");
+					SwingUtils.showMessage(null, "请输入正确的两位年级代码！", "错误");
 				} else {
 					result = ResponseUtils.getResponseByHash(
 							new Request(App.connectionToServer, null, "tech.zxuuu.server.studentManage.StudentManage.tableDisplay",
@@ -100,8 +102,13 @@ public class StudentTablePane extends JPanel {
 				}
 			}
 		});
-		buttonSearch.setBounds(527, 42, 82, 36);
+		buttonSearch.setBounds(526, 59, 82, 36);
 		this.add(buttonSearch);
+		
+		JLabel lblNewLabel = new JLabel("院系学生查询");
+		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		lblNewLabel.setBounds(273, 13, 108, 24);
+		add(lblNewLabel);
 
 		List<String> academies = new ArrayList<>(
 				Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16",

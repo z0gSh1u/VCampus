@@ -3,6 +3,11 @@ package tech.zxuuu.client.opencourse;
 import javax.swing.JPanel;
 import javax.swing.JEditorPane;
 
+/**
+ * 单表情面板
+ * 
+ * @author LongChen
+ */
 public class SingleEmoticonPanel extends JPanel {
 	private String name;
 	private String URL;

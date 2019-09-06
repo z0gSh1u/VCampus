@@ -18,6 +18,12 @@ import java.awt.Toolkit;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 
+/**
+ * 教务系统学生端主界面
+ * 
+ * @author 王志华
+ * @author z0gSh1u
+ */
 public class TeachingStudentMain extends JFrame {
 
 	private JPanel contentPane;
@@ -28,23 +34,6 @@ public class TeachingStudentMain extends JFrame {
 	private JPanel defaultPanel;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					TeachingStudentMain frame = new TeachingStudentMain();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public TeachingStudentMain() {
@@ -52,7 +41,7 @@ public class TeachingStudentMain extends JFrame {
 				Toolkit.getDefaultToolkit().getImage(TeachingStudentMain.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("教务管理系统（学生端） - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 958, 767);
+		setBounds(100, 100, 958, 795);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,11 +51,9 @@ public class TeachingStudentMain extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				currentDisplay.setVisible(false);
 				classSelectPane.setVisible(true);
 				currentDisplay = classSelectPane;
-
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(TeachingStudentMain.class.getResource("/resources/assets/icon/xk.png")));
@@ -78,11 +65,9 @@ public class TeachingStudentMain extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				currentDisplay.setVisible(false);
 				scheduleTablePane.setVisible(true);
 				currentDisplay = scheduleTablePane;
-
 			}
 		});
 		btnNewButton_1.setBounds(769, 20, 145, 57);

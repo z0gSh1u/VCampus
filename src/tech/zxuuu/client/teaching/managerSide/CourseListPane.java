@@ -22,65 +22,71 @@ import java.util.List;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
+/**
+ * 教务老师院系开课查询
+ * 
+ * @author z0gSh1u
+ */
 public class CourseListPane extends JPanel {
 	private JTable table;
-	
-	String[] head = { "ID", "课程", "时间", "教师", "教室"};
+
+	String[] head = { "ID", "课程", "时间", "教师", "教室" };
 	public String[][] rowData;
 	private DefaultTableModel model;
 
 	public static List<ClassInfo> getClassInfo(String academy) {
 		Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassInfo",
-				new Object[] {academy});
+				new Object[] { academy });
 		String hash = req.send();
 		ResponseUtils.blockAndWaitResponse(hash);
 		Response resp = ResponseQueue.getInstance().consume(hash);
 		return resp.getListReturn(ClassInfo.class);
 	}
-	
+
 	/**
 	 * Create the panel.
 	 */
 	public CourseListPane() {
 		setLayout(null);
-		
-		JLabel label = new JLabel("课程列表");
-		label.setBounds(278, 13, 72, 18);
+
+		JLabel label = new JLabel("查询院系开课");
+		label.setFont(new Font("微软雅黑", Font.PLAIN, 25));
+		label.setBounds(238, 13, 150, 34);
 		add(label);
-		
+
 		JLabel label_1 = new JLabel("选择院系");
 		label_1.setBounds(55, 58, 72, 18);
 		add(label_1);
-		
+
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(141, 55, 340, 24);
+		comboBox.setFont(new Font("宋体", Font.PLAIN, 17));
+		comboBox.setBounds(141, 55, 340, 34);
 		add(comboBox);
-		
-		List<String> academies = new ArrayList<>(
-				Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16",
-						"17", "19", "21", "22", "24", "25", "41", "42", "43", "57", "61", "71"));
+
+		List<String> academies = new ArrayList<>(Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+				"11", "12", "13", "14", "15", "16", "17", "19", "21", "22", "24", "25", "41", "42", "43", "57", "61", "71"));
 		for (String academy : academies) {
 			comboBox.addItem(academy + " - " + OtherUtils.getAcademyByNumber(academy));
 		}
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(26, 96, 610, 441);
 		add(scrollPane);
-		
-		
-		
+
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		
+
 		// table.setModel(model);
-		
+
 		JButton btnNewButton = new JButton("确定");
+		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 17));
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.setRowCount(0);
-				List<ClassInfo> CI = getClassInfo(((String)comboBox.getSelectedItem()).substring(0, 2));
+				List<ClassInfo> CI = getClassInfo(((String) comboBox.getSelectedItem()).substring(0, 2));
 				rowData = new String[CI.size()][5];
 				for (int i = 0; i < CI.size(); i++) {
 					rowData[i][0] = CI.get(i).getID();
@@ -96,10 +102,10 @@ public class CourseListPane extends JPanel {
 					}
 				};
 				table.setModel(model);
-				
+
 			}
 		});
-		btnNewButton.setBounds(507, 54, 113, 27);
+		btnNewButton.setBounds(507, 54, 113, 35);
 		add(btnNewButton);
 
 	}

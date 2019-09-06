@@ -25,33 +25,16 @@ import java.awt.Color;
 public class AppOpencourseManager extends JFrame {
 
 	private JPanel contentPane;
-
 	private JPanel currentDisplay;
 	private JPanel listOpencoursePane;
 	private JPanel newOpencoursePane;
 	private JPanel defaultPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					AppOpencourseManager frame = new AppOpencourseManager();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public AppOpencourseManager() {
+		setResizable(false);
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(AppOpencourseManager.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("公开课管理员 - VCampus");
@@ -90,7 +73,7 @@ public class AppOpencourseManager extends JFrame {
 				currentDisplay = listOpencoursePane;
 			}
 		});
-		btnNewButton.setBounds(647, 22, 113, 53);
+		btnNewButton.setBounds(607, 25, 105, 53);
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("新增公开课");
@@ -102,7 +85,7 @@ public class AppOpencourseManager extends JFrame {
 				currentDisplay = newOpencoursePane;
 			}
 		});
-		btnNewButton_1.setBounds(774, 50, 113, 27);
+		btnNewButton_1.setBounds(720, 25, 105, 53);
 		contentPane.add(btnNewButton_1);
 
 		JButton btnNewButton_2 = new JButton("删除公开课");
@@ -124,7 +107,7 @@ public class AppOpencourseManager extends JFrame {
 
 			}
 		});
-		btnNewButton_2.setBounds(774, 22, 113, 27);
+		btnNewButton_2.setBounds(834, 25, 105, 53);
 		contentPane.add(btnNewButton_2);
 
 		defaultPane = new JPanel();

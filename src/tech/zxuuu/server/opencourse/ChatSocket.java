@@ -6,6 +6,11 @@ import java.net.Socket;
 import tech.zxuuu.entity.UserType;
 import tech.zxuuu.net.Connection;
 
+/**
+ * 聊天用多功能Socket
+ * 
+ * @author LongChen
+ */
 public class ChatSocket extends Connection implements Runnable {
 	private ReceivePredicate receiveResponse;
 	private UserType userType;
@@ -14,7 +19,6 @@ public class ChatSocket extends Connection implements Runnable {
 
 	public ChatSocket(Socket socket, ReceivePredicate receiveResponse) {
 		super(socket);
-		// TODO Auto-generated constructor stub
 		this.receiveResponse = receiveResponse;
 		this.courseId = -1;
 		this.userType = null;
@@ -24,7 +28,6 @@ public class ChatSocket extends Connection implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		String str = "";
 		while ((str = this.readLine()) != null) {
 			receiveResponse.callResponse(str, this);
@@ -33,7 +36,6 @@ public class ChatSocket extends Connection implements Runnable {
 
 	@Override
 	public void write(String content) {
-		// TODO Auto-generated method stub
 		synchronized (ChatSocket.class) {
 			this.pWriter.write(content + "\n");
 			this.pWriter.flush();
@@ -42,7 +44,6 @@ public class ChatSocket extends Connection implements Runnable {
 
 	@Override
 	public String readLine() {
-		// TODO Auto-generated method stub
 		try {
 			return this.bReader.readLine();
 		} catch (IOException e) {

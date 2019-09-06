@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * JSON相关工具函数。仅在.net包调用
+ * 
+ * @author z0gSh1u
+ */
 public class JSONUtils {
 
 	protected final static List<Class> BASIC_CLASSES = new ArrayList<>(Arrays.asList(

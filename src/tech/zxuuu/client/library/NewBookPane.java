@@ -4,10 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
@@ -18,6 +21,12 @@ import tech.zxuuu.util.SwingUtils;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 
+/**
+ * 书籍添加面板
+ * 
+ * @author 曾铖
+ * @modify z0gSh1u
+ */
 public class NewBookPane extends JPanel {
 
 	private JTextField txtTitle;
@@ -27,11 +36,12 @@ public class NewBookPane extends JPanel {
 	private JTextField txtSetISBN;
 	private JLabel lblSetISBN;
 	private JButton btnComfirm;
-	private JTextField txtCategory;
 	private JLabel lblCategory;
 	private JTextArea txtAreaDetails;
 	private JTextField txtPictureURL;
 	private JLabel label;
+	private JLabel lblPx;
+	JComboBox<String> combCategory;
 
 	/**
 	 * Create the panel.
@@ -75,21 +85,16 @@ public class NewBookPane extends JPanel {
 		btnComfirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Request req = new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.addBook",
-
-						new Object[] { txtSetISBN.getText(), txtTitle.getText(), txtauthor.getText(), txtCategory.getText(),
-								txtAreaDetails.getText(), txtPictureURL.getText() });
-
-				String hash = req.send();
-				ResponseUtils.blockAndWaitResponse(hash);
-				Response response = ResponseQueue.getInstance().consume(hash);
-				Boolean ret = response.getReturn(Boolean.class);
-
-				if (ret)
-					SwingUtils.showMessage(null, "Succeed adding", "test");
-				else {
-					SwingUtils.showError(null, "Fail adding maybe invalid ISBN", "test");
-
+				Boolean ret = ResponseUtils
+						.getResponseByHash(new Request(App.connectionToServer, null, "tech.zxuuu.server.library.BookServer.addBook",
+								new Object[] { txtSetISBN.getText(), txtTitle.getText(), txtauthor.getText(),
+										(String) combCategory.getSelectedItem(), txtAreaDetails.getText(), txtPictureURL.getText() })
+												.send())
+						.getReturn(Boolean.class);
+				if (ret) {
+					SwingUtils.showMessage(null, "新增成功！", "提示");
+				} else {
+					SwingUtils.showError(null, "新增失败！", "错误");
 				}
 			}
 		});
@@ -100,10 +105,18 @@ public class NewBookPane extends JPanel {
 		lblDetails.setBounds(48, 230, 88, 30);
 		this.add(lblDetails);
 
-		txtCategory = new JTextField();
-		txtCategory.setBounds(591, 153, 175, 30);
-		this.add(txtCategory);
-		txtCategory.setColumns(10);
+		combCategory = new JComboBox<String>();
+		combCategory.setBounds(591, 156, 175, 30);
+		combCategory.addItem("教育");
+		combCategory.addItem("小说");
+		combCategory.addItem("文艺");
+		combCategory.addItem("社科");
+		combCategory.addItem("经管");
+		combCategory.addItem("科技");
+		combCategory.addItem("励志");
+		combCategory.addItem("体育");
+		combCategory.setVisible(true);
+		add(combCategory);
 
 		lblCategory = new JLabel("分类");
 		lblCategory.setFont(new Font("微软雅黑", Font.PLAIN, 22));
@@ -123,12 +136,16 @@ public class NewBookPane extends JPanel {
 		txtPictureURL.setBounds(224, 380, 542, 35);
 		this.add(txtPictureURL);
 		txtPictureURL.setColumns(10);
-		
+
 		label = new JLabel(" 添加书籍");
 		label.setIcon(new ImageIcon(NewBookPane.class.getResource("/resources/assets/icon/add.png")));
 		label.setFont(new Font("微软雅黑", Font.PLAIN, 24));
 		label.setBounds(21, 20, 245, 64);
 		add(label);
+
+		lblPx = new JLabel("(185 px * 260 px)");
+		lblPx.setBounds(46, 422, 144, 18);
+		add(lblPx);
 	}
 
 }

@@ -1,11 +1,19 @@
 package tech.zxuuu.server.opencourse;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import tech.zxuuu.dao.IOpenCourseMapper;
 import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.server.main.App;
 
+/**
+ * 公开课管理员后端
+ * 
+ * @author z0gSh1u
+ * @author 王志华
+ */
 public class OpencourseManage {
 
 	public static Boolean insertNewOpencourse(OpenCourseInfo opencourse) {
@@ -39,4 +47,18 @@ public class OpencourseManage {
 		return result;
 	}
 
+	public static List<OpenCourseInfo> getOpenCourseList() {
+		List<OpenCourseInfo> result = null;
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+			IOpenCourseMapper openCourseMapper = sqlSession.getMapper(IOpenCourseMapper.class);
+			result = openCourseMapper.getOpenCourseList();
+			sqlSession.commit();
+		} catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

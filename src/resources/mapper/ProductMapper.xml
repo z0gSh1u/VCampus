@@ -6,17 +6,40 @@
 
 	<select id="searchProduct" parameterType="String"
 		resultType="Product">
-		SELECT * FROM tb_product WHERE p_name LIKE "%"#{p_name}"%"
+		SELECT * FROM tb_product WHERE name LIKE "%"#{name}"%"
 	</select>
+
 	<select id="listProductByType" parameterType="String"
 		resultType="Product">
 		SELECT * FROM tb_product WHERE type = #{type}
 	</select>
 
 	<insert id="insertNewProcut" parameterType="Product">
-		INSERT INTO `tb_product` VALUES (#{p_name}, #{type},
-		#{price}, #{picture}, #{number}, #{p_name})
+		INSERT INTO
+		`tb_product` VALUES (#{name}, #{type},
+		#{price}, #{picture}, #{number},
+		#{information})
 	</insert>
 
+	<select id="manageListProduct" parameterType="Product"
+		resultType="Product">
+		SELECT * FROM tb_product WHERE name LIKE "%"#{name}"%" OR
+		type LIKE "%"#{type}"%"
+	</select>
+
+	<delete id="deleteProduct" parameterType="Product">
+		DELETE FROM
+		`tb_product` WHERE name = #{name} AND type = #{type} AND price =
+		#{price} AND number = #{number}
+	</delete>
+	
+	<select id="getProductStorage" parameterType="String"
+	resultType="String">
+		SELECT `number` FROM `tb_product` WHERE `name` = #{name} LIMIT 1
+	</select>
+	
+	<update id="buySomething" parameterType="Map">
+		UPDATE `tb_product` SET `number` = `number` - #{howmany} WHERE `name` = #{name} LIMIT 1
+	</update>
 
 </mapper>

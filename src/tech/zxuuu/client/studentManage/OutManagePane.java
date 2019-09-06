@@ -21,7 +21,8 @@ import javax.swing.ImageIcon;
 /**
  * 退学功能面板
  * 
- * @version 已review完成，已美化
+ * @author 沈汉唐
+ * @author z0gSh1u
  */
 public class OutManagePane extends JPanel {
 
