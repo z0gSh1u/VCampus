@@ -1,5 +1,8 @@
 package tech.zxuuu.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.*;
 
 /**
@@ -47,6 +50,18 @@ public final class SwingUtils {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * 检查字符串是否含汉字
+	 */
+	public static boolean containsChinese(String str) {
+		Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+		Matcher m = p.matcher(str);
+		if (m.find()) {
+			return true;
+		}
+		return false;
 	}
 
 }

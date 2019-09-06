@@ -44,6 +44,9 @@ public class ClassSelectPane extends JPanel {
 			}
 		};
 		tblClassList.setModel(newModel);
+		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(140);
+		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(130);
+		tblClassList.setBounds(5, 5, 512, 390);
 	}
 
 	public void dropCourse(int row) {
@@ -55,6 +58,9 @@ public class ClassSelectPane extends JPanel {
 			}
 		};
 		tblClassList.setModel(newModel);
+		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(140);
+		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(130);
+		tblClassList.setBounds(5, 5, 512, 390);
 	}
 
 	public List<ClassInfo> getClassInfo() {
@@ -104,20 +110,18 @@ public class ClassSelectPane extends JPanel {
 		};
 
 		pBody = new Panel();
-		pBody.setBounds(21, 50, 660, 458);
+		pBody.setBounds(21, 50, 700, 458);
 		this.add(pBody);
 		pBody.setLayout(null);
 		tblClassList = new JTable();
 		JScrollPane jsp = new JScrollPane(tblClassList);
-		jsp.setBounds(14, 13, 625, 425);
+		jsp.setBounds(14, 13, 650, 425);
 		pBody.add(jsp);
 
 		tblClassList.setModel(model);
 
-		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(130);
-		tblClassList.getColumnModel().getColumn(0).setMaxWidth(300);
-		tblClassList.getColumnModel().getColumn(1).setMaxWidth(214);
-		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(136);
+		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(140);
+		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(130);
 		tblClassList.setBounds(5, 5, 512, 390);
 
 		ClassSelectPane csg = this;
