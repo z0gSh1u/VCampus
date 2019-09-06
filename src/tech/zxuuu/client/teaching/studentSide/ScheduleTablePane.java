@@ -1,5 +1,6 @@
 package tech.zxuuu.client.teaching.studentSide;
 
+import java.awt.Button;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,9 @@ import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * 学生课表
@@ -25,7 +29,10 @@ import tech.zxuuu.util.ResponseUtils;
 public class ScheduleTablePane extends JPanel {
 
 	private JLabel[] labels;
-
+	/**
+	 * @wbp.nonvisual location=434,524
+	 */
+	
 	public List<ClassInfo> getClassOfOneTeacher(String name) {
 		return ResponseUtils
 				.getResponseByHash(new Request(App.connectionToServer, null,
@@ -85,6 +92,16 @@ public class ScheduleTablePane extends JPanel {
 	 * Create the panel.
 	 */
 	public ScheduleTablePane() {
+		JButton btnRefresh = new JButton("New button");
+		btnRefresh.setBounds(800, 300, 800, 600);
+
+
+		btnRefresh.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				studentSchedule();
+			}
+		});
 
 		this.setLayout(null);
 		JPanel northFlowPanel = new JPanel();
@@ -93,6 +110,7 @@ public class ScheduleTablePane extends JPanel {
 		centerNullPanel.setBounds(0, 0, 948, 644);
 		centerNullPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.add(centerNullPanel);
+		this.add(btnRefresh);
 
 		Color darkerGray = Color.GRAY.darker();
 		Color ligherBlack = darkerGray.darker().darker().darker();
@@ -134,5 +152,4 @@ public class ScheduleTablePane extends JPanel {
 			labels[5].setText("<html><body><h2>星期五<br /></h2>");
 		}
 	}
-
 }
