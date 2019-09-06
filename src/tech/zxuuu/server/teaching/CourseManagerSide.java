@@ -48,4 +48,17 @@ public class CourseManagerSide {
 		return null;
 	}
 
+	
+	public static Boolean deleteCourse(String id) {
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+			IClassMapper classMapper = sqlSession.getMapper(IClassMapper.class);
+			classMapper.deleteCourse(id);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

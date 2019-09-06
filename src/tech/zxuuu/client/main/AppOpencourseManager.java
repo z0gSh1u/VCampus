@@ -81,7 +81,9 @@ public class AppOpencourseManager extends JFrame {
 				showOpenCourseList();
 			}
 		});
-		btnNewButton.setBounds(589, 22, 113, 53);
+
+		btnNewButton.setBounds(607, 25, 105, 53);
+
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("新增公开课");
@@ -93,7 +95,9 @@ public class AppOpencourseManager extends JFrame {
 				currentDisplay = newOpencoursePane;
 			}
 		});
-		btnNewButton_1.setBounds(708, 50, 113, 27);
+
+		btnNewButton_1.setBounds(720, 25, 105, 53);
+
 		contentPane.add(btnNewButton_1);
 
 		JButton btnNewButton_2 = new JButton("删除公开课");
@@ -105,7 +109,9 @@ public class AppOpencourseManager extends JFrame {
 				currentDisplay = deleteOpencoursePane;
 			}
 		});
-		btnNewButton_2.setBounds(708, 21, 113, 27);
+
+		btnNewButton_2.setBounds(834, 25, 105, 53);
+
 		contentPane.add(btnNewButton_2);
 
 		defaultPane = new JPanel();

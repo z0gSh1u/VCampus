@@ -32,5 +32,8 @@
 		#{classroom})
 	</insert>
 
-
+	<delete id="deleteCourse" parameterType="String">
+		DELETE FROM
+		`tb_class` WHERE `id` = #{id} LIMIT 1
+	</delete>
 </mapper>

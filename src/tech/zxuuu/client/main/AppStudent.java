@@ -279,6 +279,7 @@ public class AppStudent extends JFrame {
 			todayClass[i] = null;
 		}
 
+
 		if (selectedClass!=""&&!selectedClass.equals(""))
 		{
 			for (int i = 0; i < course.length; i++) {
@@ -296,6 +297,7 @@ public class AppStudent extends JFrame {
 							.getReturn(ClassInfo.class);
 					todayClass[(Integer.valueOf(course[i].charAt(11)) - 48) / 2 - 1] = cla;
 				}
+
 			}
 		}
 

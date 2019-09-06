@@ -1,9 +1,11 @@
 package tech.zxuuu.client.teaching.studentSide;
 
+import java.awt.Button;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,6 +19,11 @@ import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+
 /**
  * 学生课表
  * 
@@ -25,7 +32,10 @@ import tech.zxuuu.util.ResponseUtils;
 public class ScheduleTablePane extends JPanel {
 
 	private JLabel[] labels;
-
+	/**
+	 * @wbp.nonvisual location=434,524
+	 */
+	
 	public List<ClassInfo> getClassOfOneTeacher(String name) {
 		return ResponseUtils
 				.getResponseByHash(new Request(App.connectionToServer, null,
@@ -85,6 +95,16 @@ public class ScheduleTablePane extends JPanel {
 	 * Create the panel.
 	 */
 	public ScheduleTablePane() {
+		JButton btnRefresh = new JButton("New button");
+		btnRefresh.setBounds(800, 300, 800, 600);
+
+
+		btnRefresh.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				studentSchedule();
+			}
+		});
 
 		this.setLayout(null);
 		JPanel northFlowPanel = new JPanel();
@@ -93,7 +113,11 @@ public class ScheduleTablePane extends JPanel {
 		centerNullPanel.setBounds(0, 0, 948, 644);
 		centerNullPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.add(centerNullPanel);
+		this.add(btnRefresh);
 
+		Color lightblue = new Color(208,227,234);
+		Color silvergray = new Color(233,241,244);
+		Color gemblue = new Color(85,169,208);
 		Color darkerGray = Color.GRAY.darker();
 		Color ligherBlack = darkerGray.darker().darker().darker();
 		labels = new JLabel[36];
@@ -101,14 +125,17 @@ public class ScheduleTablePane extends JPanel {
 			for (int j = 0; j < 6; j++) {
 				int index = i * 6 + j;
 				labels[index] = new JLabel();
-				labels[index].setBounds(j * 130, i * 100, 130, 100);
+				labels[index].setBounds(j * 148, i * 103, 148, 103);
 				labels[index].setOpaque(true);
 				labels[index].setHorizontalAlignment(JTextField.CENTER);
-				if ((i & 1) == 0)
-					labels[index].setBackground((j & 1) == 0 ? ligherBlack : darkerGray);
-				else
-					labels[index].setBackground((j & 1) == 0 ? darkerGray : ligherBlack);
-				labels[index].setForeground(Color.WHITE);
+				if (i == 0)
+					labels[index].setBackground(gemblue);
+				else if(i!=0&&j==0)
+					labels[index].setBackground(lightblue);
+				else labels[index].setBackground(i%2!=0?lightblue:silvergray);
+					
+				labels[index].setForeground(Color.BLACK);
+				labels[index].setBorder(BorderFactory.createLineBorder(Color.WHITE));
 				centerNullPanel.add(labels[index]);
 			}
 		}
@@ -134,5 +161,4 @@ public class ScheduleTablePane extends JPanel {
 			labels[5].setText("<html><body><h2>星期五<br /></h2>");
 		}
 	}
-
 }

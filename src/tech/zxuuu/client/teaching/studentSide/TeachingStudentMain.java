@@ -41,7 +41,7 @@ public class TeachingStudentMain extends JFrame {
 				Toolkit.getDefaultToolkit().getImage(TeachingStudentMain.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("教务管理系统（学生端） - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 958, 767);
+		setBounds(100, 100, 958, 795);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

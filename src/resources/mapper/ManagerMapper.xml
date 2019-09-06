@@ -17,6 +17,7 @@
 		`card_number`=#{cardNumber}
 	</select>
 
+
 	<!-- Used By Auth Module -->
 
 </mapper>

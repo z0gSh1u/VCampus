@@ -20,12 +20,16 @@ import java.awt.event.ActionEvent;
  */
 public class CourseInfoPane extends JPanel {
 
+
 	public static final int HEIGHT = 130;
+
 	private int id; // 课程ID
 	private String preview; // 预览图链接
 	private String courseName; // 课程名称
 	private String speaker; // 主讲人名称
-	private JEditorPane epnPreview;
+
+	private JEditorPane edpPreview;
+
 	private JLabel lblCourseName;
 	private JLabel lblSpeaker;
 	public String videoUrl;
@@ -66,13 +70,16 @@ public class CourseInfoPane extends JPanel {
 	 * Create the panel.
 	 */
 	public CourseInfoPane() {
+
+		setLayout(null);
+
+		this.edpPreview = new JEditorPane();
+		edpPreview.setContentType("text/html");
+		edpPreview.setBounds(0, 0, 120, 130);
 		
-		
-		epnPreview = new JEditorPane();
-		epnPreview.setContentType("text/html");
+
 		epnPreview.setEditable(false);
-		epnPreview.setBounds(0, 0, 127, 113);
-		add(epnPreview);
+add(edpPreview);
 
 		this.lblCourseName = new JLabel("这里是课程名");
 		lblCourseName.setFont(new Font("微软雅黑", Font.PLAIN, 48));

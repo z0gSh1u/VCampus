@@ -56,7 +56,9 @@ public class AppTeacher extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AppTeacher.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("教师端 - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		setBounds(100, 100, 1046, 791);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -75,12 +77,15 @@ public class AppTeacher extends JFrame {
 		contentPane.add(lblVcampus);
 
 		JLabel lblWelcome = new JLabel("");
+
 		lblWelcome.setBounds(440, 46, 559, 18);
+
 		contentPane.add(lblWelcome);
 
 		lblWelcome.setText(
 				"欢迎您， " + App.session.getTeacher().getName() + " 老师！您的一卡通号：" + App.session.getTeacher().getCardNumber());
 		
+
 		JPanel pnlOpencourse = new JPanel();
 		newOpencoursePanel = pnlOpencourse;
 		pnlOpencourse.setBounds(14, 70, 837, 650);
@@ -101,11 +106,13 @@ public class AppTeacher extends JFrame {
 		pnlCourseList.setBounds(14, 70, 837, 650);
 		contentPane.add(pnlCourseList);
 		pnlCourseList.setLayout(null);
+
 		
 		JLabel lblNewLabel = new JLabel("排课表");
 		lblNewLabel.setBounds(384, 0, 54, 24);
 		pnlCourseList.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+
 		
 		JPanel panel = new ScheduleTablePane();
 		panel.setBounds(0, 34, 837, 616);
@@ -143,5 +150,6 @@ public class AppTeacher extends JFrame {
 		});
 		btnGotoOpencourse.setBounds(858, 224, 153, 37);
 		contentPane.add(btnGotoOpencourse);
+
 	}
 }

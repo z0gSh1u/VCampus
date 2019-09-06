@@ -3,6 +3,7 @@ package tech.zxuuu.client.teaching.studentSide;
 import java.awt.Panel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -44,6 +45,9 @@ public class ClassSelectPane extends JPanel {
 			}
 		};
 		tblClassList.setModel(newModel);
+		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(140);
+		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(130);
+		tblClassList.setBounds(5, 5, 512, 390);
 	}
 
 	public void dropCourse(int row) {
@@ -55,13 +59,18 @@ public class ClassSelectPane extends JPanel {
 			}
 		};
 		tblClassList.setModel(newModel);
+		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(140);
+		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(130);
+		tblClassList.setBounds(5, 5, 512, 390);
 	}
 
 	public List<ClassInfo> getClassInfo() {
+
 		return ResponseUtils.getResponseByHash(
 				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassInfo",
 						new Object[] { App.session.getStudent().getAcademy() }).send())
 				.getListReturn(ClassInfo.class);
+
 	}
 
 	/**
@@ -102,27 +111,31 @@ public class ClassSelectPane extends JPanel {
 		};
 
 		pBody = new Panel();
-		pBody.setBounds(21, 50, 660, 458);
+
+		pBody.setBounds(21, 55, 858, 551);
+
 		this.add(pBody);
 		pBody.setLayout(null);
 		tblClassList = new JTable();
 		JScrollPane jsp = new JScrollPane(tblClassList);
-		jsp.setBounds(14, 13, 625, 425);
+
+		jsp.setBounds(14, 13, 825, 520);
+
 		pBody.add(jsp);
 
 		tblClassList.setModel(model);
 
-		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(130);
-		tblClassList.getColumnModel().getColumn(0).setMaxWidth(300);
-		tblClassList.getColumnModel().getColumn(1).setMaxWidth(214);
-		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(136);
+		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(140);
+		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(130);
 		tblClassList.setBounds(5, 5, 512, 390);
 
 		ClassSelectPane csg = this;
 		
 		lblNewLabel = new JLabel("课程选择");
-		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		lblNewLabel.setBounds(310, 13, 72, 18);
+
+		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));
+		lblNewLabel.setBounds(383, 18, 137, 37);
+
 		add(lblNewLabel);
 
 		tblClassList.addMouseListener(new MouseAdapter() {
