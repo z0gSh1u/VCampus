@@ -66,21 +66,10 @@ public class StuMenuGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public StuMenuGUI() {
-		this.setVisible(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(StuMenuGUI.class.getResource("/resources/assets/icon/fav.png")));
-		setTitle("在线课堂 - VCampus");
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		screenWidth = (int) screenSize.getWidth();
-		screenHeight = (int) screenSize.getHeight();
-		frameWidth = 800;
-		frameHeight = 600;
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, 922, 762);
+		
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		
 
 		spnCourseList = new JScrollPane();
 		spnCourseList.setBounds(52, 95, 813, 598);
@@ -125,6 +114,10 @@ public class StuMenuGUI extends JFrame {
 
 		JFrame that = this;
 		
+		showCourseList();
+		this.setExtendedState(NORMAL);
+		
+		/*
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -136,8 +129,40 @@ public class StuMenuGUI extends JFrame {
 					// Impossible catch.
 				}
 				that.setVisible(true);
+				spnCourseList.getVerticalScrollBar().setValue(spnCourseList.getVerticalScrollBar().getMaximum());
+				that.repaint();
+				try {
+					Thread.sleep(1000);
+				}catch(Exception e) {
+					//Impossible catch
+				}
+				that.setExtendedState(ICONIFIED);
+				try {
+					Thread.sleep(1000);
+				}catch(Exception e) {
+					//Impossible catch
+				}
+				that.setExtendedState(NORMAL);
 			}
-		}).start();
-
+		}).start();*/
+		
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StuMenuGUI.class.getResource("/resources/assets/icon/fav.png")));
+		setTitle("在线课堂 - VCampus");
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		screenWidth = (int) screenSize.getWidth();
+		screenHeight = (int) screenSize.getHeight();
+		frameWidth = 800;
+		frameHeight = 600;
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, 922, 762);
+		
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+//		this.setExtendedState(ICONIFIED);
+		
+		
+		this.setVisible(true);
 	}
 }

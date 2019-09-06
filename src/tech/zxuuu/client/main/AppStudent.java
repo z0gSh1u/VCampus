@@ -109,8 +109,8 @@ public class AppStudent extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				StuMenuGUI stuMenuGUI = new StuMenuGUI();
-				stuMenuGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				stuMenuGUI.setVisible(true);
+
+//				stuMenuGUI.setVisible(true);
 			}
 		});
 		btnOpencourse.setIcon(new ImageIcon(AppStudent.class.getResource("/resources/assets/icon/opencourse.png")));

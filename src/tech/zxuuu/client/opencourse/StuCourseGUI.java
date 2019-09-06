@@ -169,6 +169,8 @@ public class StuCourseGUI extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					epnInputBox.setText(epnInputBox.getText() + "\\" + emoInfo.getName() + "/");
+					scpEmoticonList.setVisible(false);
+					epnInputBox.grabFocus();
 				}
 			});
 			newEmo.setEditable(false);
@@ -269,25 +271,12 @@ public class StuCourseGUI extends JFrame {
 		pnlEmoticonList.setBackground(Color.LIGHT_GRAY);
 		pnlEmoticonList.setLayout(new GridLayout(0, 4, 0, 0));
 
-		epnInputBox = new JEditorPane();
-		epnInputBox.setBounds(33, 414, 322, 62);
-		contentPane.add(epnInputBox);
-
 		JButton btnSendMess = new JButton("发送 (Ctrl + Enter)");
 		btnSendMess.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				sendMessage(epnInputBox.getText());
 				epnInputBox.setText("");
-			}
-		});
-		epnInputBox.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_ENTER) {
-					sendMessage(epnInputBox.getText());
-					epnInputBox.setText("");
-				}
 			}
 		});
 		btnSendMess.setBounds(33, 489, 322, 37);
@@ -313,6 +302,22 @@ public class StuCourseGUI extends JFrame {
 			}
 		});
 		contentPane.add(epnShowEmoticon);
+		
+		JScrollPane scpInputBox = new JScrollPane();
+		scpInputBox.setBounds(33, 408, 322, 68);
+		contentPane.add(scpInputBox);
+		
+				epnInputBox = new JEditorPane();
+				scpInputBox.setViewportView(epnInputBox);
+				epnInputBox.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_ENTER) {
+							sendMessage(epnInputBox.getText());
+							epnInputBox.setText("");
+						}
+					}
+				});
 
 		epnChatBox.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
