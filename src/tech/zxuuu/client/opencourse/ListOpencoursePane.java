@@ -18,6 +18,7 @@ import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 import java.awt.Font;
 
+
 /**
  * 公开课列表
  * 
@@ -27,6 +28,7 @@ import java.awt.Font;
 public class ListOpencoursePane extends JPanel {
 	private JTable table;
 	private DefaultTableModel model = new DefaultTableModel();
+
 
 	public void updateOpenCourse() {
 		List<OpenCourseInfo> oci = ResponseUtils
@@ -56,6 +58,7 @@ public class ListOpencoursePane extends JPanel {
 		JScrollPane jsp = new JScrollPane(table);
 		jsp.setBounds(31, 72, 600, 450);
 		updateOpenCourse();
+
 		table.setModel(model);
 		table.setBounds(46, 90, 569, 413);
 		add(jsp);

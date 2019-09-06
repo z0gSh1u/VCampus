@@ -91,7 +91,9 @@ public class StuCourseGUI extends JFrame {
 		} catch (Exception e) {
 			// Don't care.
 		}
+
 		scpChatBox.getVerticalScrollBar().setValue(scpChatBox.getVerticalScrollBar().getMaximum());
+
 	}
 
 	private String toEmoticon(String str) {
@@ -167,8 +169,10 @@ public class StuCourseGUI extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					epnInputBox.setText(epnInputBox.getText() + "\\" + emoInfo.getName() + "/");
+
 					scpEmoticonList.setVisible(false);
 					epnInputBox.grabFocus();
+
 				}
 			});
 			newEmo.setEditable(false);
@@ -264,6 +268,13 @@ public class StuCourseGUI extends JFrame {
 		scpEmoticonList.setVisible(false);
 		scpEmoticonList.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+
+		
+
+		epnInputBox = new JEditorPane();
+		epnInputBox.setBounds(33, 414, 322, 62);
+		contentPane.add(epnInputBox);
+
 		pnlEmoticonList = new JPanel();
 		scpEmoticonList.setViewportView(pnlEmoticonList);
 		pnlEmoticonList.setBackground(Color.LIGHT_GRAY);
@@ -299,6 +310,7 @@ public class StuCourseGUI extends JFrame {
 				scpEmoticonList.setVisible(!scpEmoticonList.isVisible());
 			}
 		});
+
 		contentPane.add(epnShowEmoticon);
 		
 		JScrollPane scpInputBox = new JScrollPane();
@@ -316,6 +328,7 @@ public class StuCourseGUI extends JFrame {
 						}
 					}
 				});
+
 
 		epnChatBox.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {

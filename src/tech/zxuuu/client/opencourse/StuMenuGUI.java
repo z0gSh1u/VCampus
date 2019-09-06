@@ -64,7 +64,10 @@ public class StuMenuGUI extends JFrame {
 	}
 
 	public StuMenuGUI() {
+
+
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StuMenuGUI.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("在线课堂 - VCampus");
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -86,7 +89,11 @@ public class StuMenuGUI extends JFrame {
 		spnCourseList.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		spnCourseList.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		spnCourseList.setViewportView(pnlCourseList);
+
+		pnlCourseList.setLayout(new GridLayout(0, 1, 0, 0));
+
 		contentPane.add(spnCourseList);
+
 
 		label = new JLabel("");
 		label.setIcon(new ImageIcon(StuMenuGUI.class.getResource("/resources/assets/icon/opencourse.png")));
@@ -105,6 +112,7 @@ public class StuMenuGUI extends JFrame {
 		
 		lblNewLabel_1 = new JLabel("播放在线课程需要安装VLC插件，点击了解如何安装...");
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Desktop desktop = Desktop.getDesktop();
@@ -113,6 +121,7 @@ public class StuMenuGUI extends JFrame {
 				} catch (IOException | URISyntaxException e1) {
 					SwingUtils.showError(null, "浏览器打开失败，请手动访问http://zxuuu.tech/share/installVLC.html", "错误");
 				}
+
 			}
 		});
 		lblNewLabel_1.setForeground(Color.BLUE);

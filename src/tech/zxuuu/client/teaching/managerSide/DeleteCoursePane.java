@@ -1,6 +1,7 @@
 package tech.zxuuu.client.teaching.managerSide;
 
 import javax.swing.JPanel;
+
 import javax.swing.JTextField;
 
 import tech.zxuuu.client.main.App;
@@ -16,6 +17,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
 import javax.swing.JLabel;
 
 public class DeleteCoursePane extends JPanel {
@@ -248,6 +250,7 @@ public class DeleteCoursePane extends JPanel {
 			result += "节；";
 		}
 		return result;
+
 		
 	}
 
