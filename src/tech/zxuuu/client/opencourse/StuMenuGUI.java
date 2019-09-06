@@ -60,13 +60,14 @@ public class StuMenuGUI extends JFrame {
 			pnlCourseList.add(new CourseInfoPane(course.getId(), course.getCourseName(), course.getSpeaker(),
 					course.getPreview(), course.getVideo()));
 		}
+		pnlCourseList.setPreferredSize(new Dimension(spnCourseList.getWidth(), courseList.size() * CourseInfoPane.HEIGHT));
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public StuMenuGUI() {
-		this.setVisible(false);
+
+
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StuMenuGUI.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("在线课堂 - VCampus");
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -74,23 +75,25 @@ public class StuMenuGUI extends JFrame {
 		screenHeight = (int) screenSize.getHeight();
 		frameWidth = 800;
 		frameHeight = 600;
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2, 922, 762);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		spnCourseList = new JScrollPane();
-		spnCourseList.setBounds(52, 95, 813, 598);
-		contentPane.add(spnCourseList);
-		spnCourseList.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		spnCourseList.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		contentPane.setLayout(null);		
 
 		pnlCourseList = new JPanel();
+		pnlCourseList.setLayout(new GridLayout(0, 1));
+		spnCourseList = new JScrollPane(pnlCourseList);
+		spnCourseList.setBounds(52, 95, 813, 598);
+		spnCourseList.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		spnCourseList.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		spnCourseList.setViewportView(pnlCourseList);
+
 		pnlCourseList.setLayout(new GridLayout(0, 1, 0, 0));
+
+		contentPane.add(spnCourseList);
+
 
 		label = new JLabel("");
 		label.setIcon(new ImageIcon(StuMenuGUI.class.getResource("/resources/assets/icon/opencourse.png")));
@@ -109,6 +112,7 @@ public class StuMenuGUI extends JFrame {
 		
 		lblNewLabel_1 = new JLabel("播放在线课程需要安装VLC插件，点击了解如何安装...");
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Desktop desktop = Desktop.getDesktop();
@@ -117,27 +121,13 @@ public class StuMenuGUI extends JFrame {
 				} catch (IOException | URISyntaxException e1) {
 					SwingUtils.showError(null, "浏览器打开失败，请手动访问http://zxuuu.tech/share/installVLC.html", "错误");
 				}
+
 			}
 		});
 		lblNewLabel_1.setForeground(Color.BLUE);
 		lblNewLabel_1.setBounds(526, 32, 364, 18);
 		contentPane.add(lblNewLabel_1);
-
-		JFrame that = this;
 		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				showCourseList();
-				pnlCourseList.paintImmediately(pnlCourseList.getBounds());
-				try {
-					wait(2000);
-				} catch (Exception e) {
-					// Impossible catch.
-				}
-				that.setVisible(true);
-			}
-		}).start();
-
+		showCourseList();	
 	}
 }

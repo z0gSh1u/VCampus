@@ -198,12 +198,16 @@ public class AppTeachingManager extends JFrame {
 		newCoursePane.setVisible(false);
 		
 		courseListPane = new CourseListPane();
+
 		courseListPane.setBounds(225, 86, 732, 654);
+
 		contentPane.add(courseListPane);
 		courseListPane.setVisible(false);
 
 		deleteCoursePane = new DeleteCoursePane();
+
 		deleteCoursePane.setBounds(225, 86, 732, 654);
+
 		contentPane.add(deleteCoursePane);
 		deleteCoursePane.setVisible(false);
 
@@ -242,6 +246,9 @@ public class AppTeachingManager extends JFrame {
 		button_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				currentDisplayPane.setVisible(false);
+				deleteCoursePane.setVisible(true);
+				currentDisplayPane = deleteCoursePane;
 
 			}
 		});

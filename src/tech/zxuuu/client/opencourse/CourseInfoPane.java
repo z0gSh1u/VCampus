@@ -20,11 +20,16 @@ import java.awt.event.ActionEvent;
  */
 public class CourseInfoPane extends JPanel {
 
+
+	public static final int HEIGHT = 130;
+
 	private int id; // 课程ID
 	private String preview; // 预览图链接
 	private String courseName; // 课程名称
 	private String speaker; // 主讲人名称
+
 	private JEditorPane edpPreview;
+
 	private JLabel lblCourseName;
 	private JLabel lblSpeaker;
 	public String videoUrl;
@@ -65,12 +70,16 @@ public class CourseInfoPane extends JPanel {
 	 * Create the panel.
 	 */
 	public CourseInfoPane() {
+
 		setLayout(null);
 
 		this.edpPreview = new JEditorPane();
 		edpPreview.setContentType("text/html");
 		edpPreview.setBounds(0, 0, 120, 130);
-		add(edpPreview);
+		
+
+		epnPreview.setEditable(false);
+add(edpPreview);
 
 		this.lblCourseName = new JLabel("这里是课程名");
 		lblCourseName.setFont(new Font("微软雅黑", Font.PLAIN, 48));
@@ -97,6 +106,9 @@ public class CourseInfoPane extends JPanel {
 		});
 		btnNewButton.setBounds(584, 80, 99, 41);
 		add(btnNewButton);
+		
+		setLayout(null);
+		setVisible(true);
 	}
 
 	public CourseInfoPane(int id, String courseName, String speaker, String preview, String videoUrl) {
@@ -106,8 +118,12 @@ public class CourseInfoPane extends JPanel {
 		this.courseName = courseName;
 		this.speaker = speaker;
 		this.videoUrl = videoUrl;
-		this.edpPreview.setText(this.preview);
+		this.epnPreview.setText(this.preview);
 		this.lblCourseName.setText(this.courseName);
 		this.lblSpeaker.setText(this.speaker);
+		this.validate();
+		this.repaint();
+		this.updateUI();
+		this.revalidate();
 	}
 }

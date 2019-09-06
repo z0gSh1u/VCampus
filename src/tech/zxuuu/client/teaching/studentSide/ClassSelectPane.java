@@ -45,6 +45,9 @@ public class ClassSelectPane extends JPanel {
 			}
 		};
 		tblClassList.setModel(newModel);
+		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(140);
+		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(130);
+		tblClassList.setBounds(5, 5, 512, 390);
 	}
 
 	public void dropCourse(int row) {
@@ -56,14 +59,18 @@ public class ClassSelectPane extends JPanel {
 			}
 		};
 		tblClassList.setModel(newModel);
+		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(140);
+		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(130);
+		tblClassList.setBounds(5, 5, 512, 390);
 	}
 
 	public List<ClassInfo> getClassInfo() {
-//		return ResponseUtils.getResponseByHash(
-//				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassInfo",
-//						new Object[] { App.session.getStudent().getAcademy() }).send())
-//				.getListReturn(ClassInfo.class);
-		return new ArrayList<ClassInfo>();
+
+		return ResponseUtils.getResponseByHash(
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassInfo",
+						new Object[] { App.session.getStudent().getAcademy() }).send())
+				.getListReturn(ClassInfo.class);
+
 	}
 
 	/**
@@ -73,6 +80,12 @@ public class ClassSelectPane extends JPanel {
 
 		this.setLayout(null);
 
+		String selectClass=ResponseUtils
+				.getResponseByHash(new Request(App.connectionToServer, null,
+						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { App.session.getStudent() }).send())
+				.getReturn(String.class);
+		String[] course=selectClass.split(",");
+
 		List<ClassInfo> CI = this.getClassInfo();
 		rowData = new String[CI.size()][6];
 		for (int i = 0; i < CI.size(); i++) {
@@ -81,7 +94,14 @@ public class ClassSelectPane extends JPanel {
 			rowData[i][2] = CI.get(i).getTime();
 			rowData[i][3] = CI.get(i).getTeacher();
 			rowData[i][4] = CI.get(i).getClassroom();
-			rowData[i][5] = "";
+
+			for (int j=0;j<course.length;j++) {
+				if (rowData[i][0].contentEquals(course[j])) {
+					rowData[i][5]="√";
+					break;
+				}
+				rowData[i][5]="";
+			}
 		}
 		model = new DefaultTableModel(rowData, head) {
 			@Override
@@ -91,27 +111,31 @@ public class ClassSelectPane extends JPanel {
 		};
 
 		pBody = new Panel();
+
 		pBody.setBounds(21, 55, 858, 551);
+
 		this.add(pBody);
 		pBody.setLayout(null);
 		tblClassList = new JTable();
 		JScrollPane jsp = new JScrollPane(tblClassList);
+
 		jsp.setBounds(14, 13, 825, 520);
+
 		pBody.add(jsp);
 
 		tblClassList.setModel(model);
 
-		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(130);
-		tblClassList.getColumnModel().getColumn(0).setMaxWidth(300);
-		tblClassList.getColumnModel().getColumn(1).setMaxWidth(214);
-		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(136);
+		tblClassList.getColumnModel().getColumn(0).setPreferredWidth(140);
+		tblClassList.getColumnModel().getColumn(2).setPreferredWidth(130);
 		tblClassList.setBounds(5, 5, 512, 390);
 
 		ClassSelectPane csg = this;
 		
 		lblNewLabel = new JLabel("课程选择");
+
 		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));
 		lblNewLabel.setBounds(383, 18, 137, 37);
+
 		add(lblNewLabel);
 
 		tblClassList.addMouseListener(new MouseAdapter() {
