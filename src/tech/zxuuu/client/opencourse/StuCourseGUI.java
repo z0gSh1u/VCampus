@@ -91,8 +91,6 @@ public class StuCourseGUI extends JFrame {
 		} catch (Exception e) {
 			// Don't care.
 		}
-		//epnChatBox.setVisible(false);
-		//epnChatBox.setVisible(true);
 		scpChatBox.getVerticalScrollBar().setValue(scpChatBox.getVerticalScrollBar().getMaximum());
 	}
 

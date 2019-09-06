@@ -20,7 +20,7 @@ import java.awt.event.ActionEvent;
  */
 public class CourseInfoPane extends JPanel {
 
-
+	public static final int HEIGHT = 130;
 	private int id; // 课程ID
 	private String preview; // 预览图链接
 	private String courseName; // 课程名称

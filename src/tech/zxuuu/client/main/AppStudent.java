@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
@@ -109,8 +110,8 @@ public class AppStudent extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				StuMenuGUI stuMenuGUI = new StuMenuGUI();
-
-//				stuMenuGUI.setVisible(true);
+				stuMenuGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				stuMenuGUI.setVisible(true);
 			}
 		});
 		btnOpencourse.setIcon(new ImageIcon(AppStudent.class.getResource("/resources/assets/icon/opencourse.png")));
