@@ -10,14 +10,11 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import tech.zxuuu.client.main.App;
-import tech.zxuuu.client.messageQueue.ResponseQueue;
-import tech.zxuuu.entity.ClassInfo;
 import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.net.Request;
-import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 import java.awt.Font;
-
+import javax.swing.border.BevelBorder;
 
 /**
  * 公开课列表
@@ -29,14 +26,13 @@ public class ListOpencoursePane extends JPanel {
 	private JTable table;
 	private DefaultTableModel model = new DefaultTableModel();
 
-
 	public void updateOpenCourse() {
 		List<OpenCourseInfo> oci = ResponseUtils
 				.getResponseByHash(new Request(App.connectionToServer, null,
 						"tech.zxuuu.server.opencourse.OpencourseManage.getOpenCourseList", null).send())
 				.getListReturn(OpenCourseInfo.class);
 		String[][] rowDate = new String[oci.size()][5];
-		System.out.println(oci.size());
+
 		String[] head = { "ID", "课程名", "演讲者", "预告", "录像" };
 		for (int i = 0; i < oci.size(); i++) {
 			rowDate[i][0] = String.valueOf(oci.get(i).getId());
@@ -47,16 +43,18 @@ public class ListOpencoursePane extends JPanel {
 		}
 		model.setDataVector(rowDate, head);
 	}
+
 	public ListOpencoursePane() {
+		setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		setLayout(null);
 		JLabel label = new JLabel("公开课列表");
 		label.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		label.setBounds(270, 30, 90, 24);
+		label.setBounds(414, 35, 90, 24);
 		add(label);
 		table = new JTable();
 		table.setEnabled(false);
 		JScrollPane jsp = new JScrollPane(table);
-		jsp.setBounds(31, 72, 600, 450);
+		jsp.setBounds(24, 72, 860, 450);
 		updateOpenCourse();
 
 		table.setModel(model);

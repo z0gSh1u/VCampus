@@ -20,7 +20,7 @@
 	</select>
 
 	<select id="searchChargableByISBN" parameterType="String"
-		resultType="int">
+		resultType="Integer">
 		SELECT chargable FROM tb_book WHERE isbn=#{ISBN}
 	</select>
 
@@ -36,13 +36,13 @@
 
 	<update id="returnBookByISBN" parameterType="String">
 		UPDATE tb_book SET
-		chargable=1 WHERE isbn=#{ISBN}
+		chargable=1, borrower="", renewornot=0 WHERE isbn=#{ISBN}
 	</update>
 
 	<insert id="addBook" parameterType="Book">
 		INSERT INTO tb_book
-		(isbn,title,author,number,chargable,borrower,category,details,pictureURL)
-		VALUES(#{ISBN},#{title},#{author},0,1,"",#{category},#{details},#{pictureURL})
+		(isbn,title,author,number,chargable,borrower,category,details,pictureURL,borrowTime,renewornot)
+		VALUES(#{ISBN},#{title},#{author},0,1,"",#{category},#{details},#{pictureURL}, "2000-01-01", "0")
 	</insert>
 
 	<delete id="deleteBook" parameterType="Book">
@@ -51,8 +51,7 @@
 	</delete>
 
 	<select id="searchHowManyByISBN" parameterType="String"
-		resultType="int">
-
+		resultType="Integer">
 		SELECT COUNT(*) AS number FROM tb_book WHERE isbn=#{ISBN}
 	</select>
 
@@ -99,13 +98,32 @@
 		UPDATE tb_book
 		SET `borrower` = #{borrower} WHERE isbn=#{ISBN} LIMIT 1
 	</update>
-	
-	<select id="getBorrowerByISBN" parameterType="String" resultType="String">
-		SELECT `borrower` FROM `tb_book` WHERE `isbn` = #{ISBN} LIMIT 1
+
+	<select id="getBorrowerByISBN" parameterType="String"
+		resultType="String">
+		SELECT `borrower` FROM `tb_book` WHERE `isbn` = #{ISBN}
+		LIMIT 1
 	</select>
-	
-	<select id="getBorrowedBook" parameterType="String" resultType="Book">
+
+	<select id="getBorrowedBook" parameterType="String"
+		resultType="Book">
 		SELECT * FROM `tb_book` WHERE `borrower` = #{cardNumber}
 	</select>
+	<select id="checkBorrowTime" parameterType="String"
+		resultType="Integer">
+		SELECT DATEDIFF((SELECT CURDATE()),(SELECT borrowTime FROM
+		tb_book WHERE
+		isbn=#{ISBN}))
+	</select>
+	<select id="checkRenewOrNot" parameterType="String"
+		resultType="Integer">
+		SELECT renewornot FROM `tb_book` WHERE isbn=#{ISBN}
+	</select>
+
+	<update id="renewBook" parameterType="String">
+		UPDATE tb_book
+		SET
+		`renewornot`=1, borrowTime=(SELECT CURDATE()) WHERE isbn=#{ISBN}
+	</update>
 
 </mapper>

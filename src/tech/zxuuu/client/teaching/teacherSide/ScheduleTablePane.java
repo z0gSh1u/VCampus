@@ -11,11 +11,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.main.App;
-import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.entity.ClassInfo;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.Request;
-import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 
 /**
@@ -71,7 +69,6 @@ public class ScheduleTablePane extends JPanel {
 			course[i] = cla.get(i).getID();
 		}
 		for (int i = 0; i < cla.size(); i++) {
-			System.out.println(course[i]);
 			labels[Integer.valueOf(course[i].charAt(6)) - 48 + (Integer.valueOf(course[i].charAt(8)) - 48) / 2 * 6]
 					.setText("<html>" + cla.get(i).getClassName() + "<br>" + cla.get(i).getClassroom() + "<html>");
 			labels[Integer.valueOf(course[i].charAt(9)) - 48 + (Integer.valueOf(course[i].charAt(11)) - 48) / 2 * 6]
@@ -91,9 +88,9 @@ public class ScheduleTablePane extends JPanel {
 		centerNullPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.add(centerNullPanel);
 
-		Color lightblue = new Color(208,227,234);
-		Color silvergray = new Color(233,241,244);
-		Color gemblue = new Color(85,169,208);
+		Color lightblue = new Color(208, 227, 234);
+		Color silvergray = new Color(233, 241, 244);
+		Color gemblue = new Color(85, 169, 208);
 		Color darkerGray = Color.GRAY.darker();
 		Color ligherBlack = darkerGray.darker().darker().darker();
 		labels = new JLabel[36];
@@ -106,10 +103,11 @@ public class ScheduleTablePane extends JPanel {
 				labels[index].setHorizontalAlignment(JTextField.CENTER);
 				if (i == 0)
 					labels[index].setBackground(gemblue);
-				else if(i!=0&&j==0)
+				else if (i != 0 && j == 0)
 					labels[index].setBackground(lightblue);
-				else labels[index].setBackground(i%2!=0?lightblue:silvergray);
-					
+				else
+					labels[index].setBackground(i % 2 != 0 ? lightblue : silvergray);
+
 				labels[index].setForeground(Color.BLACK);
 				labels[index].setBorder(BorderFactory.createLineBorder(Color.WHITE));
 				centerNullPanel.add(labels[index]);

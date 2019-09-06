@@ -48,6 +48,7 @@ public class BookDetails extends JDialog {
 	 * Create the dialog.
 	 */
 	public BookDetails(String title, String ISBN, String category, String details) {
+		setTitle("图书详情 - " + title + " - VCampus");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BookDetails.class.getResource("/resources/assets/icon/fav.png")));
 		setResizable(false);
 		setBounds(100, 100, 680, 550);
@@ -73,17 +74,17 @@ public class BookDetails extends JDialog {
 		jsp.setBounds(14, 336, 624, 154);
 		getContentPane().add(jsp);
 
-
 		txtCategory = new JTextField();
 		txtCategory.setEditable(false);
 		txtCategory.setFont(new Font("微软雅黑", Font.PLAIN, 17));
 		txtCategory.setBounds(140, 22, 119, 40);
 		getContentPane().add(txtCategory);
 		txtCategory.setColumns(10);
-		
+		this.txtCategory.setText(category);
 		list = ResponseUtils.getResponseByHash(new Request(App.connectionToServer, null,
 				"tech.zxuuu.server.library.BookServer.searchSimilarBook", new Object[] { title, txtCategory.getText() }).send())
 				.getListReturn(Book.class);
+
 		model.setRowCount(0);
 		String[][] listData = null;
 		if (list == null) {
@@ -134,8 +135,7 @@ public class BookDetails extends JDialog {
 		this.txtDetails.setText(details);
 
 		editPicture.setText("<html><body><img src=\"" + result + "\"></body></html>");
-
-		this.txtCategory.setText(category);
+		editPicture.setEditable(false);
 
 		JLabel label = new JLabel("相似图书推荐");
 		label.setFont(new Font("微软雅黑", Font.PLAIN, 18));

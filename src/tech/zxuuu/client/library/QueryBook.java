@@ -50,7 +50,7 @@ public class QueryBook extends JDialog {
 	 * Create the dialog.
 	 */
 	public QueryBook() {
-		setResizable(false); 
+		setResizable(false);
 		setTitle("书籍检索与借阅 - VCampus");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(QueryBook.class.getResource("/resources/assets/icon/fav.png")));
 		setBounds(100, 100, 808, 467);
@@ -85,11 +85,15 @@ public class QueryBook extends JDialog {
 			public void mousePressed(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					int row = ((JTable) e.getSource()).rowAtPoint(e.getPoint());
-					txtISBN.setText(list.get(row).getISBN());
+
 					BookDetails details = new BookDetails(list.get(row).getTitle(), list.get(row).getISBN(),
 							list.get(row).getCategory(), list.get(row).getDetails());
 					details.setModal(true);
 					details.setVisible(true);
+				}
+				if (e.getClickCount() == 1) {
+					int row = ((JTable) e.getSource()).rowAtPoint(e.getPoint());
+					txtISBN.setText(list.get(row).getISBN());
 				}
 			}
 		});
@@ -101,9 +105,11 @@ public class QueryBook extends JDialog {
 		btnSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				list = ResponseUtils.getResponseByHash(new Request(App.connectionToServer, null,
-						"tech.zxuuu.server.library.BookServer.fuzzySearchByTitleAndAuthor",
-						new Object[] { txtTitle.getText(), txtAuthor.getText() }).send()).getListReturn(Book.class);
+				list = ResponseUtils
+						.getResponseByHash(new Request(App.connectionToServer, null,
+								"tech.zxuuu.server.library.BookServer.fuzzySearchByTitleAndAuthor",
+								new Object[] { txtTitle.getText().trim(), txtAuthor.getText().trim() }).send())
+						.getListReturn(Book.class);
 				String[][] listData = new String[list.size()][3];
 				model.setRowCount(0);
 				if (list == null) {
@@ -135,6 +141,7 @@ public class QueryBook extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				txtTitle.setText("");
 				txtAuthor.setText("");
+				model.setRowCount(0);
 			}
 		});
 		contentPanel.add(btnReset);
@@ -145,18 +152,18 @@ public class QueryBook extends JDialog {
 		tblSearch.setBounds(2, 2, 300, 300);
 
 		txtISBN = new JTextField();
-		txtISBN.setBounds(271, 362, 267, 30);
+		txtISBN.setBounds(271, 379, 267, 30);
 		contentPanel.add(txtISBN);
 		txtISBN.setColumns(10);
 
 		JLabel lblISBN = new JLabel("需要借阅的书目编号");
-		lblISBN.setBounds(122, 368, 135, 18);
+		lblISBN.setBounds(122, 385, 135, 18);
 		contentPanel.add(lblISBN);
 
 		JButton btnComfirm = new JButton("确认");
 		btnComfirm.setFont(new Font("宋体", Font.PLAIN, 18));
 		btnComfirm.setIcon(new ImageIcon(QueryBook.class.getResource("/resources/assets/icon/tick.png")));
-		btnComfirm.setBounds(552, 345, 121, 57);
+		btnComfirm.setBounds(552, 362, 121, 57);
 		btnComfirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -177,5 +184,9 @@ public class QueryBook extends JDialog {
 			}
 		});
 		contentPanel.add(btnComfirm);
+
+		JLabel lblNewLabel = new JLabel("双击表项查看书籍详情...");
+		lblNewLabel.setBounds(21, 345, 174, 18);
+		contentPanel.add(lblNewLabel);
 	}
 }

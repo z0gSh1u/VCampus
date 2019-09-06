@@ -3,12 +3,10 @@ package tech.zxuuu.client.opencourse;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.main.AppOpencourseManager;
-import tech.zxuuu.entity.OpenCourseInfo;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
@@ -18,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import javax.swing.border.BevelBorder;
 
 /**
  * 公开课新增面板
@@ -32,22 +31,24 @@ public class DeleteOpencoursePane extends JPanel {
 	 * Create the panel.
 	 */
 	public DeleteOpencoursePane(AppOpencourseManager frame) {
+		setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		this.mainFrame = frame;
 		setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("删除公开课");
-		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-		lblNewLabel.setBounds(245, 29, 90, 24);
-		add(lblNewLabel);
+		JLabel lblDelete = new JLabel("删除公开课");
+		lblDelete.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		lblDelete.setBounds(425, 124, 90, 24);
+		add(lblDelete);
 
 		JLabel lblNewLabel_1 = new JLabel("课程ID");
-		lblNewLabel_1.setBounds(106, 79, 72, 18);
+		lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		lblNewLabel_1.setBounds(275, 189, 72, 18);
 		add(lblNewLabel_1);
 		
 		JLabel lblShowInfo = new JLabel("");
 		lblShowInfo.setForeground(Color.RED);
 		lblShowInfo.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		lblShowInfo.setBounds(201, 107, 249, 32);
+		lblShowInfo.setBounds(529, 278, 249, 32);
 		add(lblShowInfo);
 
 		JButton btnNewButton = new JButton("删除");
@@ -80,13 +81,19 @@ public class DeleteOpencoursePane extends JPanel {
 				}
 			}
 		});
-		btnNewButton.setBounds(234, 158, 121, 57);
+		btnNewButton.setBounds(394, 259, 121, 57);
 		add(btnNewButton);
 
 		txtCourseName = new JTextField();
-		txtCourseName.setBounds(201, 76, 201, 24);
+		txtCourseName.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		txtCourseName.setBounds(361, 177, 249, 42);
 		add(txtCourseName);
 		txtCourseName.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(DeleteOpencoursePane.class.getResource("/resources/assets/icon/借入.png")));
+		lblNewLabel.setBounds(363, 113, 48, 48);
+		add(lblNewLabel);
 		
 		
 

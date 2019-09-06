@@ -1,7 +1,5 @@
 package tech.zxuuu.client.main;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -29,10 +27,8 @@ import tech.zxuuu.util.SwingUtils;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JList;
 
 public class AppStudent extends JFrame {
 
@@ -64,11 +60,15 @@ public class AppStudent extends JFrame {
 		btnTeaching.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				TeachingStudentMain teachingStudentMain = new TeachingStudentMain();
-				teachingStudentMain.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				teachingStudentMain.setVisible(true);
-
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						TeachingStudentMain teachingStudentMain = new TeachingStudentMain();
+						teachingStudentMain.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						teachingStudentMain.setVisible(true);
+					}
+				});
 			}
 		});
 		btnTeaching.setFont(new Font("微软雅黑", Font.PLAIN, 18));
@@ -76,7 +76,7 @@ public class AppStudent extends JFrame {
 		btnTeaching.setBounds(374, 600, 220, 80);
 		contentPane.add(btnTeaching);
 
-		JButton btnLibrary = new JButton(" 李文歪图书馆");
+		JButton btnLibrary = new JButton(" 李文正图书馆");
 		btnLibrary.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -91,7 +91,7 @@ public class AppStudent extends JFrame {
 		btnLibrary.setBounds(120, 491, 220, 80);
 		contentPane.add(btnLibrary);
 
-		JButton btnShop = new JButton("天不平超市");
+		JButton btnShop = new JButton("天平超市");
 		btnShop.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -109,9 +109,15 @@ public class AppStudent extends JFrame {
 		btnOpencourse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StuMenuGUI stuMenuGUI = new StuMenuGUI();
-				stuMenuGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				stuMenuGUI.setVisible(true);
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						StuMenuGUI stuMenuGUI = new StuMenuGUI();
+						stuMenuGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						stuMenuGUI.setVisible(true);
+					}
+				});
 			}
 		});
 		btnOpencourse.setIcon(new ImageIcon(AppStudent.class.getResource("/resources/assets/icon/opencourse.png")));
@@ -244,9 +250,10 @@ public class AppStudent extends JFrame {
 		});
 		btnRecharge.setBounds(203, 147, 63, 27);
 		panel.add(btnRecharge);
-		
+
 		JButton btnMyBorrow = new JButton("查看");
 		btnMyBorrow.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				MyBorrowGUI myBorrowGUI = new MyBorrowGUI();
 				myBorrowGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -279,9 +286,7 @@ public class AppStudent extends JFrame {
 			todayClass[i] = null;
 		}
 
-
-		if (selectedClass!=""&&!selectedClass.equals(""))
-		{
+		if (selectedClass != "" && !selectedClass.equals("")) {
 			for (int i = 0; i < course.length; i++) {
 				if (Integer.valueOf(course[i].charAt(6) - 48) == today) {
 					ClassInfo cla = ResponseUtils
@@ -374,23 +379,23 @@ public class AppStudent extends JFrame {
 				.getListReturn(NoticeInfo.class);
 
 		NoticeBlock noticeBlock1 = new NoticeBlock(noticeInfos.get(0).getTitle(),
-				quickFormatDate(noticeInfos.get(0).getDate()));
-		noticeBlock1.setBounds(57, 170, 630, 50);
+				quickFormatDate(noticeInfos.get(0).getDate()), noticeInfos.get(0).getUrl());
+		noticeBlock1.setBounds(57, 170, 660, 50);
 		contentPane.add(noticeBlock1);
 
 		NoticeBlock noticeBlock2 = new NoticeBlock(noticeInfos.get(1).getTitle(),
-				quickFormatDate(noticeInfos.get(1).getDate()));
-		noticeBlock2.setBounds(57, 233, 630, 50);
+				quickFormatDate(noticeInfos.get(1).getDate()), noticeInfos.get(1).getUrl());
+		noticeBlock2.setBounds(57, 233, 660, 50);
 		contentPane.add(noticeBlock2);
 
 		NoticeBlock noticeBlock3 = new NoticeBlock(noticeInfos.get(2).getTitle(),
-				quickFormatDate(noticeInfos.get(2).getDate()));
-		noticeBlock3.setBounds(57, 296, 630, 50);
+				quickFormatDate(noticeInfos.get(2).getDate()), noticeInfos.get(2).getUrl());
+		noticeBlock3.setBounds(57, 296, 660, 50);
 		contentPane.add(noticeBlock3);
 
 		NoticeBlock noticeBlock4 = new NoticeBlock(noticeInfos.get(3).getTitle(),
-				quickFormatDate(noticeInfos.get(3).getDate()));
-		noticeBlock4.setBounds(57, 359, 630, 50);
+				quickFormatDate(noticeInfos.get(3).getDate()), noticeInfos.get(3).getUrl());
+		noticeBlock4.setBounds(57, 359, 660, 50);
 		contentPane.add(noticeBlock4);
 
 	}

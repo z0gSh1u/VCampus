@@ -37,8 +37,8 @@ public class OutManagePane extends JPanel {
 		buttonYes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (textCardNumber.getText().length() != 9) {
-					SwingUtils.showError(null, "一卡通长度错误！", "错误");
+				if (textCardNumber.getText().length() != 9 || !SwingUtils.isPureDigits(textCardNumber.getText())) {
+					SwingUtils.showError(null, "一卡通错误！", "错误");
 					return;
 				}
 				String cardnumber = textCardNumber.getText();

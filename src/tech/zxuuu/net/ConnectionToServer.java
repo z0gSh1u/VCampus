@@ -13,27 +13,24 @@ public class ConnectionToServer extends Connection {
 	public ConnectionToServer(Socket socket) {
 		super(socket);
 	}
-	
+
 	@Override
 	public void write(String content) {
-		 System.out.println("半同步方法Connection.write被进入了");
-		 synchronized (ConnectionToServer.class) {
-			 System.out.println("同步代码块进入");
-			 this.pWriter.write(content + "\n");
-			 this.pWriter.flush();
-		 }
+		synchronized (ConnectionToServer.class) {
+			this.pWriter.write(content + "\n");
+			this.pWriter.flush();
+		}
 	}
-	
+
 	@Override
 	public synchronized String readLine() {
-		//synchronized (ConnectionToServer.class) {
-			try {
-				return this.bReader.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		//}
+		// readLine本身就是阻塞的，无需同步
+		try {
+			return this.bReader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

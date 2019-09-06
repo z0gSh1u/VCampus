@@ -13,6 +13,14 @@ public class ClassInfo {
 	public ClassInfo() {
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getID() {
 		return id;
 	}
@@ -65,4 +73,14 @@ public class ClassInfo {
 		this.teacher = teacher;
 		this.classroom = classroom;
 	}
+
+	@Override
+	public String toString() {
+		return "ClassInfo [id=" + id + ", className=" + className + ", time=" + time + ", teacher=" + teacher
+				+ ", classroom=" + classroom + "]";
+	}
+
+
+	
+	
 }

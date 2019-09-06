@@ -93,10 +93,12 @@ public class InManagePane extends JPanel {
 		buttonYes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (textCardNumber.getText().length() != 9) {
-					SwingUtils.showError(null, "一卡通长度错误！", "错误");
-				} else if (textStudentNumber.getText().length() != 8) {
-					SwingUtils.showError(null, "学号长度错误！", "错误");
+				if (textCardNumber.getText().length() != 9 || !SwingUtils.isPureDigits(textCardNumber.getText())
+						|| SwingUtils.containsChinese(textCardNumber.getText())) {
+					SwingUtils.showError(null, "一卡通错误！", "错误");
+				} else if (textStudentNumber.getText().length() != 8
+						|| SwingUtils.containsChinese(textStudentNumber.getText())) {
+					SwingUtils.showError(null, "学号错误！", "错误");
 				} else if (passwordField.getText().length() > 16 || passwordField.getText().length() == 0) {
 					SwingUtils.showError(null, "请输入1-16位密码！", "错误");
 				} else if (!(passwordField.getText().equals(passwordConfirm.getText()))) {

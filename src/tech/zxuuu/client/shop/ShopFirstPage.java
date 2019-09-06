@@ -4,16 +4,11 @@ import java.awt.BorderLayout;
 
 import java.awt.Dimension;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-
-import jdk.nashorn.internal.ir.Block;
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.entity.Product;
 import tech.zxuuu.net.Request;
@@ -25,6 +20,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 import java.awt.GridLayout;
+import java.awt.Point;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -36,11 +32,10 @@ import javax.swing.JScrollPane;
 
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
-import javax.swing.JList;
-import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 /**
  * 商店学生主页
@@ -54,11 +49,14 @@ public class ShopFirstPage extends JFrame {
 	private JTextField txt_Search;
 	private DefaultTableModel model;
 
+	CartPane cartPanel;
+
 	public static List<Product> cart;
 	public static JLabel lblCartCount;
 
 	JPanel pnl_list;
 	JScrollPane jsp_List;
+	JLabel lblDefaultHint;
 
 	public void handleTypeButtonClick(JButton btn) {
 		pnl_list.removeAll();
@@ -76,8 +74,16 @@ public class ShopFirstPage extends JFrame {
 				paneli.setName(list.get(i).getName());
 				pnl_list.add(paneli);
 			}
-
 		}
+		// 滚动到顶端
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				jsp_List.getVerticalScrollBar().setValue(0);
+				lblDefaultHint.setVisible(false);
+				jsp_List.setVisible(true);
+			}
+		});
 	}
 
 	/**
@@ -103,14 +109,21 @@ public class ShopFirstPage extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
-		
-		
-		CartPane cartPanel = new CartPane();
-		cartPanel.setBackground(Color.blue);
-		cartPanel.setBounds(108, 173, 385, 490);
+		cartPanel = new CartPane();
+		cartPanel.setBackground(Color.WHITE);
+		cartPanel.setBounds(108, 173, 378, 490);
 		cartPanel.setVisible(false);
-		panel.add(cartPanel);
 
+		JLabel label = new JLabel("");
+		label.setBounds(14, 13, 64, 64);
+		label.setIcon(new ImageIcon(ShopFirstPage.class.getResource("/resources/assets/icon/shop.png")));
+		panel.add(label);
+		panel.add(cartPanel);
+		
+		lblDefaultHint = new JLabel("选择一项分类来开始...");
+		lblDefaultHint.setBounds(284, 272, 159, 18);
+		cartPanel.add(lblDefaultHint);
+		lblDefaultHint.setVisible(true);
 
 		pnl_list = new JPanel();
 		pnl_list.setLayout(new GridLayout(0, 1));
@@ -119,6 +132,8 @@ public class ShopFirstPage extends JFrame {
 		jsp_List.setBounds(190, 173, 510, 531);
 
 		panel.add(jsp_List);
+		
+		jsp_List.setVisible(false);
 
 		jsp_List.setViewportView(pnl_list);
 		pnl_list.setPreferredSize(new Dimension(jsp_List.getWidth() - 50, jsp_List.getHeight() * 2));
@@ -136,6 +151,7 @@ public class ShopFirstPage extends JFrame {
 
 		btn_Search.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				pnl_list.removeAll();
 				List<Product> list = ResponseUtils
@@ -162,11 +178,6 @@ public class ShopFirstPage extends JFrame {
 
 		btn_Search.setFont(new Font("幼圆", Font.BOLD, 15));
 		panel.add(btn_Search);
-
-		JLabel label = new JLabel("");
-		label.setBounds(14, 13, 64, 64);
-		label.setIcon(new ImageIcon(ShopFirstPage.class.getResource("/resources/assets/icon/shop.png")));
-		panel.add(label);
 
 		JLabel lblVcampus = new JLabel("商店 - VCampus");
 		lblVcampus.setBounds(102, 32, 239, 34);
@@ -197,7 +208,6 @@ public class ShopFirstPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				handleTypeButtonClick(btn_Drink);
-
 			}
 		});
 		btn_Drink.setFont(new Font("宋体", Font.PLAIN, 16));
@@ -236,10 +246,19 @@ public class ShopFirstPage extends JFrame {
 
 		JButton btnCart = new JButton("");
 		btnCart.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				cartPanel.requireReRender();
-				cartPanel.setVisible(true);
-
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						cartPanel.setVisible(false);
+						cartPanel.requireReRender();
+						cartPanel.setVisible(true);
+					}
+				});
+				
 			}
 		});
 		btnCart.setIcon(new ImageIcon(ShopFirstPage.class.getResource("/resources/assets/icon/cart.png")));

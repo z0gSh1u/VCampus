@@ -1,7 +1,5 @@
 package tech.zxuuu.client.main;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,10 +8,6 @@ import tech.zxuuu.client.opencourse.DeleteOpencoursePane;
 import tech.zxuuu.client.opencourse.ListOpencoursePane;
 import tech.zxuuu.client.opencourse.NewOpencoursePane;
 import tech.zxuuu.client.opencourse.StuMenuGUI;
-import tech.zxuuu.net.Request;
-import tech.zxuuu.util.ResponseUtils;
-import tech.zxuuu.util.SwingUtils;
-
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -69,25 +63,25 @@ public class AppOpencourseManager extends JFrame {
 		label_2.setBounds(380, 48, 105, 18);
 		contentPane.add(label_2);
 
-		JLabel label_3 = new JLabel((String) null);
-		label_3.setBounds(488, 48, 114, 18);
-		contentPane.add(label_3);
-		label_3.setText(App.session.getManager().getCardNumber());
+		JLabel lblCardDisp = new JLabel((String) null);
+		lblCardDisp.setBounds(488, 48, 114, 18);
+		contentPane.add(lblCardDisp);
+		lblCardDisp.setText(App.session.getManager().getCardNumber());
 
-		JButton btnNewButton = new JButton("公开课列表");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnList = new JButton("公开课列表");
+		btnList.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				showOpenCourseList();
 			}
 		});
 
-		btnNewButton.setBounds(607, 25, 105, 53);
+		btnList.setBounds(607, 25, 105, 53);
 
-		contentPane.add(btnNewButton);
+		contentPane.add(btnList);
 
-		JButton btnNewButton_1 = new JButton("新增公开课");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnNew = new JButton("新增公开课");
+		btnNew.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currentDisplay.setVisible(false);
@@ -96,12 +90,12 @@ public class AppOpencourseManager extends JFrame {
 			}
 		});
 
-		btnNewButton_1.setBounds(720, 25, 105, 53);
+		btnNew.setBounds(719, 13, 105, 34);
 
-		contentPane.add(btnNewButton_1);
+		contentPane.add(btnNew);
 
-		JButton btnNewButton_2 = new JButton("删除公开课");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton btnDelete = new JButton("删除公开课");
+		btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currentDisplay.setVisible(false);
@@ -110,9 +104,9 @@ public class AppOpencourseManager extends JFrame {
 			}
 		});
 
-		btnNewButton_2.setBounds(834, 25, 105, 53);
+		btnDelete.setBounds(719, 50, 105, 34);
 
-		contentPane.add(btnNewButton_2);
+		contentPane.add(btnDelete);
 
 		defaultPane = new JPanel();
 		defaultPane.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -141,6 +135,7 @@ public class AppOpencourseManager extends JFrame {
 		
 		JButton btnShowOpenCourseList = new JButton("进入公开课");
 		btnShowOpenCourseList.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				StuMenuGUI stuMenuGUI = new StuMenuGUI();
 				stuMenuGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

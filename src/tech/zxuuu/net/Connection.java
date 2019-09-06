@@ -18,11 +18,13 @@ public abstract class Connection {
 	protected Socket socket;
 	protected PrintWriter pWriter;
 	protected BufferedReader bReader;
-
+	
+	
 	// 初始化连接，并初始化相关流读写器
 	public Connection(Socket socket) {
 		super();
 		this.socket = socket;
+		
 		if (this.socket == null || !this.socket.isConnected()) {
 			return;
 		}

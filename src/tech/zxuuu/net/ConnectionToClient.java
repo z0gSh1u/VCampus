@@ -16,9 +16,7 @@ public class ConnectionToClient extends Connection {
 
 	@Override
 	public void write(String content) {
-		System.out.println("半同步方法Connection.write被进入了");
 		synchronized (ConnectionToClient.class) {
-			System.out.println("同步代码块进入");
 			this.pWriter.write(content + "\n");
 			this.pWriter.flush();
 		}
@@ -26,14 +24,13 @@ public class ConnectionToClient extends Connection {
 
 	@Override
 	public synchronized String readLine() {
-		//synchronized (ConnectionToClient.class) {
-			try {
-				return this.bReader.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		//}
+		// readLine本身就是阻塞的，无需同步
+		try {
+			return this.bReader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

@@ -10,14 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
-
-import tech.zxuuu.client.main.App;
 import tech.zxuuu.entity.Product;
-import tech.zxuuu.net.Request;
-import tech.zxuuu.util.ResponseUtils;
-import tech.zxuuu.util.SwingUtils;
-
 import javax.swing.JLabel;
 
 import java.awt.Color;
@@ -35,10 +28,12 @@ public class Blocks extends JPanel {
 
 	private String name;
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}

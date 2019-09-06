@@ -57,7 +57,7 @@ public class NewProductPane extends JPanel {
 		JLabel lbl_Price = new JLabel("价格");
 		lbl_Price.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		lbl_Price.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_Price.setBounds(38, 214, 115, 33);
+		lbl_Price.setBounds(38, 220, 115, 33);
 		this.add(lbl_Price);
 
 		JLabel lbl_Picture = new JLabel("图片");
@@ -99,6 +99,10 @@ public class NewProductPane extends JPanel {
 		btn_Confirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				if (!SwingUtils.isPureDigits(txtCount.getText()) || !SwingUtils.isPureDigits(txtPrice.getText())) {
+					SwingUtils.showError(null, "输入不合法，请检查！", "错误");
+				}
 
 				Product product = new Product();
 				product.setName(txtName.getText());

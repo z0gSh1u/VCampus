@@ -68,8 +68,6 @@ public class Response {
 		
 		JSONArray tempParam = (JSONArray) this.param;
 		
-		System.out.println(tempParam.toJSONString());
-		
 		List<Object> unparsedList = JSON.parseArray(tempParam.toJSONString());
 		List<T> processedList = new ArrayList<T>();
 		
@@ -123,7 +121,6 @@ public class Response {
 	public void send() {
 		String json = JSON.toJSONString(this);
 		this.connectionToClient.write(json);
-		System.out.println("服务器端一个响应被组织并写到连接了");
 	}
 
 	public ConnectionToClient getConnectionToClient() {

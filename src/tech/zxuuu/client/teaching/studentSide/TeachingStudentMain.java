@@ -1,7 +1,5 @@
 package tech.zxuuu.client.teaching.studentSide;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -30,13 +28,14 @@ public class TeachingStudentMain extends JFrame {
 
 	private JPanel currentDisplay;
 	private JPanel classSelectPane;
-	private JPanel scheduleTablePane;
+	private ScheduleTablePane scheduleTablePane;
 	private JPanel defaultPanel;
 
 	/**
 	 * Create the frame.
 	 */
 	public TeachingStudentMain() {
+		setResizable(false);
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(TeachingStudentMain.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("教务管理系统（学生端） - VCampus");
@@ -104,13 +103,13 @@ public class TeachingStudentMain extends JFrame {
 		currentDisplay = defaultPanel;
 
 		classSelectPane = new ClassSelectPane();
-		classSelectPane.setBounds(24, 90, 889, 617);
+		classSelectPane.setBounds(24, 90, 889, 683);
 		classSelectPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		contentPane.add(classSelectPane);
 		classSelectPane.setVisible(false);
 
 		scheduleTablePane = new ScheduleTablePane();
-		scheduleTablePane.setBounds(24, 90, 889, 617);
+		scheduleTablePane.setBounds(24, 90, 889, 683);
 		scheduleTablePane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		contentPane.add(scheduleTablePane);
 		scheduleTablePane.setVisible(false);

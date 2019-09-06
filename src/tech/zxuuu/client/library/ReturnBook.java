@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 import tech.zxuuu.client.main.App;
 import tech.zxuuu.client.messageQueue.ResponseQueue;
 import tech.zxuuu.net.Request;
@@ -53,7 +55,7 @@ public class ReturnBook extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ReturnBook.class.getResource("/resources/assets/icon/fav.png")));
 		setResizable(false);
 		setTitle("书籍归还 - VCampus");
-		setBounds(100, 100, 530, 237);
+		setBounds(100, 100, 498, 237);
 		getContentPane().setLayout(new BorderLayout());
 		lblISBN.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(lblISBN, BorderLayout.CENTER);
@@ -74,11 +76,16 @@ public class ReturnBook extends JDialog {
 		btnComfirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (SwingUtils.isTxtEmpty(txtISBN)) {
+					SwingUtils.showError(null, "有字段为空！", "错误");
+					return;
+				}
 				int result = ResponseUtils
 						.getResponseByHash(
 								new Request(App.connectionToServer, App.session, "tech.zxuuu.server.library.BookServer.returnBook",
 										new Object[] { App.session.getStudent().getCardNumber(), txtISBN.getText() }).send())
 						.getReturn(Integer.class);
+
 				if (result == 2) {
 					SwingUtils.showMessage(null, "还书成功！", "提示");
 				}
