@@ -47,6 +47,7 @@ public class CourseManagerSide {
 		}
 		return null;
 	}
+
 	
 	public static Boolean deleteCourse(String id) {
 		SqlSession sqlSession = null;

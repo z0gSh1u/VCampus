@@ -168,15 +168,18 @@ public class NewCoursePane extends JPanel {
 		dispTeacher.setColumns(10);
 
 		JButton btnAutoLoad;
-		JButton btnNewCourse = new JButton("添加");
-		btnNewCourse.setIcon(new ImageIcon(NewCoursePane.class.getResource("/resources/assets/icon/tick.png")));
-		btnNewCourse.addActionListener(new ActionListener() {
+
+		JButton btnNewButton = new JButton("添加");
+		btnNewButton.setIcon(new ImageIcon(NewCoursePane.class.getResource("/resources/assets/icon/tick.png")));
+		btnNewButton.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (dispTeacher.getText().equals("")) {
 					SwingUtils.showError(null, "请先通过自动装填！", "错误");
 					return;
 				}
+      }
 				
 				if (judgeConflict(time)) {
 					SwingUtils.showError(null, "课程时间冲突", "错误");
@@ -199,6 +202,7 @@ public class NewCoursePane extends JPanel {
 		});
 		btnNewCourse.setBounds(342, 423, 115, 57);
 		add(btnNewCourse);
+
 
 		JLabel lblNewLabel_5 = new JLabel("开课院系");
 		lblNewLabel_5.setBounds(58, 162, 72, 18);

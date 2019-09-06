@@ -21,4 +21,5 @@ public interface IClassMapper {
 
 	public Boolean deleteCourse(String id);
 
+
 }
