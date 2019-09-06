@@ -219,6 +219,8 @@ public class ShopFirstPage extends JFrame {
 		btnCart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cartPanel.requireReRender();
+//				cartPanel.setBackground(new Color(135, 206, 250));
+//				cartPanel.setOpaque(false);
 				cartPanel.setVisible(true);
 			}
 		});

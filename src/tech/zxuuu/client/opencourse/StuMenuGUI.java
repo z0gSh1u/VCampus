@@ -135,7 +135,7 @@ public class StuMenuGUI extends JFrame {
 				} catch (Exception e) {
 					// Impossible catch.
 				}
-				that.setVisible(true);
+				that.setVisible(true);	
 			}
 		}).start();
 

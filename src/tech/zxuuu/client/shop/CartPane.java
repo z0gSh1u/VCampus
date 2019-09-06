@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 import java.awt.Color;
+import javax.swing.border.LineBorder;
 
 /**
  * 购物车面板
@@ -44,8 +45,7 @@ public class CartPane extends JPanel {
 	}
 
 	public CartPane() {
-		setBackground(new Color(135, 206, 250));
-		setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		
 
 		model = new DefaultTableModel(null, head) {
 			@Override
@@ -54,7 +54,6 @@ public class CartPane extends JPanel {
 			}
 		};
 
-		setLayout(null);
 
 		JPanel that = this;
 
@@ -127,6 +126,14 @@ public class CartPane extends JPanel {
 		add(btnNewButton);
 
 		table.setModel(model);
+		
+		setBorder(new LineBorder(new Color(0, 0, 0)));
+		setLayout(null);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(CartPane.class.getResource("/resources/assets/picture/white.png")));
+		lblNewLabel_2.setBounds(0, 0, 370, 486);
+		add(lblNewLabel_2);
 
 	}
 }

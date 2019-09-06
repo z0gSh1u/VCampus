@@ -30,13 +30,14 @@ public class TeachingStudentMain extends JFrame {
 
 	private JPanel currentDisplay;
 	private JPanel classSelectPane;
-	private JPanel scheduleTablePane;
+	private ScheduleTablePane scheduleTablePane;
 	private JPanel defaultPanel;
 
 	/**
 	 * Create the frame.
 	 */
 	public TeachingStudentMain() {
+		setResizable(false);
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(TeachingStudentMain.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("教务管理系统（学生端） - VCampus");

@@ -56,14 +56,14 @@ public class ScheduleTablePane extends JPanel {
 		String[] course = temp.split(",");
 		for (int i = 0; i < course.length; i++) {
 			ClassInfo cla = getOneClass(course[i]);
-			
-			System.out.println("[cla]"+cla);
-			
 			labels[Integer.valueOf(course[i].charAt(6)) - 48 + (Integer.valueOf(course[i].charAt(8)) - 48) / 2 * 6]
 					.setText("<html>" + cla.getClassName() + "<br>" + cla.getTeacher() + "<br>" + cla.getClassroom() + "<html>");
 			labels[Integer.valueOf(course[i].charAt(9)) - 48 + (Integer.valueOf(course[i].charAt(11)) - 48) / 2 * 6]
 					.setText("<html>" + cla.getClassName() + "<br>" + cla.getTeacher() + "<br>" + cla.getClassroom() + "<html>");
 		}
+		
+		
+		
 	}
 
 	public void teacherSchedule() {
@@ -120,7 +120,7 @@ public class ScheduleTablePane extends JPanel {
 		labels[18].setText("<html><body><h2>第5-6节<br /></h2>下午</body></html>");
 		labels[24].setText("<html><body><h2>第7-8节<br /></h2>下午</body></html>");
 		labels[30].setText("<html><body><h2>第9-10节<br /></h2>晚上</body></html>");
-		studentSchedule();
+		// studentSchedule();
 	}
 
 	static class ScheduleUtilities {
