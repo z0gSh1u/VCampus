@@ -51,10 +51,10 @@ public class ChatManager extends Thread {
 			text = "[学生]";
 			break;
 		case TEACHER:
-			text = "[老师]";
+			text = "<font color=\"Blue\">[老师]</font>";
 			break;
 		case MANAGER:
-			text = "[管理员]";
+			text = "<font color=\"Red\">[管理员]</font>";
 			break;
 		}
 		text += "【" + speaker.getName() + "】<br/>" + str + "<br/>";

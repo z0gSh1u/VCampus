@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 
-
 /**
  * 教务老师新增课程
  * 
@@ -37,30 +36,31 @@ public class NewCoursePane extends JPanel {
 	private JTextField dispTeacherId;
 	private JTextField dispTeacher;
 	private JTextField dispAca;
-	public String[] time=new String [2];
+	public String[] time = new String[2];
 
 	/**
 	 * Create the panel.
 	 */
 	public boolean judgeConflict(String time[]) {
-		List<ClassInfo> Tca = ResponseUtils
-				.getResponseByHash(new Request(App.connectionToServer, null,
-						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassOfOneTeacher", new Object[] { dispTeacher.getText() }).send())
+		List<ClassInfo> Tca = ResponseUtils.getResponseByHash(
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassOfOneTeacher",
+						new Object[] { dispTeacher.getText() }).send())
 				.getListReturn(ClassInfo.class);
 		String[] courseTime = new String[Tca.size() * 2];
 		for (int i = 0; i < Tca.size(); i++) {
 			courseTime[i * 2] = Tca.get(i).getID().substring(6, 9);
 			courseTime[i * 2 + 1] = Tca.get(i).getID().substring(9, 12);
 		}
-		for (int i=0;i<Tca.size()*2;i++) {
+		for (int i = 0; i < Tca.size() * 2; i++) {
 			System.out.println(courseTime[i]);
-			for (int j=0;j<2;j++) {
-				if (courseTime[i]==time[j]||courseTime[i].equals(time[j]))
+			for (int j = 0; j < 2; j++) {
+				if (courseTime[i] == time[j] || courseTime[i].equals(time[j]))
 					return true;
 			}
 		}
 		return false;
 	}
+
 	public NewCoursePane() {
 		setLayout(null);
 
@@ -179,12 +179,10 @@ public class NewCoursePane extends JPanel {
 					SwingUtils.showError(null, "请先通过自动装填！", "错误");
 					return;
 				}
-      }
-				
+
 				if (judgeConflict(time)) {
 					SwingUtils.showError(null, "课程时间冲突", "错误");
-				}
-				else {
+				} else {
 					ClassInfo cla = new ClassInfo();
 					cla.setID(txtAca.getText() + txtCourseId.getText() + txtTime.getText() + txtTeacherId.getText()
 							+ txtClassroom.getText());
@@ -200,9 +198,9 @@ public class NewCoursePane extends JPanel {
 				}
 			}
 		});
+		JButton btnNewCourse = new JButton("新增");
 		btnNewCourse.setBounds(342, 423, 115, 57);
 		add(btnNewCourse);
-
 
 		JLabel lblNewLabel_5 = new JLabel("开课院系");
 		lblNewLabel_5.setBounds(58, 162, 72, 18);
@@ -221,36 +219,31 @@ public class NewCoursePane extends JPanel {
 				if (txtAca.getText().length() != 2) {
 					SwingUtils.showError(null, "院系代码长度错误！", "错误");
 					return;
-				}
-				else if (!SwingUtils.isPureDigits(txtAca.getText())){
+				} else if (!SwingUtils.isPureDigits(txtAca.getText())) {
 					SwingUtils.showError(null, "院系代码含有非法字符！", "错误");
 				}
 				if (txtClassroom.getText().length() != 4) {
 					SwingUtils.showError(null, "教室代码长度错误！", "错误");
 					return;
-				}
-				else if (!SwingUtils.isPureDigits(txtClassroom.getText())){
+				} else if (!SwingUtils.isPureDigits(txtClassroom.getText())) {
 					SwingUtils.showError(null, "教师代码含有非法字符！", "错误");
 				}
 				if (txtCourseId.getText().length() != 3) {
 					SwingUtils.showError(null, "院系内课程代码长度错误！", "错误");
 					return;
-				}
-				else if (!SwingUtils.isPureDigits(txtCourseId.getText())){
+				} else if (!SwingUtils.isPureDigits(txtCourseId.getText())) {
 					SwingUtils.showError(null, "课程代码含有非法字符！", "错误");
 				}
 				if (txtTeacherId.getText().length() != 3) {
 					SwingUtils.showError(null, "院系内教师代码长度错误！", "错误");
 					return;
-				}
-				else if (!SwingUtils.isPureDigits(txtTeacherId.getText())){
+				} else if (!SwingUtils.isPureDigits(txtTeacherId.getText())) {
 					SwingUtils.showError(null, "教师代码含有非法字符！", "错误");
 				}
 				if (txtTime.getText().length() != 6) {
 					SwingUtils.showError(null, "课程时间长度错误！", "错误");
 					return;
-				}
-				else if (!SwingUtils.isPureDigits(txtTime.getText())){
+				} else if (!SwingUtils.isPureDigits(txtTime.getText())) {
 					SwingUtils.showError(null, "课程时间含有非法字符！", "错误");
 				}
 				if (SwingUtils.isTxtEmpty(txtAca) || SwingUtils.isTxtEmpty(txtClassroom) || SwingUtils.isTxtEmpty(txtCourseId)
@@ -280,22 +273,21 @@ public class NewCoursePane extends JPanel {
 					return;
 				}
 				dispTeacher.setText((teacherName == null || teacherName.equals("")) ? "" : teacherName);
-				
+
 				String converted = convertClassTimeToChinese(txtTime.getText());
 				if (converted.contains("[ERROR]")) {
 					SwingUtils.showError(null, "时间代码错误！", "错误");
 					dispTime.setText("");
 					return;
 				}
-				time[0]=txtTime.getText().substring(0,3);
-				time[1]=txtTime.getText().substring(3);
+				time[0] = txtTime.getText().substring(0, 3);
+				time[1] = txtTime.getText().substring(3);
 				if (judgeConflict(time)) {
-					dispTime.setText(converted+"（冲突）");
-				}
-				else {
+					dispTime.setText(converted + "（冲突）");
+				} else {
 					dispTime.setText(converted);
 				}
-			
+
 			}
 		});
 		btnAutoLoad.setBounds(177, 434, 113, 27);

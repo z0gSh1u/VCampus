@@ -16,9 +16,7 @@ public class ConnectionToClient extends Connection {
 
 	@Override
 	public void write(String content) {
-		System.out.println("半同步方法Connection.write被进入了");
 		synchronized (ConnectionToClient.class) {
-			System.out.println("同步代码块进入");
 			this.pWriter.write(content + "\n");
 			this.pWriter.flush();
 		}

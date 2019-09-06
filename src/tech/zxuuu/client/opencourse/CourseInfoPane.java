@@ -76,10 +76,8 @@ public class CourseInfoPane extends JPanel {
 		this.edpPreview = new JEditorPane();
 		edpPreview.setContentType("text/html");
 		edpPreview.setBounds(0, 0, 120, 130);
+		add(edpPreview);
 		
-
-		epnPreview.setEditable(false);
-add(edpPreview);
 
 		this.lblCourseName = new JLabel("这里是课程名");
 		lblCourseName.setFont(new Font("微软雅黑", Font.PLAIN, 48));
@@ -118,7 +116,7 @@ add(edpPreview);
 		this.courseName = courseName;
 		this.speaker = speaker;
 		this.videoUrl = videoUrl;
-		this.epnPreview.setText(this.preview);
+		this.edpPreview.setText("<html>"+this.preview+"</html>");
 		this.lblCourseName.setText(this.courseName);
 		this.lblSpeaker.setText(this.speaker);
 		this.validate();

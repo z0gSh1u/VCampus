@@ -16,12 +16,13 @@ public class ConnectionToServer extends Connection {
 	
 	@Override
 	public void write(String content) {
-		 System.out.println("半同步方法Connection.write被进入了");
+		 System.out.println("半同步方法ConnectionToServer.write被进入了");
 		 synchronized (ConnectionToServer.class) {
 			 System.out.println("同步代码块进入");
 			 this.pWriter.write(content + "\n");
 			 this.pWriter.flush();
 		 }
+		 System.out.println("同步代码块退出");
 	}
 	
 	@Override

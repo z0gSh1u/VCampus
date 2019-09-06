@@ -23,7 +23,6 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
 /**
  * 学生课表
  * 
@@ -32,10 +31,11 @@ import java.awt.event.MouseEvent;
 public class ScheduleTablePane extends JPanel {
 
 	private JLabel[] labels;
+
 	/**
 	 * @wbp.nonvisual location=434,524
 	 */
-	
+
 	public List<ClassInfo> getClassOfOneTeacher(String name) {
 		return ResponseUtils
 				.getResponseByHash(new Request(App.connectionToServer, null,
@@ -71,9 +71,7 @@ public class ScheduleTablePane extends JPanel {
 			labels[Integer.valueOf(course[i].charAt(9)) - 48 + (Integer.valueOf(course[i].charAt(11)) - 48) / 2 * 6]
 					.setText("<html>" + cla.getClassName() + "<br>" + cla.getTeacher() + "<br>" + cla.getClassroom() + "<html>");
 		}
-		
-		
-		
+
 	}
 
 	public void teacherSchedule() {
@@ -98,7 +96,6 @@ public class ScheduleTablePane extends JPanel {
 		JButton btnRefresh = new JButton("New button");
 		btnRefresh.setBounds(800, 300, 800, 600);
 
-
 		btnRefresh.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -115,9 +112,9 @@ public class ScheduleTablePane extends JPanel {
 		this.add(centerNullPanel);
 		this.add(btnRefresh);
 
-		Color lightblue = new Color(208,227,234);
-		Color silvergray = new Color(233,241,244);
-		Color gemblue = new Color(85,169,208);
+		Color lightblue = new Color(208, 227, 234);
+		Color silvergray = new Color(233, 241, 244);
+		Color gemblue = new Color(85, 169, 208);
 		Color darkerGray = Color.GRAY.darker();
 		Color ligherBlack = darkerGray.darker().darker().darker();
 		labels = new JLabel[36];
@@ -130,10 +127,11 @@ public class ScheduleTablePane extends JPanel {
 				labels[index].setHorizontalAlignment(JTextField.CENTER);
 				if (i == 0)
 					labels[index].setBackground(gemblue);
-				else if(i!=0&&j==0)
+				else if (i != 0 && j == 0)
 					labels[index].setBackground(lightblue);
-				else labels[index].setBackground(i%2!=0?lightblue:silvergray);
-					
+				else
+					labels[index].setBackground(i % 2 != 0 ? lightblue : silvergray);
+
 				labels[index].setForeground(Color.BLACK);
 				labels[index].setBorder(BorderFactory.createLineBorder(Color.WHITE));
 				centerNullPanel.add(labels[index]);

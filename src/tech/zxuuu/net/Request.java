@@ -17,9 +17,10 @@ public class Request {
 	private String targetApi; // 请求目标接口
 	private Object[] params; // 请求目标接口参数，注意，params.length应正好，且元素顺序应对应
 
-	public Request() {}	
-	public Request(ConnectionToServer connectionToServer, Session session,
-			String targetApi, Object[] params) {
+	public Request() {
+	}
+
+	public Request(ConnectionToServer connectionToServer, Session session, String targetApi, Object[] params) {
 		super();
 		this.connectionToServer = connectionToServer;
 		this.connectionToClient = null;
@@ -28,7 +29,7 @@ public class Request {
 		this.targetApi = targetApi;
 		this.params = params;
 	}
-	
+
 	// 组装JSON发送，返回本次请求的Hash
 	public String send() {
 		// 在发送请求的前一时刻，Request对象的最终形态才确定，此时的Hash才有意义

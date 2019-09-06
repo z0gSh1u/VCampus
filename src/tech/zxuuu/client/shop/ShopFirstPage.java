@@ -69,7 +69,7 @@ public class ShopFirstPage extends JFrame {
 		if (list == null) {
 			SwingUtils.showMessage(null, "抱歉，没有搜到这个商品，管理员正在努力备货中...", "提示");
 		} else {
-			pnl_list.setPreferredSize(new Dimension(jsp_List.getWidth() - 50, jsp_List.getHeight() * list.size()));
+			pnl_list.setPreferredSize(new Dimension(jsp_List.getWidth() - 50, 280 * list.size()));
 			for (int i = 0; i < list.size(); i++) {
 				JPanel paneli = new Blocks(list.get(i).getPicture(), list.get(i).getInformation(), list.get(i).getType(),
 						list.get(i).getPrice());
@@ -103,11 +103,14 @@ public class ShopFirstPage extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
+		
+		
 		CartPane cartPanel = new CartPane();
-		panel.add(cartPanel);
 		cartPanel.setBackground(Color.blue);
-		cartPanel.setBounds(115, 173, 378, 490);
+		cartPanel.setBounds(108, 173, 385, 490);
 		cartPanel.setVisible(false);
+		panel.add(cartPanel);
+
 
 		pnl_list = new JPanel();
 		pnl_list.setLayout(new GridLayout(0, 1));
@@ -118,7 +121,7 @@ public class ShopFirstPage extends JFrame {
 		panel.add(jsp_List);
 
 		jsp_List.setViewportView(pnl_list);
-		pnl_list.setPreferredSize(new Dimension(jsp_List.getWidth() - 50, jsp_List.getHeight() * 4));
+		pnl_list.setPreferredSize(new Dimension(jsp_List.getWidth() - 50, jsp_List.getHeight() * 2));
 		panel.revalidate(); // 告诉其他部件,我的宽高变了 this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -132,9 +135,25 @@ public class ShopFirstPage extends JFrame {
 		btn_Search.setBounds(587, 101, 113, 42);
 
 		btn_Search.addActionListener(new ActionListener() {
-			@Override
+
 			public void actionPerformed(ActionEvent e) {
-				handleTypeButtonClick(btn_Search);
+				pnl_list.removeAll();
+				List<Product> list = ResponseUtils
+						.getResponseByHash(new Request(App.connectionToServer, null,
+								"tech.zxuuu.server.shop.ProductServer.searchProduct", new Object[] { txt_Search.getText() }).send())
+						.getListReturn(Product.class);
+				if (list == null) {
+					SwingUtils.showMessage(null, "抱歉，没有搜到这个商品，管理员正在努力备货中...", "提示");
+				} else {
+					pnl_list.setPreferredSize(new Dimension(jsp_List.getWidth() - 50, 280 * list.size()));
+					for (int i = 0; i < list.size(); i++) {
+						JPanel paneli = new Blocks(list.get(i).getPicture(), list.get(i).getInformation(), list.get(i).getType(),
+								list.get(i).getPrice());
+						paneli.setName(list.get(i).getName());
+						pnl_list.add(paneli);
+					}
+				}
+
 			}
 		});
 
@@ -222,6 +241,7 @@ public class ShopFirstPage extends JFrame {
 //				cartPanel.setBackground(new Color(135, 206, 250));
 //				cartPanel.setOpaque(false);
 				cartPanel.setVisible(true);
+
 			}
 		});
 		btnCart.setIcon(new ImageIcon(ShopFirstPage.class.getResource("/resources/assets/icon/cart.png")));
