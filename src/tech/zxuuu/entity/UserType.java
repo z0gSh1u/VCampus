@@ -2,7 +2,6 @@ package tech.zxuuu.entity;
 
 /**
  * 用户角色类型定义
- * @author z0gSh1u
  */
 public enum UserType {
 	

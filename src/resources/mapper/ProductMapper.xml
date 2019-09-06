@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="tech.zxuuu.dao.IProductMapper">
+
+	<select id="searchProduct" parameterType="String"
+		resultType="Product">
+		SELECT * FROM tb_product WHERE name LIKE "%"#{name}"%"
+	</select>
+
+	<select id="listProductByType" parameterType="String"
+		resultType="Product">
+		SELECT * FROM tb_product WHERE type = #{type}
+	</select>
+
+	<insert id="insertNewProcut" parameterType="Product">
+		INSERT INTO
+		`tb_product` VALUES (#{name}, #{type},
+		#{price}, #{picture}, #{number},
+		#{information})
+	</insert>
+
+	<select id="manageListProduct" parameterType="Product"
+		resultType="Product">
+		SELECT * FROM tb_product WHERE name LIKE "%"#{name}"%" OR
+		type LIKE "%"#{type}"%"
+	</select>
+
+	<delete id="deleteProduct" parameterType="Product">
+		DELETE FROM
+		`tb_product` WHERE name = #{name} AND type = #{type} AND price =
+		#{price} AND number = #{number}
+	</delete>
+	
+	<select id="getProductStorage" parameterType="String"
+	resultType="String">
+		SELECT `number` FROM `tb_product` WHERE `name` = #{name} LIMIT 1
+	</select>
+	
+	<update id="buySomething" parameterType="Map">
+		UPDATE `tb_product` SET `number` = `number` - #{howmany} WHERE `name` = #{name} LIMIT 1
+	</update>
+
+</mapper>

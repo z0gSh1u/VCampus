@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
- 
+
 <mapper namespace="tech.zxuuu.dao.IClassMapper">
-    <select id="getClassInfo" parameterType="Student" resultType="ClassInfo">
-		SELECT * FROM `tb_class` 
+	<select id="getClassInfo" parameterType="String"
+		resultType="ClassInfo">
+		SELECT * FROM `tb_class` WHERE `id` LIKE CONCAT(#{academy},
+		"%")
 	</select>
 	<update id="takeClass" parameterType="Student">
-        UPDATE tb_student SET selected_course=#{classNumber} WHERE card_number=#{cardNumber}
-    </update>
-     <select id="getClassSelection" parameterType="Student" resultType="String">
-		SELECT selected_course FROM `tb_student` WHERE card_number=#{cardNumber}
+		UPDATE tb_student SET
+		selected_course=#{classNumber} WHERE
+		card_number=#{cardNumber}
+	</update>
+	<select id="getClassSelection" parameterType="Student"
+		resultType="String">
+		SELECT selected_course FROM `tb_student` WHERE
+		card_number=#{cardNumber}
 	</select>
-	 <select id="getOneClass" parameterType="String" resultType="ClassInfo">
+	<select id="getOneClass" parameterType="String"
+		resultType="ClassInfo">
 		SELECT * FROM `tb_class` WHERE id=#{id}
 	</select>
-	 <select id="getClassOfOneTeacher" parameterType="String" resultType="ClassInfo">
+	<select id="getClassOfOneTeacher" parameterType="String"
+		resultType="ClassInfo">
 		SELECT * FROM `tb_class` WHERE teacher=#{name}
 	</select>
+	<insert id="insertNewCourse" parameterType="ClassInfo">
+		INSERT INTO
+		`tb_class` VALUES (#{id}, #{className}, #{time}, #{teacher},
+		#{classroom})
+	</insert>
+
+
 </mapper>

@@ -6,11 +6,15 @@ import tech.zxuuu.dao.IManagerMapper;
 import tech.zxuuu.dao.IStudentMapper;
 import tech.zxuuu.dao.ITeacherMapper;
 import tech.zxuuu.entity.Manager;
-import tech.zxuuu.entity.ManagerType;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.entity.Teacher;
 import tech.zxuuu.server.main.*;
 
+/**
+ * 登陆认证后端
+ * 
+ * @author z0gSh1u
+ */
 public class Auth {
 
 	// 学生登录后端接口
@@ -52,9 +56,6 @@ public class Auth {
 	// 管理员登陆后端接口
 	public static Manager managerLoginChecker(Manager manager) {
 		Manager result = null;
-		
-		System.out.println("后端接到manager=" + manager.toString());
-		
 		try {
 			SqlSession sqlSession = App.sqlSessionFactory.openSession();
 			IManagerMapper managerMapper = sqlSession.getMapper(IManagerMapper.class);

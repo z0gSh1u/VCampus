@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
- 
+
 <mapper namespace="tech.zxuuu.dao.ITeacherMapper">
 
 	<!-- Used By Auth Module -->
-	<select id="verifyTeacher" parameterType="Teacher" resultType="boolean">
-		SELECT COUNT(*) FROM `tb_teacher` WHERE `card_number`=#{cardNumber} AND `password`=#{password}
-	</select>
 	
-	<select id="getTeacherDetailByCardNumber" parameterType="String" resultType="Teacher">
-		SELECT * FROM `tb_teacher` WHERE `card_number`=#{cardNumber}
+	<select id="verifyTeacher" parameterType="Teacher"
+		resultType="boolean">
+		SELECT COUNT(*) FROM `tb_teacher` WHERE
+		`card_number`=#{cardNumber} AND `password`=#{password}
 	</select>
-	
+
+	<select id="getTeacherDetailByCardNumber" parameterType="String"
+		resultType="Teacher">
+		SELECT * FROM `tb_teacher` WHERE
+		`card_number`=#{cardNumber}
+	</select>
+
 	<!-- Used By Auth Module -->
-	
+
+	<select id="getTeacherNameById" parameterType="Map"
+		resultType="String">
+		SELECT `name` FROM `tb_teacher` WHERE `academy` =
+		#{academy} AND `id_in_academy` = #{idInAcademy} LIMIT 1
+	</select>
 
 </mapper>

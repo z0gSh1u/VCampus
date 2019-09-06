@@ -1,2 +1,5 @@
 bin/
 src/resources/database.properties
+plugins/
+libvlc.dll
+libvlccore.dll

@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
- 
+
 <mapper namespace="tech.zxuuu.dao.IOpenCourseMapper">
 
-	<select id="getOpenCourseList" resultType="tech.zxuuu.entity.OpenCourseInfo">
-		SELECT 
-			`Id`				as "id",
-			`CourseName`		as "courseName",
-			`Speaker`			as "speaker",
-			`Preview` 			as "preview"
-			FROM `tb_opencourse`
+	<select id="getOpenCourseList" resultType="OpenCourseInfo">
+		SELECT
+		`Id` as "id",
+		`CourseName` as "courseName",
+		`Speaker` as "speaker",
+		`Preview` as
+		"preview",
+		`video` as "video"
+		FROM `tb_opencourse`
 	</select>
-    
+
+	<select id="getEmoticonList"
+		resultType="tech.zxuuu.entity.EmoticonInfo">
+		SELECT
+		`name` as `name`,
+		`addr` as `addr`
+		FROM `tb_emoticon`
+	</select>
+
+	<select id="getEmoticon" parameterType="String"
+		resultType="String">
+		SELECT `addr` FROM tb_emoticon WHERE `Name`=#{emoName}
+	</select>
+
+	<select id="getMaxId" resultType="Integer">
+		SELECT max(Id) FROM
+		`tb_opencourse`
+	</select>
+
+	<insert id="insertNewOpencourse" parameterType="OpenCourseInfo">
+		INSERT INTO
+		`tb_opencourse` VALUES (#{id}, #{courseName}, #{speaker}, #{preview},
+		#{video})
+	</insert>
+
+	<delete id="deleteOpencourse" parameterType="Integer">
+		DELETE FROM
+		`tb_opencourse` WHERE `id` = #{id} LIMIT 1
+	</delete>
+
 </mapper>

@@ -1,14 +1,19 @@
 package tech.zxuuu.util;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
+/**
+ * 不易归类的工具函数
+ * 
+ * @author z0gSh1u
+ */
 public class OtherUtils {
 
+	/**
+	 * 根据学院号获取学院名称
+	 */
 	public static String getAcademyByNumber(String number) {
 		Map<String, String> map = new HashMap<>();
 		map.put("01", "建筑学院");
@@ -41,20 +46,25 @@ public class OtherUtils {
 		map.put("71", "软件学院");
 		return map.getOrDefault(number, "");
 	}
-	
+
 	/**
-	 * 获取调用者端的本地时间Date对象
-	 * 注意，如果需要准确可靠的时间，必须要在服务器端调用，不可以信任客户端的时间。
+	 * 获取调用者端的本地时间Date对象 注意，如果需要准确可靠的时间，必须要在服务器端调用，不可以信任客户端的时间。
 	 */
 	public static Date getLocalTime() {
 		Date now = new Date();
 		return now;
 	}
-	
+
+	/**
+	 * 根据Unix时间戳获取星期几
+	 * 
+	 * @param unixTimeStamp
+	 * @return 1~7
+	 */
 	public static Integer getDay(long unixTimeStamp) {
 		// 1 ~ 7
 		Date date = new Date(unixTimeStamp);
 		return date.getDay() == 0 ? 7 : date.getDay();
 	}
-	
+
 }

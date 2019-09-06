@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
- 
+
 <mapper namespace="tech.zxuuu.dao.IManagerMapper">
 
 	<!-- Used By Auth Module -->
-	
-	<select id="verifyManager" parameterType="Manager" resultType="boolean">
-		SELECT COUNT(*) FROM `tb_manager` WHERE `card_number`=#{cardNumber} AND `password`=#{password}
+
+	<select id="verifyManager" parameterType="Manager"
+		resultType="boolean">
+		SELECT COUNT(*) FROM `tb_manager` WHERE
+		`card_number`=#{cardNumber} AND `password`=#{password}
 	</select>
-	<select id="getManagerDetailByCardNumber" parameterType="String" resultType="Manager">
-		SELECT * FROM `tb_manager` WHERE `card_number`=#{cardNumber}
+	<select id="getManagerDetailByCardNumber" parameterType="String"
+		resultType="Manager">
+		SELECT * FROM `tb_manager` WHERE
+		`card_number`=#{cardNumber}
 	</select>
-	
+
 	<!-- Used By Auth Module -->
 
 </mapper>

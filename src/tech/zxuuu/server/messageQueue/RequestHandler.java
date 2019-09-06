@@ -69,9 +69,6 @@ public class RequestHandler extends Thread {
 					new Response(
 						req.getConnectionToClient(), req.getHash(), req.getTargetApi(), ret
 					).send();
-					
-					System.out.println("res hash=" + req.getHash());
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
