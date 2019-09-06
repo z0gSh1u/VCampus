@@ -17,6 +17,8 @@ public interface IClassMapper {
 
 	public List<ClassInfo> getClassOfOneTeacher(String name);
 
-	public void insertNewCourse(ClassInfo classInfo);
+	public Boolean insertNewCourse(ClassInfo classInfo);
+
+	public Boolean deleteCourse(String id);
 
 }

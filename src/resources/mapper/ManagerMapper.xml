@@ -16,6 +16,7 @@
 		SELECT * FROM `tb_manager` WHERE
 		`card_number`=#{cardNumber}
 	</select>
+	
 
 	<!-- Used By Auth Module -->
 

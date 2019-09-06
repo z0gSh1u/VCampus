@@ -242,6 +242,9 @@ public class AppTeachingManager extends JFrame {
 		button_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				currentDisplayPane.setVisible(false);
+				deleteCoursePane.setVisible(true);
+				currentDisplayPane = deleteCoursePane;
 
 			}
 		});
