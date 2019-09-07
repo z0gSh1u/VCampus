@@ -30,5 +30,7 @@ public interface IStudentMapper {
 	public Boolean chargeCard(Map map);
 	
 	public String getBalance(String cardNumber);
+	
+	public Boolean resetPassword(Map map);
 
 }
