@@ -77,6 +77,7 @@ public class AuthGUI extends JFrame {
 				App.requireRouting();
 			} else {
 				SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
+				txtPassword.setText("");
 				btnLogin.setText("登陆");
 			}
 			// -------------
@@ -91,6 +92,7 @@ public class AuthGUI extends JFrame {
 				App.requireRouting();
 			} else {
 				SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
+				txtPassword.setText("");
 				btnLogin.setText("登陆");
 			}
 		}
