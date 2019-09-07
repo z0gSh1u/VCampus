@@ -48,7 +48,6 @@ public class AppTeacher extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(AppTeacher.class.getResource("/resources/assets/icon/teacher.png")));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -112,20 +111,20 @@ public class AppTeacher extends JFrame {
 		});
 		btnGotoOpencourse.setBounds(555, 58, 107, 27);
 		contentPane.add(btnGotoOpencourse);
-		
+
 		coursePanel = new ScheduleTablePane();
 		coursePanel.setBounds(14, 31, 904, 347);
 		pnlOpencourse.add(coursePanel);
 
 		currentDisplay = coursePanel;
-						
-								JLabel lblWelcome = new JLabel("");
-								lblWelcome.setBounds(440, 26, 416, 18);
-								contentPane.add(lblWelcome);
-								
-										lblWelcome.setText(
-												"欢迎您， " + App.session.getTeacher().getName() + " 老师！您的一卡通号：" + App.session.getTeacher().getCardNumber());
+
+		JLabel lblWelcome = new JLabel("");
+		lblWelcome.setBounds(440, 26, 416, 18);
+		contentPane.add(lblWelcome);
+
+		lblWelcome.setText(
+				"欢迎您， " + App.session.getTeacher().getName() + " 老师！您的一卡通号：" + App.session.getTeacher().getCardNumber());
 		coursePanel.setVisible(true);
-		
+
 	}
 }

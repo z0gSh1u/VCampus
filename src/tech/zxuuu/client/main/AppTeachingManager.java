@@ -10,6 +10,7 @@ import javax.swing.border.TitledBorder;
 
 import tech.zxuuu.client.studentManage.InManagePane;
 import tech.zxuuu.client.studentManage.OutManagePane;
+import tech.zxuuu.client.studentManage.ResetPasswordPane;
 import tech.zxuuu.client.studentManage.StudentTablePane;
 import tech.zxuuu.client.studentManage.SwitchManagePane;
 import tech.zxuuu.client.teaching.managerSide.CourseListPane;
@@ -42,6 +43,7 @@ public class AppTeachingManager extends JFrame {
 	private JPanel outManagePane;
 	private JPanel inManagePane;
 	private JPanel switchManagePane;
+	private JPanel resetPasswordPane;
 	/* 课程管理相关Panel */
 	private JPanel newCoursePane;
 	private JPanel courseListPane;
@@ -81,7 +83,7 @@ public class AppTeachingManager extends JFrame {
 		JPanel studentManageButtonGroup = new JPanel();
 		studentManageButtonGroup.setBorder(
 				new TitledBorder(null, "\u5B66\u751F\u7BA1\u7406", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		studentManageButtonGroup.setBounds(14, 86, 182, 345);
+		studentManageButtonGroup.setBounds(14, 86, 182, 382);
 		contentPane.add(studentManageButtonGroup);
 		studentManageButtonGroup.setLayout(null);
 
@@ -95,7 +97,7 @@ public class AppTeachingManager extends JFrame {
 			}
 		});
 		btnIn.setIcon(new ImageIcon(AppTeachingManager.class.getResource("/resources/assets/icon/jinru.png")));
-		btnIn.setBounds(14, 42, 147, 57);
+		btnIn.setBounds(14, 30, 147, 57);
 		studentManageButtonGroup.add(btnIn);
 
 		JButton btnOut = new JButton("退学");
@@ -108,7 +110,7 @@ public class AppTeachingManager extends JFrame {
 			}
 		});
 		btnOut.setIcon(new ImageIcon(AppTeachingManager.class.getResource("/resources/assets/icon/tuichu.png")));
-		btnOut.setBounds(14, 187, 147, 57);
+		btnOut.setBounds(14, 170, 147, 57);
 		studentManageButtonGroup.add(btnOut);
 
 		JButton btnSwitch = new JButton("转系");
@@ -121,7 +123,7 @@ public class AppTeachingManager extends JFrame {
 			}
 		});
 		btnSwitch.setIcon(new ImageIcon(AppTeachingManager.class.getResource("/resources/assets/icon/zhuanhuan.png")));
-		btnSwitch.setBounds(14, 112, 147, 57);
+		btnSwitch.setBounds(14, 100, 147, 57);
 		studentManageButtonGroup.add(btnSwitch);
 
 		JButton btnList = new JButton("列表");
@@ -134,8 +136,20 @@ public class AppTeachingManager extends JFrame {
 			}
 		});
 		btnList.setIcon(new ImageIcon(AppTeachingManager.class.getResource("/resources/assets/icon/liebiao.png")));
-		btnList.setBounds(14, 262, 147, 57);
+		btnList.setBounds(14, 240, 147, 57);
 		studentManageButtonGroup.add(btnList);
+
+		JButton btnResetPW = new JButton("改密");
+		btnResetPW.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				currentDisplayPane.setVisible(false);
+				resetPasswordPane.setVisible(true);
+				currentDisplayPane = resetPasswordPane;
+			}
+		});
+		btnResetPW.setIcon(new ImageIcon(AppTeachingManager.class.getResource("/resources/assets/icon/keyicon.png")));
+		btnResetPW.setBounds(14, 310, 147, 57);
+		studentManageButtonGroup.add(btnResetPW);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(AppTeachingManager.class.getResource("/resources/assets/icon/doctor.png")));
@@ -156,8 +170,7 @@ public class AppTeachingManager extends JFrame {
 		contentPane.add(lblCardNumber);
 
 		// TODO Release this:
-		// lblCardNumber.setText(App.session.getManager().getCardNumber());
-		lblCardNumber.setText("213171281");
+		lblCardNumber.setText(App.session.getManager().getCardNumber());
 
 		/* 默认Panel */
 		defaultDisplayPane = new JPanel();
@@ -196,25 +209,26 @@ public class AppTeachingManager extends JFrame {
 		newCoursePane.setBounds(225, 86, 732, 654);
 		contentPane.add(newCoursePane);
 		newCoursePane.setVisible(false);
-		
+
 		courseListPane = new CourseListPane();
-
 		courseListPane.setBounds(225, 86, 732, 654);
-
 		contentPane.add(courseListPane);
 		courseListPane.setVisible(false);
 
 		deleteCoursePane = new DeleteCoursePane();
-
 		deleteCoursePane.setBounds(225, 86, 732, 654);
-
 		contentPane.add(deleteCoursePane);
 		deleteCoursePane.setVisible(false);
+
+		resetPasswordPane = new ResetPasswordPane();
+		resetPasswordPane.setBounds(225, 86, 732, 654);
+		contentPane.add(resetPasswordPane);
+		resetPasswordPane.setVisible(false);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(
 				new TitledBorder(null, "\u8BFE\u7A0B\u7BA1\u7406", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(14, 459, 182, 259);
+		panel.setBounds(14, 481, 182, 259);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -222,7 +236,9 @@ public class AppTeachingManager extends JFrame {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				currentDisplayPane.setVisible(false);
+				courseListPane.setVisible(true);
+				currentDisplayPane = courseListPane;
 			}
 		});
 		button.setIcon(new ImageIcon(AppTeachingManager.class.getResource("/resources/assets/icon/liebiao.png")));

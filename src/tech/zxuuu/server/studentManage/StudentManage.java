@@ -29,7 +29,7 @@ public class StudentManage {
 		}
 		return result;
 	}
-	
+
 	public static Boolean insertStudent(Student student) {
 		Boolean result = false;
 		SqlSession sqlSession = null;
@@ -102,6 +102,23 @@ public class StudentManage {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 			result = studentMapper.tableDisplay(map);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static Boolean resetPassword(String cardNumber, String newPasswordMD5) {
+		Boolean result = null;
+		SqlSession sqlSession = null;
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("cardNumber", cardNumber);
+		map.put("password", newPasswordMD5);
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
+			result = studentMapper.resetPassword(map);
 			sqlSession.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
