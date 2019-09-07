@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 public class AppStudent extends JFrame {
 
 	private JPanel contentPane;
+	public static JLabel lblBalance;
 
 	/**
 	 * Create the frame.
@@ -160,7 +161,7 @@ public class AppStudent extends JFrame {
 		lblAcademy.setBounds(104, 116, 149, 18);
 		panel.add(lblAcademy);
 
-		JLabel lblBalance = new JLabel("...");
+		lblBalance = new JLabel("...");
 		lblBalance.setBounds(104, 147, 97, 18);
 		panel.add(lblBalance);
 
