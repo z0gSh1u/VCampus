@@ -18,6 +18,7 @@ public class Addons {
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			result = bookMapper.getBorrowedBook(cardNumber);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

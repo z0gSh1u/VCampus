@@ -59,13 +59,13 @@ public class AppTeacher extends JFrame {
 		lblVcampus.setFont(new Font("微软雅黑", Font.PLAIN, 32));
 		lblVcampus.setBounds(92, 26, 306, 43);
 		contentPane.add(lblVcampus);
-		
+
 		coursePanel = new ScheduleTablePane();
 		coursePanel.setBounds(14, 100, 932, 650);
 		contentPane.add(coursePanel);
-		
-				currentDisplay = coursePanel;
-				coursePanel.setVisible(true);
+
+		currentDisplay = coursePanel;
+		coursePanel.setVisible(true);
 
 		JPanel pnlOpencourse = new JPanel();
 		newOpencoursePanel = pnlOpencourse;
@@ -119,14 +119,12 @@ public class AppTeacher extends JFrame {
 		btnGotoOpencourse.setBounds(555, 58, 107, 27);
 		contentPane.add(btnGotoOpencourse);
 
-						
 		JLabel lblWelcome = new JLabel("");
 		lblWelcome.setBounds(440, 26, 416, 18);
 		contentPane.add(lblWelcome);
-		
+
 		lblWelcome.setText(
 				"欢迎您， " + App.session.getTeacher().getName() + " 老师！您的一卡通号：" + App.session.getTeacher().getCardNumber());
-		
 
 	}
 }

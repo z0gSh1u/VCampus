@@ -21,6 +21,7 @@ public class StuCourse {
 			IOpenCourseMapper openCourseMapper = sqlSession.getMapper(IOpenCourseMapper.class);
 			list = openCourseMapper.getEmoticonList();
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

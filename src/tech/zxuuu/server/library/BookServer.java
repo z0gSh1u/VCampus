@@ -27,6 +27,7 @@ public class BookServer {
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			result = bookMapper.searchAuthorByTitle(title);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -60,6 +61,7 @@ public class BookServer {
 				}
 			}
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -75,6 +77,7 @@ public class BookServer {
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			list = bookMapper.searchBeBorrowed(borrower);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -91,10 +94,12 @@ public class BookServer {
 			if (author == null) {
 				list = bookMapper.fuzzySearchByTitle(title);
 				sqlSession.commit();
+				sqlSession.close();
 				return list;
 			} else if (title == null) {
 				list = bookMapper.fuzzySearchByAuthor(author);
 				sqlSession.commit();
+				sqlSession.close();
 				return list;
 			} else {
 				Book book = new Book();
@@ -102,6 +107,7 @@ public class BookServer {
 				book.setAuthor(author);
 				list = bookMapper.fuzzySearchByTitleAndAuthor(book);
 				sqlSession.commit();
+				sqlSession.close();
 				return list;
 			}
 		} catch (Exception e) {
@@ -137,6 +143,7 @@ public class BookServer {
 				}
 			}
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -154,6 +161,7 @@ public class BookServer {
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			int number = bookMapper.searchHowManyByISBN(ISBN);
 			if (number == 1) {
+				sqlSession.close();
 				return false;
 			} else {
 				Book book2 = new Book();
@@ -165,6 +173,7 @@ public class BookServer {
 				book2.setPictureURL(pictureURL);
 				bookMapper.addBook(book2);
 				sqlSession.commit();
+				sqlSession.close();
 				return true;
 			}
 		} catch (Exception e) {
@@ -202,6 +211,7 @@ public class BookServer {
 			book.setCategory(category);
 			list = bookMapper.searchSimilarBook(book);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -216,6 +226,7 @@ public class BookServer {
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			result = bookMapper.searchPicture(ISBN);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -231,6 +242,7 @@ public class BookServer {
 			IBookMapper bookMapper = sqlSession.getMapper(IBookMapper.class);
 			list = bookMapper.searchHotBook();
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -249,6 +261,7 @@ public class BookServer {
 			book.setISBN(ISBN);
 			result = bookMapper.deleteBook(book);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -275,6 +288,7 @@ public class BookServer {
 				}
 			}
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();

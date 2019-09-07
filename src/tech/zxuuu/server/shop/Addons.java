@@ -21,6 +21,7 @@ public class Addons {
 			IProductMapper productMapper = sqlSession.getMapper(IProductMapper.class);
 			result = productMapper.insertNewProcut(product);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -38,6 +39,7 @@ public class Addons {
 			IProductMapper productMapper = sqlSession.getMapper(IProductMapper.class);
 			result = productMapper.deleteProduct(product);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -93,6 +95,7 @@ public class Addons {
 			map.put("cardNumber", cardNumber);
 			studentMapper.chargeCard(map);
 			sqlSession.commit();
+			sqlSession.close();
 			return 0;
 		} catch (Exception e) {
 			sqlSession.rollback();

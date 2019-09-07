@@ -29,6 +29,7 @@ public class CourseManagerSide {
 			map.put("idInAcademy", idInAcademy);
 			result = teacherMapper.getTeacherNameById(map);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -42,6 +43,7 @@ public class CourseManagerSide {
 			IClassMapper classMapper = sqlSession.getMapper(IClassMapper.class);
 			classMapper.insertNewCourse(classInfo);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,6 +58,7 @@ public class CourseManagerSide {
 			IClassMapper classMapper = sqlSession.getMapper(IClassMapper.class);
 			classMapper.deleteCourse(id);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

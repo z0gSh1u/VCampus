@@ -20,7 +20,7 @@ public class ProductServer {
 			result = productMapper.searchProduct(product);
 
 			sqlSession.commit();// 提交查询
-
+			sqlSession.close();
 		} catch (Exception e) {
 			// sqlSession.rollback();
 			e.printStackTrace();
@@ -38,6 +38,7 @@ public class ProductServer {
 			result = productMapper.listProductByType(type);
 
 			sqlSession.commit();// 提交查询
+			sqlSession.close();
 		} catch (Exception e) {
 			// sqlSession.rollback();
 			e.printStackTrace();
@@ -54,8 +55,9 @@ public class ProductServer {
 			IProductMapper productMapper = sqlSession.getMapper(IProductMapper.class);
 			result = productMapper.manageListProduct(product);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
-			sqlSession.rollback();
+			//sqlSession.rollback();
 			e.printStackTrace();
 		}
 		return result;
@@ -71,6 +73,7 @@ public class ProductServer {
 			IProductMapper productMapper = sqlSession.getMapper(IProductMapper.class);
 			result = productMapper.addBuyer(product);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -89,7 +92,7 @@ public class ProductServer {
 			result = productMapper.searchBuyer(buyer);
 
 			sqlSession.commit();// 提交查询
-
+			sqlSession.close();
 		} catch (Exception e) {
 			// sqlSession.rollback();
 			e.printStackTrace();
