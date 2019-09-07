@@ -55,13 +55,9 @@ public class Addons {
 		// tokenize and parse
 		Float totalMoney = (float) 0;
 		Map<String, Integer> remainChecker = new HashMap<>();
-		
-		String[] L1 = se.split("$");
+		String[] L1 = se.split("\\$");
 		for (String ele : L1) {
 			String[] L2 = ele.split("@");
-			
-			L2[2] = L2[2].substring(0, L2.length - 1);
-			
 			remainChecker.put(L2[0], Integer.parseInt(L2[1]));
 			totalMoney += (Integer.parseInt(L2[1]) * Float.parseFloat(L2[2]));
 		}

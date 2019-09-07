@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import tech.zxuuu.entity.Product;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.client.main.App;
+import tech.zxuuu.client.main.AppStudent;
 import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
 
@@ -26,6 +27,7 @@ import javax.swing.border.LineBorder;
 
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 /**
  * 购物车面板
@@ -130,6 +132,7 @@ public class CartPane extends JPanel {
 					checkoutHelper += "@";
 					checkoutHelper += ele.getPrice();
 					checkoutHelper += "$";
+					// 百事可乐@2@3.0$可口可乐@3@3.5$
 				}
 				Integer ret = ResponseUtils
 						.getResponseByHash(new Request(App.connectionToServer, null, "tech.zxuuu.server.shop.Addons.checkout",
@@ -145,6 +148,14 @@ public class CartPane extends JPanel {
 					ShopFirstPage.cart.clear();
 					requireReRender();
 					ShopFirstPage.lblCartCount.setText("0");
+					SwingUtilities.invokeLater(new Runnable() {
+
+						@Override
+						public void run() {
+							AppStudent.lblBalance
+									.setText(String.format("%.2f", Double.parseDouble(AppStudent.lblBalance.getText()) - sum));
+						}
+					});
 				} else if (ret.equals(1)) {
 					SwingUtils.showError(null, "一卡通余额不足！", "错误");
 				} else if (ret.equals(2)) {
