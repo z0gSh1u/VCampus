@@ -36,11 +36,11 @@ public final class ResponseUtils {
 			if (ResponseQueue.getInstance().contain(hash)) {
 				break;
 			}
-			/*if (new Date().getTime() >= shouldEnd) {
+			if (new Date().getTime() >= shouldEnd) {
 				// TODO: uncomment this when release
 				SwingUtils.showError(null, "请求超时！Hash=" + hash, "错误");
 				return null;
-			}*/
+			}
 		}
 		return ResponseQueue.getInstance().consume(hash);
 	}
