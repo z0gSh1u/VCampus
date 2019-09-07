@@ -78,14 +78,14 @@ public class CourseListPane extends JPanel {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 
-		// table.setModel(model);
-
 		JButton btnNewButton = new JButton("确定");
 		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 17));
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.setRowCount(0);
+				if (model != null) {
+					model.setRowCount(0);
+				}
 				List<ClassInfo> CI = getClassInfo(((String) comboBox.getSelectedItem()).substring(0, 2));
 				rowData = new String[CI.size()][5];
 				for (int i = 0; i < CI.size(); i++) {
