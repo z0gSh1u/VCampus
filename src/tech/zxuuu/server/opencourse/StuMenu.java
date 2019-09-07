@@ -22,6 +22,7 @@ public class StuMenu {
 			IOpenCourseMapper openCourseMapper = sqlSession.getMapper(IOpenCourseMapper.class);
 			list = openCourseMapper.getOpenCourseList();
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

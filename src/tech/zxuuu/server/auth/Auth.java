@@ -29,6 +29,7 @@ public class Auth {
 			}
 			result = studentMapper.getStudentDetailByCardNumber(student.getCardNumber());
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,6 +48,7 @@ public class Auth {
 			}
 			result = teacherMapper.getTeacherDetailByCardNumber(teacher.getCardNumber());
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,6 +67,7 @@ public class Auth {
 			}
 			result = managerMapper.getManagerDetailByCardNumber(manager.getCardNumber());
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

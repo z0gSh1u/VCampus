@@ -24,6 +24,7 @@ public class StudentManage {
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 			result = studentMapper.getNameByCardNumber(cardNumber);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,6 +39,7 @@ public class StudentManage {
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 			result = studentMapper.insertStudent(student);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -54,6 +56,7 @@ public class StudentManage {
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 			ret = studentMapper.deleteStudent(cardnumber);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -68,10 +71,12 @@ public class StudentManage {
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 			int one = studentMapper.searchStudentByCardNumber(cardnumber);
 			if (one == 0) {
+				sqlSession.close();
 				return "Nocard";
 			}
 			int two = studentMapper.searchStudentByStudentNumber(studentnumber);
 			if (two == 1) {
+				sqlSession.close();
 				return "Repeat";
 			}
 			Student baigei = new Student();
@@ -80,6 +85,7 @@ public class StudentManage {
 			baigei.setStudentNumber(studentnumber);
 			int rows = studentMapper.switchStudent(baigei);
 			sqlSession.commit();
+			sqlSession.close();
 			if (rows == 0) {
 				return "Nocard";
 			} else {

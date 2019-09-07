@@ -25,6 +25,7 @@ public class OpencourseManage {
 			opencourse.setId(openCourseMapper.getMaxId() + 1);
 			result = openCourseMapper.insertNewOpencourse(opencourse);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -40,6 +41,7 @@ public class OpencourseManage {
 			IOpenCourseMapper openCourseMapper = sqlSession.getMapper(IOpenCourseMapper.class);
 			result = openCourseMapper.deleteOpencourse(id);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -55,6 +57,7 @@ public class OpencourseManage {
 			IOpenCourseMapper openCourseMapper = sqlSession.getMapper(IOpenCourseMapper.class);
 			result = openCourseMapper.getOpenCourseList();
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();

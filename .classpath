@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.28.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-nop-1.7.28.jar"/>
 	<classpathentry kind="lib" path="lib/vlcj-3.12.1.jar"/>
+	<classpathentry kind="lib" path="lib/c3p0-0.9.5.2.jar"/>
+	<classpathentry kind="lib" path="lib/mchange-commons-java-0.2.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

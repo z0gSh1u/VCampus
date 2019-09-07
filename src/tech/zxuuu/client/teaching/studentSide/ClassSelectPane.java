@@ -77,27 +77,28 @@ public class ClassSelectPane extends JPanel {
 
 		this.setLayout(null);
 
-		String selectClass=ResponseUtils
-				.getResponseByHash(new Request(App.connectionToServer, null,
-						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { App.session.getStudent() }).send())
+		String selectClass = ResponseUtils.getResponseByHash(
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection",
+						new Object[] { App.session.getStudent() }).send())
 				.getReturn(String.class);
-		String[] course=selectClass.split(",");
 
-		List<ClassInfo> CI = this.getClassInfo();
-		rowData = new String[CI.size()][6];
-		for (int i = 0; i < CI.size(); i++) {
-			rowData[i][0] = CI.get(i).getID();
-			rowData[i][1] = CI.get(i).getClassName();
-			rowData[i][2] = CI.get(i).getTime();
-			rowData[i][3] = CI.get(i).getTeacher();
-			rowData[i][4] = CI.get(i).getClassroom();
-
-			for (int j=0;j<course.length;j++) {
-				if (rowData[i][0].contentEquals(course[j])) {
-					rowData[i][5]="√";
-					break;
+		if (selectClass != null && !selectClass.equals("")) {
+			String[] course = selectClass.split(",");
+			List<ClassInfo> CI = this.getClassInfo();
+			rowData = new String[CI.size()][6];
+			for (int i = 0; i < CI.size(); i++) {
+				rowData[i][0] = CI.get(i).getID();
+				rowData[i][1] = CI.get(i).getClassName();
+				rowData[i][2] = CI.get(i).getTime();
+				rowData[i][3] = CI.get(i).getTeacher();
+				rowData[i][4] = CI.get(i).getClassroom();
+				for (int j = 0; j < course.length; j++) {
+					if (rowData[i][0].contentEquals(course[j])) {
+						rowData[i][5] = "√";
+						break;
+					}
+					rowData[i][5] = "";
 				}
-				rowData[i][5]="";
 			}
 		}
 		model = new DefaultTableModel(rowData, head) {
@@ -127,7 +128,7 @@ public class ClassSelectPane extends JPanel {
 		tblClassList.setBounds(5, 5, 512, 390);
 
 		ClassSelectPane csg = this;
-		
+
 		lblNewLabel = new JLabel("课程选择");
 
 		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));

@@ -61,7 +61,7 @@ public class AppStudent extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SwingUtilities.invokeLater(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						TeachingStudentMain teachingStudentMain = new TeachingStudentMain();
@@ -110,7 +110,7 @@ public class AppStudent extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SwingUtilities.invokeLater(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						StuMenuGUI stuMenuGUI = new StuMenuGUI();
@@ -279,14 +279,13 @@ public class AppStudent extends JFrame {
 						new Object[] { App.session.getStudent() }).send())
 				.getReturn(String.class);
 
-		String[] course = selectedClass.split(",");
-
 		ClassInfo[] todayClass = new ClassInfo[5];
-		for (int i = 0; i < 5; i++) {
-			todayClass[i] = null;
-		}
 
-		if (selectedClass != "" && !selectedClass.equals("")) {
+		if (selectedClass != null && !selectedClass.equals("")) {
+			for (int i = 0; i < 5; i++) {
+				todayClass[i] = null;
+			}
+			String[] course = selectedClass.split(",");
 			for (int i = 0; i < course.length; i++) {
 				if (Integer.valueOf(course[i].charAt(6) - 48) == today) {
 					ClassInfo cla = ResponseUtils

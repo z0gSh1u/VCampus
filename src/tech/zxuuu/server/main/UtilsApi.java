@@ -47,6 +47,7 @@ public class UtilsApi {
 			IStudentMapper studentMapper = sqlSession.getMapper(IStudentMapper.class);
 			result = studentMapper.chargeCard(map);
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			sqlSession.rollback();
 			e.printStackTrace();
@@ -66,6 +67,7 @@ public class UtilsApi {
 			INoticeMapper noticeMapper = sqlSession.getMapper(INoticeMapper.class);
 			result = noticeMapper.getTop4Notice();
 			sqlSession.commit();
+			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
