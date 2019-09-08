@@ -16,6 +16,7 @@ import tech.zxuuu.client.studentManage.SwitchManagePane;
 import tech.zxuuu.client.teaching.managerSide.CourseListPane;
 import tech.zxuuu.client.teaching.managerSide.DeleteCoursePane;
 import tech.zxuuu.client.teaching.managerSide.NewCoursePane;
+import tech.zxuuu.client.teaching.managerSide.NewNoticePane;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -48,6 +49,8 @@ public class AppTeachingManager extends JFrame {
 	private JPanel newCoursePane;
 	private JPanel courseListPane;
 	private JPanel deleteCoursePane;
+	/* 通知发布Panel */
+	private JPanel newNoticePane;
 
 	/**
 	 * Launch the application.
@@ -224,6 +227,11 @@ public class AppTeachingManager extends JFrame {
 		resetPasswordPane.setBounds(225, 86, 732, 654);
 		contentPane.add(resetPasswordPane);
 		resetPasswordPane.setVisible(false);
+		
+		newNoticePane = new NewNoticePane();
+		newNoticePane.setBounds(225, 86, 732, 654);
+		contentPane.add(newNoticePane);
+		newNoticePane.setVisible(false);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(
@@ -271,6 +279,18 @@ public class AppTeachingManager extends JFrame {
 		button_2.setIcon(new ImageIcon(AppTeachingManager.class.getResource("/resources/assets/icon/delete.png")));
 		button_2.setBounds(14, 109, 147, 57);
 		panel.add(button_2);
+		
+		JButton btnNewButton = new JButton("发布新通知");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				currentDisplayPane.setVisible(false);
+				newNoticePane.setVisible(true);
+				currentDisplayPane = newNoticePane;
+			}
+		});
+		btnNewButton.setIcon(new ImageIcon(AppTeachingManager.class.getResource("/resources/assets/icon/统计.png")));
+		btnNewButton.setBounds(798, 16, 159, 57);
+		contentPane.add(btnNewButton);
 		switchManagePane.setVisible(false);
 
 	}

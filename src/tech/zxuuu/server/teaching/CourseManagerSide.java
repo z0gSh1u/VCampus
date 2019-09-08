@@ -5,7 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import tech.zxuuu.dao.IClassMapper;
+import tech.zxuuu.dao.INoticeMapper;
 import tech.zxuuu.dao.ITeacherMapper;
 import tech.zxuuu.server.main.App;
 import tech.zxuuu.entity.*;
@@ -38,30 +41,56 @@ public class CourseManagerSide {
 
 	public static Boolean insertNewCourse(ClassInfo classInfo) {
 		SqlSession sqlSession = null;
+		Boolean result = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IClassMapper classMapper = sqlSession.getMapper(IClassMapper.class);
-			classMapper.insertNewCourse(classInfo);
+			result = classMapper.insertNewCourse(classInfo);
 			sqlSession.commit();
 			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return result == null ? false : result;
 	}
 
-	
 	public static Boolean deleteCourse(String id) {
 		SqlSession sqlSession = null;
+		Boolean result = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IClassMapper classMapper = sqlSession.getMapper(IClassMapper.class);
-			classMapper.deleteCourse(id);
+			result = classMapper.deleteCourse(id);
 			sqlSession.commit();
 			sqlSession.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return result == null ? false : result;
 	}
+
+	public static Boolean addNotice(NoticeInfo notice) {
+		SqlSession sqlSession = null;
+		Boolean result = null;
+		try {
+			sqlSession = App.sqlSessionFactory.openSession();
+			INoticeMapper noticeMapper = sqlSession.getMapper(INoticeMapper.class);
+
+			Integer nextId = noticeMapper.getMaxId() + 1;
+			Map<String, String> map = new HashMap<>();
+			map.put("id", String.valueOf(nextId));
+			map.put("title", notice.getTitle());
+			map.put("date", notice.getDate());
+			map.put("url", notice.getUrl());
+			result = noticeMapper.insertNewNotice(map);
+			
+			sqlSession.commit();
+			sqlSession.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result == null ? false : result;
+	}
+
 }
