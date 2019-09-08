@@ -28,7 +28,7 @@ public class UtilsApi {
 	}
 
 	/**
-	 * 一卡通重置
+	 * 一卡通充值
 	 * @param cardNumber
 	 * @param howmuch
 	 * @return 成功状态

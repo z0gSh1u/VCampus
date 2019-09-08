@@ -8,5 +8,15 @@
 		SELECT `title`, `date`,
 		`url` FROM `tb_notice` ORDER BY `date` DESC LIMIT 4
 	</select>
-
+	
+	<select id="getMaxId" resultType="Integer">
+		SELECT MAX(`id`) FROM `tb_notice`
+	</select>
+		
+	<insert id="insertNewNotice" parameterType="Map">
+		INSERT INTO `tb_notice` VALUES(
+			#{id}, #{title} , #{date}, #{url}
+		)
+	</insert>
+	
 </mapper>

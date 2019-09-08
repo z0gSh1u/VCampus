@@ -64,41 +64,4 @@ public class ProductServer {
 
 	}
 
-	public static Boolean addBuyer(Product product) {
-		Boolean result = null;
-
-		SqlSession sqlSession = null;
-		try {
-			sqlSession = App.sqlSessionFactory.openSession();
-			IProductMapper productMapper = sqlSession.getMapper(IProductMapper.class);
-			result = productMapper.addBuyer(product);
-			sqlSession.commit();
-			sqlSession.close();
-		} catch (Exception e) {
-			sqlSession.rollback();
-			e.printStackTrace();
-		}
-		return result;
-
-	}
-
-	public static List<Product> searchBuyer(String buyer) {
-		List<Product> result = null;
-
-		SqlSession sqlSession = null;
-		try {
-			sqlSession = App.sqlSessionFactory.openSession();
-			IProductMapper productMapper = sqlSession.getMapper(IProductMapper.class);
-			result = productMapper.searchBuyer(buyer);
-
-			sqlSession.commit();// 提交查询
-			sqlSession.close();
-		} catch (Exception e) {
-			// sqlSession.rollback();
-			e.printStackTrace();
-		}
-		return result;
-
-	}
-
 }
