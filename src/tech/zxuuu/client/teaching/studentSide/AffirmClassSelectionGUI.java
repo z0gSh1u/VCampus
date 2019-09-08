@@ -40,7 +40,11 @@ public class AffirmClassSelectionGUI extends JDialog {
 	}
 
 	public Boolean judgeConflict() {
-		String cn = App.session.getStudent().getClassNumber();
+		String cn = ResponseUtils.getResponseByHash(
+				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection",
+						new Object[] { App.session.getStudent() }).send())
+				.getReturn(String.class);
+
 		if (cn == null || cn.equals("")) {
 			return true;
 		}
