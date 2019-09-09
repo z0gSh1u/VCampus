@@ -111,7 +111,7 @@ public class ShopFirstPage extends JFrame {
 
 		cartPanel = new CartPane();
 		cartPanel.setBackground(Color.WHITE);
-		cartPanel.setBounds(108, 173, 378, 490);
+		cartPanel.setBounds(108, 173, 371, 490);
 		cartPanel.setVisible(false);
 
 		JLabel label = new JLabel("");
@@ -141,7 +141,7 @@ public class ShopFirstPage extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		txt_Search = new JTextField();
-		txt_Search.setBounds(31, 101, 542, 42);
+		txt_Search.setBounds(79, 101, 494, 42);
 		txt_Search.setText("可乐");
 		txt_Search.setColumns(10);
 		panel.add(txt_Search);
@@ -264,6 +264,11 @@ public class ShopFirstPage extends JFrame {
 		btnCart.setIcon(new ImageIcon(ShopFirstPage.class.getResource("/resources/assets/icon/cart.png")));
 		btnCart.setBounds(15, 578, 161, 137);
 		panel.add(btnCart);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(ShopFirstPage.class.getResource("/resources/assets/icon/search01.png")));
+		lblNewLabel.setBounds(42, 105, 32, 32);
+		panel.add(lblNewLabel);
 
 		btn_Tool.addActionListener(new ActionListener() {
 			@Override

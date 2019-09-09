@@ -12,4 +12,6 @@ public interface ITeacherMapper {
 
 	public String getTeacherNameById(Map<String, String> mp);
 
+	public String getTeacherCardById(Map<String, String> mp);
+	
 }

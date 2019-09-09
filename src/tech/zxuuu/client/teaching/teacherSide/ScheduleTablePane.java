@@ -25,10 +25,10 @@ public class ScheduleTablePane extends JPanel {
 
 	private JLabel[] labels;
 
-	public List<ClassInfo> getClassOfOneTeacher(String name) {
+	public List<ClassInfo> getClassOfOneTeacher(String card) {
 		return ResponseUtils
 				.getResponseByHash(new Request(App.connectionToServer, null,
-						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassOfOneTeacher", new Object[] { name }).send())
+						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassOfOneTeacher", new Object[] { card }).send())
 				.getListReturn(ClassInfo.class);
 	}
 
@@ -63,7 +63,7 @@ public class ScheduleTablePane extends JPanel {
 	}
 
 	public void teacherSchedule() {
-		List<ClassInfo> cla = getClassOfOneTeacher(App.session.getTeacher().getName());
+		List<ClassInfo> cla = getClassOfOneTeacher(App.session.getTeacher().getCardNumber());
 		String[] course = new String[cla.size() * 2];
 		for (int i = 0; i < cla.size(); i++) {
 			course[i] = cla.get(i).getID();

@@ -30,6 +30,7 @@ public class TeachingStudentMain extends JFrame {
 	private JPanel classSelectPane;
 	private ScheduleTablePane scheduleTablePane;
 	private JPanel defaultPanel;
+	private JPanel queryScorePane;
 
 	/**
 	 * Create the frame.
@@ -40,7 +41,7 @@ public class TeachingStudentMain extends JFrame {
 				Toolkit.getDefaultToolkit().getImage(TeachingStudentMain.class.getResource("/resources/assets/icon/fav.png")));
 		setTitle("教务管理系统（学生端） - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 958, 795);
+		setBounds(100, 100, 941, 795);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -56,7 +57,7 @@ public class TeachingStudentMain extends JFrame {
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(TeachingStudentMain.class.getResource("/resources/assets/icon/xk.png")));
-		btnNewButton.setBounds(601, 20, 145, 57);
+		btnNewButton.setBounds(484, 20, 145, 57);
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("查看课表");
@@ -69,7 +70,7 @@ public class TeachingStudentMain extends JFrame {
 				currentDisplay = scheduleTablePane;
 			}
 		});
-		btnNewButton_1.setBounds(769, 20, 145, 57);
+		btnNewButton_1.setBounds(634, 20, 145, 57);
 		contentPane.add(btnNewButton_1);
 
 		JLabel label = new JLabel("");
@@ -83,11 +84,11 @@ public class TeachingStudentMain extends JFrame {
 		contentPane.add(label_1);
 
 		JLabel label_2 = new JLabel("当前登录卡号：");
-		label_2.setBounds(365, 47, 105, 18);
+		label_2.setBounds(365, 29, 105, 18);
 		contentPane.add(label_2);
 
 		JLabel label_3 = new JLabel("");
-		label_3.setBounds(473, 47, 114, 18);
+		label_3.setBounds(365, 48, 114, 18);
 		contentPane.add(label_3);
 		label_3.setText(App.session.getStudent().getCardNumber());
 
@@ -108,10 +109,28 @@ public class TeachingStudentMain extends JFrame {
 		contentPane.add(classSelectPane);
 		classSelectPane.setVisible(false);
 
+		queryScorePane = new QueryScorePane();
+		queryScorePane.setBounds(24, 90, 889, 683);
+		queryScorePane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		contentPane.add(queryScorePane);
+		queryScorePane.setVisible(false);
+
 		scheduleTablePane = new ScheduleTablePane();
 		scheduleTablePane.setBounds(24, 90, 889, 683);
 		scheduleTablePane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		contentPane.add(scheduleTablePane);
+
+		JButton btnQueryScore = new JButton("成绩查询");
+		btnQueryScore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				currentDisplay.setVisible(false);
+				queryScorePane.setVisible(true);
+				currentDisplay = queryScorePane;
+			}
+		});
+		btnQueryScore.setBounds(782, 20, 145, 57);
+		contentPane.add(btnQueryScore);
+		btnQueryScore.setIcon(new ImageIcon(TeachingStudentMain.class.getResource("/resources/assets/icon/cj.png")));
 		scheduleTablePane.setVisible(false);
 
 	}

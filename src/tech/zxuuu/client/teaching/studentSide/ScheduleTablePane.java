@@ -62,9 +62,6 @@ public class ScheduleTablePane extends JPanel {
 		}
 		String[] course = temp.split(",");
 
-		System.out.println("temp=" + temp);
-		System.out.println("course.len" + course.length);
-
 		// FIX: course.length -> course.length - 1, since `temp` is ended with `,`
 		// WRONG FIX, INVERTED.
 		for (int i = 0; i < course.length; i++) {
@@ -105,19 +102,35 @@ public class ScheduleTablePane extends JPanel {
 		JButton btnRefresh = new JButton("刷新");
 		btnRefresh.setBounds(757, 624, 104, 27);
 		add(btnRefresh);
-		
+
 		JLabel lblNewLabel = new JLabel("如果刷新按钮无效，请重新进入教务平台");
 		lblNewLabel.setBounds(477, 628, 270, 18);
 		add(lblNewLabel);
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						studentSchedule();
+					}
+				}).start();
 			}
 		});
 
 		btnRefresh.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				studentSchedule();
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO 自动生成的方法存根
+						studentSchedule();
+					}
+				}).start();
+
 			}
 		});
 
@@ -147,6 +160,21 @@ public class ScheduleTablePane extends JPanel {
 			}
 		}
 
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				studentSchedule();
+				for (JLabel label : labels) {
+					label.setVisible(false);
+					label.repaint();
+					label.updateUI();
+					label.validate();
+					label.setVisible(true);
+				}
+			}
+		});
+
 		labels[0].setText("<html><body><h1>课程表</h1></body></html>");
 		ScheduleUtilities.setWeekLabels(labels);
 		labels[6].setText("<html><body><h2>第1-2节<br /></h2>上午</body></html>");
@@ -154,20 +182,7 @@ public class ScheduleTablePane extends JPanel {
 		labels[18].setText("<html><body><h2>第5-6节<br /></h2>下午</body></html>");
 		labels[24].setText("<html><body><h2>第7-8节<br /></h2>下午</body></html>");
 		labels[30].setText("<html><body><h2>第9-10节<br /></h2>晚上</body></html>");
-		
-		SwingUtilities.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				studentSchedule();
-				for (JLabel label : labels) {
-					label.repaint();
-					label.revalidate();
-					label.updateUI();
-				}
-			}
-		});
-		
+
 	}
 
 	static class ScheduleUtilities {

@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import tech.zxuuu.client.teaching.teacherSide.ScheduleTablePane;
+import tech.zxuuu.client.teaching.teacherSide.StudentScoreManage;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -27,6 +28,7 @@ public class AppTeacher extends JFrame {
 	private JPanel coursePanel;
 	private ListOpencoursePane listOpencoursePane;
 	private JPanel newOpencoursePanel;
+	private StudentScoreManage studentScoreManage;
 
 	public void updateOpenCourseList() {
 		this.listOpencoursePane.updateOpenCourse();
@@ -63,6 +65,11 @@ public class AppTeacher extends JFrame {
 		coursePanel = new ScheduleTablePane();
 		coursePanel.setBounds(14, 100, 932, 650);
 		contentPane.add(coursePanel);
+
+		studentScoreManage = new StudentScoreManage();
+		studentScoreManage.setBounds(14, 100, 932, 650);
+		contentPane.add(studentScoreManage);
+		studentScoreManage.setVisible(false);
 
 		currentDisplay = coursePanel;
 		coursePanel.setVisible(true);
@@ -125,6 +132,17 @@ public class AppTeacher extends JFrame {
 
 		lblWelcome.setText(
 				"欢迎您， " + App.session.getTeacher().getName() + " 老师！您的一卡通号：" + App.session.getTeacher().getCardNumber());
+
+		JButton btnManageScore = new JButton("学生成绩管理");
+		btnManageScore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				currentDisplay.setVisible(false);
+				studentScoreManage.setVisible(true);
+				currentDisplay = studentScoreManage;
+			}
+		});
+		btnManageScore.setBounds(786, 58, 148, 27);
+		contentPane.add(btnManageScore);
 
 	}
 }

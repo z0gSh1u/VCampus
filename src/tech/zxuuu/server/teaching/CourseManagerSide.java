@@ -39,12 +39,17 @@ public class CourseManagerSide {
 		return result;
 	}
 
-	public static Boolean insertNewCourse(ClassInfo classInfo) {
+	public static Boolean insertNewCourse(ClassInfo classInfo, String idInAca) {
 		SqlSession sqlSession = null;
 		Boolean result = null;
 		try {
 			sqlSession = App.sqlSessionFactory.openSession();
 			IClassMapper classMapper = sqlSession.getMapper(IClassMapper.class);
+			ITeacherMapper teacherMapper = sqlSession.getMapper(ITeacherMapper.class);
+			Map<String, String> map = new HashMap<>();
+			map.put("academy", classInfo.getId().substring(0,2));
+			map.put("idInAcademy", idInAca);
+			classInfo.setTeacherCard(teacherMapper.getTeacherCardById(map));
 			result = classMapper.insertNewCourse(classInfo);
 			sqlSession.commit();
 			sqlSession.close();
@@ -83,10 +88,10 @@ public class CourseManagerSide {
 			map.put("date", notice.getDate());
 			map.put("url", notice.getUrl());
 			result = noticeMapper.insertNewNotice(map);
-			
+
 			sqlSession.commit();
 			sqlSession.close();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

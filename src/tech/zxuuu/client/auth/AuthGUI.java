@@ -63,7 +63,6 @@ public class AuthGUI extends JFrame {
 			} else {
 				SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
 				txtPassword.setText("");
-				btnLogin.setText("登陆");
 			}
 			// -------------
 		} else if (rdoTeacher.isSelected()) {
@@ -78,7 +77,6 @@ public class AuthGUI extends JFrame {
 			} else {
 				SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
 				txtPassword.setText("");
-				btnLogin.setText("登陆");
 			}
 			// -------------
 		} else if (rdoManager.isSelected()) {
@@ -93,7 +91,6 @@ public class AuthGUI extends JFrame {
 			} else {
 				SwingUtils.showError(null, "密码错误，登陆失败！", "错误");
 				txtPassword.setText("");
-				btnLogin.setText("登陆");
 			}
 		}
 	}

@@ -5,7 +5,9 @@
 <mapper namespace="tech.zxuuu.dao.IClassMapper">
 	<select id="getClassInfo" parameterType="String"
 		resultType="ClassInfo">
-		SELECT * FROM `tb_class` WHERE `id` LIKE CONCAT(#{academy},
+		SELECT `id`,`className`,`time`,`teacher`,`classroom`,
+		`teacherCard` FROM
+		`tb_class` WHERE `id` LIKE CONCAT(#{academy},
 		"%")
 	</select>
 	<update id="takeClass" parameterType="Student">
@@ -20,20 +22,36 @@
 	</select>
 	<select id="getOneClass" parameterType="String"
 		resultType="ClassInfo">
-		SELECT * FROM `tb_class` WHERE id=#{id}
+		SELECT `id`,`className`,`time`,`teacher`,`classroom`,
+		`teacherCard` FROM
+		`tb_class` WHERE id=#{id} LIMIT 1
 	</select>
 	<select id="getClassOfOneTeacher" parameterType="String"
 		resultType="ClassInfo">
-		SELECT * FROM `tb_class` WHERE teacher=#{name}
+		SELECT `id`,`className`,`time`,`teacher`,`classroom`,
+		`teacherCard` FROM
+		`tb_class` WHERE teacherCard=#{card}
 	</select>
 	<insert id="insertNewCourse" parameterType="ClassInfo">
 		INSERT INTO
 		`tb_class` VALUES (#{id}, #{className}, #{time}, #{teacher},
-		#{classroom})
+		#{classroom}, "", #{teacherCard})
 	</insert>
-
 	<delete id="deleteCourse" parameterType="String">
 		DELETE FROM
-		`tb_class` WHERE `id` = #{id} LIMIT 1
+		`tb_class`
+		WHERE `id` = #{id} LIMIT 1
 	</delete>
+
+	<select id="getStudentOfOneClass" parameterType="String"
+		resultType="String">
+		SELECT `students` FROM `tb_class` WHERE id=#{id} LIMIT 1
+	</select>
+	<update id="updateScoreOfOneClass" parameterType="Map">
+		UPDATE tb_class
+		SET `students` = #{content} WHERE `id` = #{classId} LIMIT 1
+	</update>
+	
+
+
 </mapper>
