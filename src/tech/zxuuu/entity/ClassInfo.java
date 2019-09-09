@@ -9,10 +9,12 @@ public class ClassInfo {
 	private String time;
 	private String teacher;
 	private String classroom;
+	private String teacherCard;
 
 	public ClassInfo() {
 	}
 
+	// 历史遗留问题
 	public String getId() {
 		return id;
 	}
@@ -20,13 +22,9 @@ public class ClassInfo {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 	public String getID() {
 		return id;
-	}
-
-	public void setID(String id) {
-		this.id = id;
 	}
 
 	public String getClassName() {
@@ -65,22 +63,28 @@ public class ClassInfo {
 		this.id = id;
 	}
 
-	public ClassInfo(String id, String className, String time, String teacher, String classroom) {
+	public String getTeacherCard() {
+		return teacherCard;
+	}
+
+	public void setTeacherCard(String teacherCard) {
+		this.teacherCard = teacherCard;
+	}
+
+	public ClassInfo(String id, String className, String time, String teacher, String classroom, String teacherCard) {
 		super();
 		this.id = id;
 		this.className = className;
 		this.time = time;
 		this.teacher = teacher;
 		this.classroom = classroom;
+		this.teacherCard = teacherCard;
 	}
 
 	@Override
 	public String toString() {
 		return "ClassInfo [id=" + id + ", className=" + className + ", time=" + time + ", teacher=" + teacher
-				+ ", classroom=" + classroom + "]";
+				+ ", classroom=" + classroom + ", teacherCard=" + teacherCard + "]";
 	}
 
-
-	
-	
 }

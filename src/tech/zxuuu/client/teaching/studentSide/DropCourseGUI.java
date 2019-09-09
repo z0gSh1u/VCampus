@@ -29,10 +29,10 @@ public class DropCourseGUI extends JDialog {
 	JTextField txtTeacher;
 	JTextField txtClassroom;
 
-	public Boolean takeClass(Student student) {
+	public Boolean takeClassInv(Student student, String dropClassId) {
 		return ResponseUtils
 				.getResponseByHash(new Request(App.connectionToServer, null,
-						"tech.zxuuu.server.teaching.ClassSelectGUI.takeClass", new Object[] { student }).send())
+						"tech.zxuuu.server.teaching.ClassSelectGUI.takeClassInv", new Object[] { student, dropClassId }).send())
 				.getReturn(Boolean.class);
 	}
 
@@ -109,13 +109,13 @@ public class DropCourseGUI extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						Student stu = App.session.getStudent();
 
-						stu.setClassNumber(ResponseUtils
-				.getResponseByHash(new Request(App.connectionToServer, null,
-						"tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection", new Object[] { App.session.getStudent() }).send())
-				.getReturn(String.class));
+						stu.setClassNumber(ResponseUtils.getResponseByHash(
+								new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassSelection",
+										new Object[] { App.session.getStudent() }).send())
+								.getReturn(String.class));
 
 						stu.setClassNumber(stu.getClassNumber().replace(txtClassID.getText() + ",", ""));
-						takeClass(stu);
+						takeClassInv(stu, txtClassID.getText());
 						csg.dropCourse(row);
 						dcg.dispose();
 					}

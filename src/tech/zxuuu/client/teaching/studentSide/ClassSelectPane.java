@@ -62,12 +62,10 @@ public class ClassSelectPane extends JPanel {
 	}
 
 	public List<ClassInfo> getClassInfo() {
-
 		return ResponseUtils.getResponseByHash(
 				new Request(App.connectionToServer, null, "tech.zxuuu.server.teaching.ClassSelectGUI.getClassInfo",
 						new Object[] { App.session.getStudent().getAcademy() }).send())
 				.getListReturn(ClassInfo.class);
-
 	}
 
 	/**
@@ -100,7 +98,20 @@ public class ClassSelectPane extends JPanel {
 					rowData[i][5] = "";
 				}
 			}
+		} else {
+			String[] course = selectClass.split(",");
+			List<ClassInfo> CI = this.getClassInfo();
+			rowData = new String[CI.size()][6];
+			for (int i = 0; i < CI.size(); i++) {
+				rowData[i][0] = CI.get(i).getID();
+				rowData[i][1] = CI.get(i).getClassName();
+				rowData[i][2] = CI.get(i).getTime();
+				rowData[i][3] = CI.get(i).getTeacher();
+				rowData[i][4] = CI.get(i).getClassroom();
+				rowData[i][5] = "";
+			}
 		}
+
 		model = new DefaultTableModel(rowData, head) {
 			@Override
 			public boolean isCellEditable(int a, int b) {
@@ -143,20 +154,16 @@ public class ClassSelectPane extends JPanel {
 					int row = ((JTable) evt.getSource()).rowAtPoint(evt.getPoint());
 					if (rowData[row][5] == "") {
 						AffirmClassSelectionGUI acsg = new AffirmClassSelectionGUI(csg, row);
-
 						acsg.txtClassID.setText((String) tblClassList.getValueAt(row, 0));
 						acsg.btnConfirm.setEnabled(acsg.judgeConflict());
-
 						if (!acsg.judgeConflict()) {
 							acsg.btnConfirm.setText("课程冲突");
 						}
-
 						acsg.txtClassName.setText((String) tblClassList.getValueAt(row, 1));
 						acsg.txtTime.setText((String) tblClassList.getValueAt(row, 2));
 						acsg.txtTeacher.setText((String) tblClassList.getValueAt(row, 3));
 						acsg.txtClassroom.setText((String) tblClassList.getValueAt(row, 4));
 						acsg.setModal(true);
-
 						acsg.setVisible(true);
 					} else {
 						DropCourseGUI dcg = new DropCourseGUI(csg, row);
@@ -172,6 +179,7 @@ public class ClassSelectPane extends JPanel {
 				}
 			}
 		});
+		
 	}
 
 }

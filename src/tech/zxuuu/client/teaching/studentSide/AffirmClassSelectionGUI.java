@@ -7,6 +7,7 @@ import tech.zxuuu.client.main.App;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.util.ResponseUtils;
+import tech.zxuuu.util.SwingUtils;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -32,10 +33,10 @@ public class AffirmClassSelectionGUI extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	JButton btnConfirm;
 
-	public Boolean takeClass(Student student) {
+	public Boolean takeClass(Student student, String newClassId) {
 		return ResponseUtils
 				.getResponseByHash(new Request(App.connectionToServer, null,
-						"tech.zxuuu.server.teaching.ClassSelectGUI.takeClass", new Object[] { student }).send())
+						"tech.zxuuu.server.teaching.ClassSelectGUI.takeClass", new Object[] { student, newClassId }).send())
 				.getReturn(Boolean.class);
 	}
 
@@ -144,8 +145,12 @@ public class AffirmClassSelectionGUI extends JDialog {
 
 				stu.setClassNumber(stu.getClassNumber() == null ? ("" + txtClassID.getText() + ",")
 						: (stu.getClassNumber() + txtClassID.getText() + ","));
-				takeClass(stu);
-				csg.selectClass(row);
+				Boolean ret = takeClass(stu, txtClassID.getText());
+				if (!ret) {
+					SwingUtils.showError(null, "出现错误！", "错误");
+				} else {
+					csg.selectClass(row);
+				}
 				acsg.dispose();
 			}
 		});

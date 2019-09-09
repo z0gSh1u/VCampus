@@ -3,6 +3,7 @@ package tech.zxuuu.client.library;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -44,6 +45,8 @@ public class LibraryStudentGUI extends JFrame {
 
 	private JPanel contentPane;
 	private Boolean click = true;
+
+	int nowPos = 0;
 
 	/**
 	 * Create the frame.
@@ -162,17 +165,36 @@ public class LibraryStudentGUI extends JFrame {
 			@Override
 			public void run() {
 				scrollPane.getVerticalScrollBar().setValue(0);
-
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
-					// TODO 自动生成的 catch 块
 					e.printStackTrace();
 				}
-
 				that.setVisible(true);
 			}
 		});
+
+		
+		Thread thread = null;
+		thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+				while (true) {
+					scrollPane.getVerticalScrollBar().setValue(nowPos++);
+					if (nowPos >= 1100 /* 容错 */) {
+						nowPos = 0;
+						scrollPane.getVerticalScrollBar().setValue(nowPos++);
+					}
+					try {
+						thread.sleep(90);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		thread.start();
 
 	}
 }

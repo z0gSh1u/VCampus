@@ -44,6 +44,9 @@ public class HotBook extends JPanel {
 		txtTitle.setFont(new Font("微软雅黑", Font.PLAIN, 17));
 		txtTitle.setBounds(253, 26, 140, 55);
 		txtTitle.setText(title);
+		
+		txtTitle.setLineWrap(true);
+		
 		add(txtTitle);
 
 		JTextArea txtAuthor = new JTextArea();
@@ -51,6 +54,9 @@ public class HotBook extends JPanel {
 		txtAuthor.setFont(new Font("微软雅黑", Font.PLAIN, 17));
 		txtAuthor.setBounds(252, 114, 140, 55);
 		txtAuthor.setText(author);
+		
+		txtAuthor.setLineWrap(true);
+		
 		add(txtAuthor);
 
 		JLabel label_1 = new JLabel("");

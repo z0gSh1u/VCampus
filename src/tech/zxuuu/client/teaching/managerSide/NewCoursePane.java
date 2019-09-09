@@ -177,28 +177,38 @@ public class NewCoursePane extends JPanel {
 					SwingUtils.showError(null, "请先通过自动装填！", "错误");
 					return;
 				}
+				if (txtName.getText().equals("")) {
+					SwingUtils.showError(null, "有字段为空！", "错误");
+					return;
+				}
 
 				if (judgeConflict(time)) {
 					SwingUtils.showError(null, "课程时间冲突", "错误");
 				} else {
 					ClassInfo cla = new ClassInfo();
-					cla.setID(txtAca.getText() + txtCourseId.getText() + txtTime.getText() + txtTeacherId.getText()
+					// 加0是历史遗留问题
+					cla.setId(txtAca.getText() + "0" + txtCourseId.getText() + txtTime.getText() + txtTeacherId.getText()
 							+ txtClassroom.getText());
 					cla.setClassName(txtName.getText());
 					String[] time = dispTime.getText().split("；");
 					cla.setTime(time[0] + " " + time[1]);
 					cla.setTeacher(dispTeacher.getText());
 					cla.setClassroom(dispClassroom.getText());
+					String idInAca = txtTeacherId.getText();
 					Boolean oci = ResponseUtils
 							.getResponseByHash(new Request(App.connectionToServer, null,
-									"tech.zxuuu.server.teaching.CourseManagerSide.insertNewCourse", new Object[] { cla }).send())
+									"tech.zxuuu.server.teaching.CourseManagerSide.insertNewCourse", new Object[] { cla, idInAca }).send())
 							.getReturn(Boolean.class);
+					if (oci) {
+						SwingUtils.showMessage(null, "新增成功！", "提示");
+					} else {
+						SwingUtils.showError(null, "新增失败！", "错误");
+					}
 				}
 			}
 		});
-		JButton btnNewCourse = new JButton("新增");
-		btnNewCourse.setBounds(342, 423, 115, 57);
-		add(btnNewCourse);
+		btnNewButton.setBounds(342, 423, 115, 57);
+		add(btnNewButton);
 
 		JLabel lblNewLabel_5 = new JLabel("开课院系");
 		lblNewLabel_5.setBounds(58, 162, 72, 18);

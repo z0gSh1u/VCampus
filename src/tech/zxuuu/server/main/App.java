@@ -65,6 +65,7 @@ public class App extends JFrame {
 	 * Create the frame.
 	 */
 	public App() {
+
 		setResizable(false);
 		setTitle("服务器端 - VCampus");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

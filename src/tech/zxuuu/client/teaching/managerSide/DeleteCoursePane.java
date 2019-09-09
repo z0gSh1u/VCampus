@@ -160,6 +160,11 @@ public class DeleteCoursePane extends JPanel {
 						.getResponseByHash(new Request(App.connectionToServer, null,
 								"tech.zxuuu.server.teaching.CourseManagerSide.deleteCourse", new Object[] { ID }).send())
 						.getReturn(Boolean.class);
+				if (oci) {
+					SwingUtils.showMessage(null, "删除成功！", "提示");
+				} else {
+					SwingUtils.showError(null, "删除失败！", "错误");
+				}
 			}
 		});
 		btnNewButton.setBounds(342, 423, 115, 57);
