@@ -98,7 +98,7 @@ public class CourseInfoPane extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					StuCourseGUI stuCourseGUI = new StuCourseGUI(id, videoUrl);
+					StuCourseGUI stuCourseGUI = new StuCourseGUI(id, videoUrl, courseName);
 					stuCourseGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					stuCourseGUI.setVisible(true);
 				} catch (Exception e1) {
