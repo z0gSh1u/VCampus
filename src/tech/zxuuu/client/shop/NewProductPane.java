@@ -1,5 +1,6 @@
 package tech.zxuuu.client.shop;
 
+import java.awt.Desktop;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -15,6 +16,9 @@ import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
 
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -143,5 +147,18 @@ public class NewProductPane extends JPanel {
 		cbType.setModel(new DefaultComboBoxModel(new String[] { "食物", "饮料", "水果", "文具", "用品" }));
 		cbType.setBounds(208, 168, 388, 30);
 		add(cbType);
+
+		JButton btnLinkImg = new JButton("图片外链平台");
+		btnLinkImg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI("http://zxuuu.tech:8080/vcout/form.html"));
+				} catch (IOException | URISyntaxException e1) {
+					SwingUtils.showError(null, "打开失败！", "错误");
+				}
+			}
+		});
+		btnLinkImg.setBounds(59, 441, 123, 27);
+		add(btnLinkImg);
 	}
 }
