@@ -13,6 +13,7 @@ import tech.zxuuu.client.main.App;
 import tech.zxuuu.entity.Student;
 import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
+import tech.zxuuu.util.OtherUtils;
 import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
 import java.awt.Font;
@@ -104,7 +105,7 @@ public class InManagePane extends JPanel {
 				} else if (!(passwordField.getText().equals(passwordConfirm.getText()))) {
 					SwingUtils.showError(null, "两次输入密码不一致！", "错误");
 				} else {
-					Student student = new Student(textCardNumber.getText(), null, passwordField.getText(), null);
+					Student student = new Student(textCardNumber.getText(), null, OtherUtils.getMD5(passwordField.getText()), null);
 					student.setName(textName.getText());
 					student.setStudentNumber(textStudentNumber.getText());
 					student.setAcademy(textStudentNumber.getText().substring(0, 2));
