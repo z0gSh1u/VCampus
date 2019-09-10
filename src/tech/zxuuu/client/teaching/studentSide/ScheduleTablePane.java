@@ -99,40 +99,10 @@ public class ScheduleTablePane extends JPanel {
 		JPanel centerNullPanel = new JPanel(null);
 		centerNullPanel.setBounds(0, 0, 948, 627);
 		this.add(centerNullPanel);
-		JButton btnRefresh = new JButton("刷新");
-		btnRefresh.setBounds(757, 624, 104, 27);
-		add(btnRefresh);
 
-		JLabel lblNewLabel = new JLabel("如果刷新按钮无效，请重新进入教务平台");
-		lblNewLabel.setBounds(477, 628, 270, 18);
+		JLabel lblNewLabel = new JLabel("再次点击查看课表即可刷新课表");
+		lblNewLabel.setBounds(711, 641, 226, 18);
 		add(lblNewLabel);
-		btnRefresh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						// TODO 自动生成的方法存根
-						studentSchedule();
-					}
-				}).start();
-			}
-		});
-
-		btnRefresh.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						// TODO 自动生成的方法存根
-						studentSchedule();
-					}
-				}).start();
-
-			}
-		});
 
 		Color lightblue = new Color(208, 227, 234);
 		Color silvergray = new Color(233, 241, 244);

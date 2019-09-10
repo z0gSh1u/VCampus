@@ -66,7 +66,16 @@ public class TeachingStudentMain extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currentDisplay.setVisible(false);
+//				scheduleTablePane.setVisible(true);
+//				currentDisplay = scheduleTablePane;
+
+				scheduleTablePane.setVisible(false);
+				contentPane.remove(scheduleTablePane);
+				scheduleTablePane = new ScheduleTablePane();
 				scheduleTablePane.setVisible(true);
+				scheduleTablePane.setBounds(24, 90, 889, 683);
+				scheduleTablePane.setBorder(new LineBorder(new Color(0, 0, 0)));
+				contentPane.add(scheduleTablePane);
 				currentDisplay = scheduleTablePane;
 			}
 		});

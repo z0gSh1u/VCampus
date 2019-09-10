@@ -15,6 +15,8 @@ import tech.zxuuu.net.ConnectionToServer;
 import tech.zxuuu.net.ResponseListener;
 import tech.zxuuu.net.Session;
 import tech.zxuuu.util.SwingUtils;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * 客户端全局根对象（App） 该窗口不会被显示。之所以继承JFrame的原因是便于前期调试。

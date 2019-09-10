@@ -47,9 +47,6 @@ public class BookServer {
 				result = 1;
 				if (chargable == 1) {
 					String nowborrower = bookMapper.getBorrowerByISBN(ISBN);
-					if (nowborrower == null || !nowborrower.equals(borrower)) {
-						return 1;
-					}
 					bookMapper.changeChargableByISBN(ISBN);
 					String title = bookMapper.searchTitleByISBN(ISBN);
 					bookMapper.changeNumberByTitle(title);
