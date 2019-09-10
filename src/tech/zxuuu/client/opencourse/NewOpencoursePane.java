@@ -13,10 +13,15 @@ import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
 
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.border.BevelBorder;
 
 /**
@@ -70,7 +75,7 @@ public class NewOpencoursePane extends JPanel {
 		JLabel lblShowInfo = new JLabel("");
 		lblShowInfo.setForeground(Color.RED);
 		lblShowInfo.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		lblShowInfo.setBounds(561, 460, 249, 32);
+		lblShowInfo.setBounds(579, 407, 249, 32);
 		add(lblShowInfo);
 
 		JButton btnSubmit = new JButton("新增");
@@ -107,7 +112,7 @@ public class NewOpencoursePane extends JPanel {
 			}
 		});
 
-		btnSubmit.setBounds(426, 447, 121, 57);
+		btnSubmit.setBounds(599, 443, 121, 57);
 		add(btnSubmit);
 
 		txtCourseName = new JTextField();
@@ -138,6 +143,19 @@ public class NewOpencoursePane extends JPanel {
 		lblPixel.setFont(new Font("宋体", Font.PLAIN, 21));
 		lblPixel.setBounds(188, 309, 99, 25);
 		add(lblPixel);
+		
+		JButton btnNewButton = new JButton("图片外链平台");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI("http://zxuuu.tech:8080/vcout/form.html"));
+				} catch (IOException | URISyntaxException e1) {
+					SwingUtils.showError(null, "打开失败！", "错误");
+				}
+			}
+		});
+		btnNewButton.setBounds(188, 442, 123, 27);
+		add(btnNewButton);
 
 	}
 }

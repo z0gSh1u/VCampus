@@ -2,6 +2,9 @@ package tech.zxuuu.client.library;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,6 +21,8 @@ import tech.zxuuu.net.Request;
 import tech.zxuuu.net.Response;
 import tech.zxuuu.util.ResponseUtils;
 import tech.zxuuu.util.SwingUtils;
+
+import java.awt.Desktop;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 
@@ -42,6 +47,7 @@ public class NewBookPane extends JPanel {
 	private JLabel label;
 	private JLabel lblPx;
 	JComboBox<String> combCategory;
+	private JButton btnNewButton;
 
 	/**
 	 * Create the panel.
@@ -81,7 +87,7 @@ public class NewBookPane extends JPanel {
 
 		btnComfirm = new JButton("确定");
 		btnComfirm.setFont(new Font("微软雅黑", Font.PLAIN, 24));
-		btnComfirm.setBounds(360, 437, 124, 39);
+		btnComfirm.setBounds(481, 440, 124, 39);
 		btnComfirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -147,6 +153,19 @@ public class NewBookPane extends JPanel {
 		lblPx = new JLabel("(185 px * 260 px)");
 		lblPx.setBounds(46, 422, 144, 18);
 		add(lblPx);
+		
+		btnNewButton = new JButton("图片外链平台");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI("http://zxuuu.tech:8080/vcout/form.html"));
+				} catch (IOException | URISyntaxException e1) {
+					SwingUtils.showError(null, "打开失败！", "错误");
+				}
+			}
+		});
+		btnNewButton.setBounds(224, 451, 123, 27);
+		add(btnNewButton);
 	}
 
 }
