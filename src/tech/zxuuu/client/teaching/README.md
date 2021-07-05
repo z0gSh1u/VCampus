@@ -1,1 +1,0 @@
-## tech.zxuuu.client.teaching
